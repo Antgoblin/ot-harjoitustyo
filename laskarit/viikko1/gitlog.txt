@@ -1,0 +1,21 @@
+C:\Users\jy\ot_viikko1>git log --stat
+commit 4f4bcbfc55c6259be1db37a8aaf288a33f72d99a (HEAD -> master)
+Author: antonpaa <anton.paavola@helsinki.fi>
+Date:   Wed Mar 13 18:39:54 2019 +0200
+
+    file1 poistettu ja file2 nimi muutettiin file22
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5447477aae84cee312db9c6cf1d8864d0c912a27
+Author: antonpaa <anton.paavola@helsinki.fi>
+Date:   Wed Mar 13 18:31:31 2019 +0200
+
+    tiedostoja, file1, file2, file3 lis<C3><A4>tty
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)

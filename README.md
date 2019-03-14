@@ -1,4 +1,4 @@
-**Ohjelmistotekniikka, harjoitustyö**
+﻿**Ohjelmistotekniikka, harjoitustyö**
 
 **Tehtävät**
 
@@ -7,3 +7,5 @@
 [gitlog.txt](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
 [komentorivi.txt](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+
+(Testi muokkaus)

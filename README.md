@@ -1,3 +1,8 @@
-AA
+**Ohjelmistotekniikka, harjoitustyö**
 
-tiedostoon tehty tavallista tekstiä, joista osa **lihavoitua** ja osa *kursivoituvaa*.
+**Tehtävät**
+
+**Viikko 1**
+
+http://github.com - automatic!
+[GitHub](http://github.com)

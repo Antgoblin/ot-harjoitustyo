@@ -13,17 +13,13 @@ import javafx.scene.shape.Polygon;
  */
 public class Character {
     
-    private Polygon shape;
     private int maxhp;
     private int currenthp;
     private Map map;
     private int x;
     private int y;
     
-    public Character(Polygon shape, int x, int y, int hp) {
-        this.shape = shape;
-        this.shape.setTranslateX(x);
-        this.shape.setTranslateY(y);
+    public Character(int x, int y, int hp) {
         this.maxhp = hp;
         this.currenthp = hp;
         this.map = null;
@@ -35,16 +31,12 @@ public class Character {
         this.map = map;
     }
     
-    public Polygon getShape() {
-        return this.shape;
+    public int getX() {
+        return this.x;
     }
     
-    public double getX() {
-        return this.shape.getTranslateX();
-    }
-    
-    public double getY() {
-        return this.shape.getTranslateY();
+    public int getY() {
+        return this.y;
     }
     
     public int getMaxHp() {
@@ -56,23 +48,19 @@ public class Character {
     }
     
     public void moveUp() {
-        double y = this.shape.getTranslateY() - 50;
-        this.shape.setTranslateY(y);
+        this.y -= 1;
     }
     
     public void moveDown() {
-        double y = this.shape.getTranslateY() + 50;
-        this.shape.setTranslateY(y);
+        this.y += 1;
     }
     
     public void moveRight() {
-        double x = this.shape.getTranslateX() + 50;
-        this.shape.setTranslateX(x);
+        this.x += 1;
     }
     
     public void moveLeft() {
-        double x = this.shape.getTranslateX() - 50;
-        this.shape.setTranslateX(x);
+        this.x -= 1;
         
     }    
 }

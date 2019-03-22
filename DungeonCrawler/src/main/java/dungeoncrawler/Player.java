@@ -13,8 +13,8 @@ import javafx.scene.shape.Polygon;
  */
 public class Player extends Character {
     
-    public Player(Polygon shape, int x, int y, int hp) {
-        super(shape, x, y, hp);
+    public Player(int x, int y, int hp) {
+        super(x, y, hp);
     }
     
     

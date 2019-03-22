@@ -18,19 +18,29 @@ import javafx.scene.shape.Rectangle;
  */
 public class Map {
     
-    private List<Tile> tiles;
+//    private List<Tile> tiles;
+    private Tile[][] tiles; 
     private int size;
     
     public Map(int size) {
         this.size = size;
-        this.tiles = new ArrayList<>();
-        for (int i = 0; i < (size*size); i++) {
-            tiles.add(new Tile(50 * (i % size), 50 * (i / size)));
+        this.tiles = new Tile[size][size];
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                tiles[x][y] = new Tile();
+            }
+//            tiles.add(new Tile(50 * (i % size), 50 * (i / size)));
+            
         }
     }
     
-    public List<Tile> getTiles() {
+    public Tile[][] getTiles() {
         return this.tiles;
+    }
+    
+    public Tile getTile(int x, int y) {
+        //tarkoituksella väärinpäin.
+        return tiles[y][x];
     }
     
     public int getSize() {
@@ -48,13 +58,6 @@ public class Map {
 //        System.out.println(memes.get(0).getSolid());
 //        return memes.get(0).getSolid();
 //    }
-    
-    public void generateRoom(int x, int y) {
-        tiles.forEach( event -> {
-            
-        });
-    }
-
 //    public class Tile extends StackPane {
 //        public Tile() {
 //            Rectangle border = new Rectangle(50, 50);

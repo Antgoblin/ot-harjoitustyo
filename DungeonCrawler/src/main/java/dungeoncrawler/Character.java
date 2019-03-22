@@ -16,7 +16,9 @@ public class Character {
     private Polygon shape;
     private int maxhp;
     private int currenthp;
-    private Tile tile;
+    private Map map;
+    private int x;
+    private int y;
     
     public Character(Polygon shape, int x, int y, int hp) {
         this.shape = shape;
@@ -24,10 +26,25 @@ public class Character {
         this.shape.setTranslateY(y);
         this.maxhp = hp;
         this.currenthp = hp;
+        this.map = null;
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void setOnMap(Map map) {
+        this.map = map;
     }
     
     public Polygon getShape() {
         return this.shape;
+    }
+    
+    public double getX() {
+        return this.shape.getTranslateX();
+    }
+    
+    public double getY() {
+        return this.shape.getTranslateY();
     }
     
     public int getMaxHp() {

@@ -47,13 +47,12 @@ public class DungeonCrawlerSovellus extends Application {
     private GridPane screen;
     private TextArea textArea;
     private TextArea statscreen;
+    private List<Enemy> enemies;
 
     public void init() {
         map = new Map(mapSize);
 
         player = new Player(5, 4, 100);
-        
-        List<Character> enemies= new ArrayList<>();
 
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
@@ -70,6 +69,8 @@ public class DungeonCrawlerSovellus extends Application {
     public void start(Stage Dungeon) {
 
         initializeLayout();
+        enemies = new ArrayList<>();
+        enemies.add(new Enemy("Rat",15,15,10,10,20,player));
         
         Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -80,6 +81,7 @@ public class DungeonCrawlerSovellus extends Application {
         drawTiles(gc);
         drawGrid(gc);
         drawPlayer(gc);
+        drawEnemies(gc);
         
         screen.add(canvas, 1, 1, 1, 1); //1,1
         initializeTextArea();
@@ -121,10 +123,19 @@ public class DungeonCrawlerSovellus extends Application {
                     }
 
                 }
+            } else if (event.getCode() == KeyCode.SPACE) {
+                
             }
+            enemies.forEach(enemy -> {
+                enemy.act();
+                if (enemy.getIfAttacked()) {
+                    textArea.appendText(enemy.getName() + " hit you for " + enemy.getDamageDealt() + " damage \n");                    
+                }
+            });
             drawTiles(gc);
             drawGrid(gc);
             drawPlayer(gc);
+            drawEnemies(gc);
             initializeStatScreen();
 
         });
@@ -204,6 +215,14 @@ public class DungeonCrawlerSovellus extends Application {
                 gc.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
         }
+    }
+    
+    private void drawEnemies(GraphicsContext gc) {
+        
+        enemies.forEach( enemy -> {
+            gc.fillOval(enemy.getX() * tileSize + (tileSize - playerSize) / 2, enemy.getY() * tileSize + (tileSize - playerSize) / 2, playerSize, playerSize);
+        });
+        
     }
 
 }

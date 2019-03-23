@@ -52,7 +52,7 @@ public class Character {
     } 
     
     public void moveUp() {
-        this.y -= 1;
+        this.y -= 1;        
     }
     
     public void moveDown() {

@@ -47,6 +47,10 @@ public class Character {
         return this.currenthp;
     }
     
+    public void loseHp(int amount) {
+        this.currenthp -= amount;
+    } 
+    
     public void moveUp() {
         this.y -= 1;
     }

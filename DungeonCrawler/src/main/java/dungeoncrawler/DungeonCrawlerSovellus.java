@@ -6,6 +6,7 @@
 package dungeoncrawler;
 
 import dungeoncrawler.Tile;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -36,18 +37,23 @@ public class DungeonCrawlerSovellus extends Application {
         launch();
     }
 
-    public static int WIDTH = 950;
-    public static int HEIGHT = 750;
-    public static int tileSize = 50;
-    public static int playerSize = 20;
+    public static int WIDTH = 950;   // 950?
+    public static int HEIGHT = 750;   // 750?
+    public static int tileSize = 40;
+    public static int playerSize = tileSize*2/5;
     private Map map;
     int mapSize = 100;
     private Player player;
+    private GridPane screen;
+    private TextArea textArea;
+    private TextArea statscreen;
 
     public void init() {
         map = new Map(mapSize);
 
-        player = new Player(5, 4, 1);
+        player = new Player(5, 4, 100);
+        
+        List<Character> enemies= new ArrayList<>();
 
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
@@ -63,29 +69,10 @@ public class DungeonCrawlerSovellus extends Application {
     @Override
     public void start(Stage Dungeon) {
 
-        GridPane screen = new GridPane();
-        screen.setPrefSize(WIDTH, HEIGHT);
-        screen.setHgap(0);
-        screen.setVgap(0);
-//        screen.setPadding(new Insets(5, 5, 5, 5));
-        screen.toBack();
-
+        initializeLayout();
+        
         Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        TextArea textArea = new TextArea();
-        textArea.setMinSize(200, 200);
-        textArea.setEditable(false);
-        textArea.setFocusTraversable(false);
-        textArea.setMouseTransparent(true);
-
-        TextArea statscreen = new TextArea();
-        statscreen.setMinSize(300, HEIGHT);
-        statscreen.setEditable(false);
-        statscreen.setFocusTraversable(false);
-        statscreen.setMouseTransparent(true);
-        Text hp = new Text("hp");
-        statscreen.appendText("aaa");
 
         int cameraMaxX = WIDTH / (2 * tileSize) + 1;
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
@@ -95,8 +82,8 @@ public class DungeonCrawlerSovellus extends Application {
         drawPlayer(gc);
         
         screen.add(canvas, 1, 1, 1, 1); //1,1
-        screen.add(textArea, 0, 0, 2, 1); //0,0
-        screen.add(statscreen, 0, 1, 1, 1);
+        initializeTextArea();
+        initializeStatScreen();
         Scene game = new Scene(screen, WIDTH + 300, HEIGHT + 200);
 
         game.setOnKeyPressed(event -> {
@@ -138,6 +125,7 @@ public class DungeonCrawlerSovellus extends Application {
             drawTiles(gc);
             drawGrid(gc);
             drawPlayer(gc);
+            initializeStatScreen();
 
         });
 
@@ -147,8 +135,46 @@ public class DungeonCrawlerSovellus extends Application {
         Dungeon.show();
 
     }
+    
+    private void initializeLayout() {
+        
+        //Layout of the game
+        screen = new GridPane();
+        screen.setPrefSize(WIDTH, HEIGHT);
+        screen.setHgap(0);
+        screen.setVgap(0);
+//        screen.setPadding(new Insets(5, 5, 5, 5));
+        
+    }
+    
+    private void initializeTextArea() {
+        
+        //TextArea (Only display)
+        textArea = new TextArea();
+        textArea.setMinSize(WIDTH * 5/4, HEIGHT / 4);
+        textArea.setEditable(false);
+        textArea.setFocusTraversable(false);
+        textArea.setMouseTransparent(true);
+        screen.add(textArea, 0, 0, 2, 1); //0,0
+        
+    }
+    
+    private void initializeStatScreen() {
+        
+        //Area for characters stats & such
+        statscreen = new TextArea();
+        statscreen.setMinSize(WIDTH / 4, HEIGHT);
+        statscreen.setEditable(false);
+        statscreen.setFocusTraversable(false);
+        statscreen.setMouseTransparent(true);
+        String hp = "hp: " + player.getCurrentHp() + " / " +player.getMaxHp();
+        statscreen.appendText(hp);
+        screen.add(statscreen, 0, 1, 1, 1);
+        
+    }
 
     private void drawGrid(GraphicsContext gc) {
+        
         gc.setStroke(Color.BLACK);
         for (int i = 0; i < map.getSize() + 1; i++) {
             gc.strokeLine(0, i * tileSize, map.getSize() * tileSize, i * tileSize);
@@ -160,11 +186,14 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     private void drawPlayer(GraphicsContext gc) {
+        
         gc.setFill(Color.BLACK);
         gc.fillRect(player.getX() * tileSize + (tileSize - playerSize) / 2, player.getY() * tileSize + (tileSize - playerSize) / 2, playerSize, playerSize);
+        
     }
 
     private void drawTiles(GraphicsContext gc) {
+        
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
                 if (map.getTile(x, y).isWall()) {

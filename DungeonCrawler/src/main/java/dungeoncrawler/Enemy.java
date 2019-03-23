@@ -5,6 +5,8 @@
  */
 package dungeoncrawler;
 
+import java.util.Random;
+
 /**
  *
  * @author jy
@@ -14,14 +16,17 @@ public class Enemy extends Character {
     private String name;
     private int aggressionRange;
     private Character target;
-    private int damage;
+    private int  minDamage;
+    private int maxDamage;
     private boolean attacked;
     private int lastDamageDealt;
+    private Random random = new Random();
     
-    public Enemy(String name, int x, int y, int hp, int damage, int aggressionRange, Character target) {
+    public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, Character target) {
         super(x, y, hp);
         this.name = name;
-        this.damage = damage;
+        this.minDamage = mindamage;
+        this.maxDamage = maxdamage;
         this.aggressionRange = aggressionRange;
         this.target = target;
         this.lastDamageDealt = 0;
@@ -31,7 +36,6 @@ public class Enemy extends Character {
     public void moveTowards(int x, int y) {
         int distanceX = Math.abs(x - this.getX());
         int distanceY = Math.abs(y - this.getY());
-        int closerDistance = Math.min(Math.abs(distanceX), Math.abs(distanceY));
         
         if(distanceY > distanceX) {
             if(y - this.getY() < 0) {
@@ -52,6 +56,7 @@ public class Enemy extends Character {
     }
     
     public void attack() {
+        int damage =  random.nextInt(maxDamage - minDamage) + minDamage;
         target.loseHp(damage);
         this.lastDamageDealt = damage;
         

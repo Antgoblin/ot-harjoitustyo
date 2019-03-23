@@ -50,9 +50,9 @@ public class DungeonCrawlerSovellus extends Application {
     private List<Enemy> enemies;
 
     public void init() {
-        map = new Map(mapSize);
 
-        player = new Player(5, 4, 100);
+        player = new Player(5, 4, 100, playerSize);
+        map = new Map(mapSize, tileSize, player);
 
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
@@ -70,17 +70,18 @@ public class DungeonCrawlerSovellus extends Application {
 
         initializeLayout();
         enemies = new ArrayList<>();
-        enemies.add(new Enemy("Rat",15,15,10,10,20,player));
+        enemies.add(new Enemy("Rat",15,15,10,5,10,20,player));
         
         Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        MapDrawer mapDrawer = new MapDrawer(map, gc);
 
         int cameraMaxX = WIDTH / (2 * tileSize) + 1;
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
 
-        drawTiles(gc);
-        drawGrid(gc);
-        drawPlayer(gc);
+        mapDrawer.drawTiles();
+        mapDrawer.drawGrid();
+        mapDrawer.drawPlayer();
         drawEnemies(gc);
         
         screen.add(canvas, 1, 1, 1, 1); //1,1
@@ -132,9 +133,9 @@ public class DungeonCrawlerSovellus extends Application {
                     textArea.appendText(enemy.getName() + " hit you for " + enemy.getDamageDealt() + " damage \n");                    
                 }
             });
-            drawTiles(gc);
-            drawGrid(gc);
-            drawPlayer(gc);
+            mapDrawer.drawTiles();
+            mapDrawer.drawGrid();
+            mapDrawer.drawPlayer();
             drawEnemies(gc);
             initializeStatScreen();
 
@@ -182,39 +183,6 @@ public class DungeonCrawlerSovellus extends Application {
         statscreen.appendText(hp);
         screen.add(statscreen, 0, 1, 1, 1);
         
-    }
-
-    private void drawGrid(GraphicsContext gc) {
-        
-        gc.setStroke(Color.BLACK);
-        for (int i = 0; i < map.getSize() + 1; i++) {
-            gc.strokeLine(0, i * tileSize, map.getSize() * tileSize, i * tileSize);
-        }
-        for (int j = 0; j < map.getSize() + 1; j++) {
-            gc.strokeLine(j * tileSize, 0, j * tileSize, map.getSize() * tileSize);
-        }
-
-    }
-
-    private void drawPlayer(GraphicsContext gc) {
-        
-        gc.setFill(Color.BLACK);
-        gc.fillRect(player.getX() * tileSize + (tileSize - playerSize) / 2, player.getY() * tileSize + (tileSize - playerSize) / 2, playerSize, playerSize);
-        
-    }
-
-    private void drawTiles(GraphicsContext gc) {
-        
-        for (int y = 0; y < map.getSize(); y++) {
-            for (int x = 0; x < map.getSize(); x++) {
-                if (map.getTile(x, y).isWall()) {
-                    gc.setFill(Color.BLACK);
-                } else {
-                    gc.setFill(Color.WHITE);
-                }
-                gc.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            }
-        }
     }
     
     private void drawEnemies(GraphicsContext gc) {

@@ -13,10 +13,14 @@ import javafx.scene.shape.Polygon;
  */
 public class Player extends Character {
     
-    public Player(int x, int y, int hp) {
+    private int Size;
+    
+    public Player(int x, int y, int hp, int size) {
         super(x, y, hp);
+        this.Size = size;
     }
-    
-    
-    
+
+    public int getSize() {
+        return this.Size;
+    }
 }

@@ -19,18 +19,21 @@ import javafx.scene.shape.Rectangle;
 public class Map {
     
 //    private List<Tile> tiles;
-    private Tile[][] tiles; 
+    private Tile[][] tiles;
     private int size;
+    private int tileSize;
+    private List<Enemy> enemies = new ArrayList<>();
+    private Player player;
     
-    public Map(int size) {
+    public Map(int size, int tileSize, Player player) {
         this.size = size;
+        this.tileSize = tileSize;
+        this.player = player;
         this.tiles = new Tile[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 tiles[x][y] = new Tile();
-            }
-//            tiles.add(new Tile(50 * (i % size), 50 * (i / size)));
-            
+            } 
         }
     }
     
@@ -45,6 +48,14 @@ public class Map {
     
     public int getSize() {
         return this.size;
+    }
+    
+    public int getTileSize() {
+        return this.tileSize;
+    }
+    
+    public Player getPlayer() {
+        return this.player;
     }
     
 //    public Boolean getSolid(double x, double y) {

@@ -22,12 +22,14 @@ public class Map {
     private Tile[][] tiles;
     private int size;
     private int tileSize;
+    private int creatureSize;
     private List<Enemy> enemies = new ArrayList<>();
     private Player player;
     
     public Map(int size, int tileSize, Player player) {
         this.size = size;
         this.tileSize = tileSize;
+        this.creatureSize = tileSize * 2/5;
         this.player = player;
         this.tiles = new Tile[size][size];
         for (int x = 0; x < size; x++) {
@@ -54,8 +56,20 @@ public class Map {
         return this.tileSize;
     }
     
+    public int getCreatureSize() {
+        return this.creatureSize;
+    }
+    
     public Player getPlayer() {
         return this.player;
+    }
+    
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+    
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
     
 //    public Boolean getSolid(double x, double y) {

@@ -36,7 +36,8 @@ public class DungeonCrawlerSovellus extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    
+    //Jotkin muuttujat täällä että niitä helppo muuttaa.
     public static int WIDTH = 950;   // 950?
     public static int HEIGHT = 750;   // 750?
     public static int tileSize = 40;
@@ -45,6 +46,8 @@ public class DungeonCrawlerSovellus extends Application {
     int mapSize = 100;
     private Player player;
     private GridPane screen;
+    private Canvas canvas;
+    private MapDrawer mapDrawer;
     private TextArea textArea;
     private TextArea statscreen;
     private List<Enemy> enemies;
@@ -69,12 +72,13 @@ public class DungeonCrawlerSovellus extends Application {
     public void start(Stage Dungeon) {
 
         initializeLayout();
+        initializeMapDrawer();
         enemies = new ArrayList<>();
-        enemies.add(new Enemy("Rat",15,15,10,5,10,20,player));
+        map.addEnemy(new Enemy("Rat",15,15,10,5,10,20,player));
         
-        Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        MapDrawer mapDrawer = new MapDrawer(map, gc);
+//        Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//        MapDrawer mapDrawer = new MapDrawer(map, gc);
 
         int cameraMaxX = WIDTH / (2 * tileSize) + 1;
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
@@ -82,9 +86,10 @@ public class DungeonCrawlerSovellus extends Application {
         mapDrawer.drawTiles();
         mapDrawer.drawGrid();
         mapDrawer.drawPlayer();
-        drawEnemies(gc);
+//        drawEnemies(gc);
+        mapDrawer.drawEnemies();
         
-        screen.add(canvas, 1, 1, 1, 1); //1,1
+//        screen.add(canvas, 1, 1, 1, 1); //1,1
         initializeTextArea();
         initializeStatScreen();
         Scene game = new Scene(screen, WIDTH + 300, HEIGHT + 200);
@@ -127,7 +132,7 @@ public class DungeonCrawlerSovellus extends Application {
             } else if (event.getCode() == KeyCode.SPACE) {
                 
             }
-            enemies.forEach(enemy -> {
+            map.getEnemies().forEach(enemy -> {
                 enemy.act();
                 if (enemy.getIfAttacked()) {
                     textArea.appendText(enemy.getName() + " hit you for " + enemy.getDamageDealt() + " damage \n");                    
@@ -136,7 +141,8 @@ public class DungeonCrawlerSovellus extends Application {
             mapDrawer.drawTiles();
             mapDrawer.drawGrid();
             mapDrawer.drawPlayer();
-            drawEnemies(gc);
+//            drawEnemies(gc);
+            mapDrawer.drawEnemies();
             initializeStatScreen();
 
         });
@@ -156,6 +162,15 @@ public class DungeonCrawlerSovellus extends Application {
         screen.setHgap(0);
         screen.setVgap(0);
 //        screen.setPadding(new Insets(5, 5, 5, 5));
+        
+    }
+    
+    private void initializeMapDrawer() {
+        
+        canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        mapDrawer = new MapDrawer(map, gc);
+        screen.add(canvas, 1, 1, 1, 1); //1,1
         
     }
     

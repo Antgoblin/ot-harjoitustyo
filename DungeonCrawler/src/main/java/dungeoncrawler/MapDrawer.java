@@ -52,10 +52,21 @@ public class MapDrawer {
     public void drawPlayer() {
         
         gc.setFill(Color.BLACK);
-        gc.fillRect(map.getPlayer().getX() * map.getTileSize() + (map.getTileSize() - map.getPlayer().getSize()) / 2,
-                map.getPlayer().getY() * map.getTileSize() + (map.getTileSize() - map.getPlayer().getSize()) / 2,
-                map.getPlayer().getSize(),
-                map.getPlayer().getSize());
+        gc.fillRect(map.getPlayer().getX() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                map.getPlayer().getY() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                map.getCreatureSize(),
+                map.getCreatureSize());
         
-    }    
+    }
+
+    public void drawEnemies() {
+        
+        map.getEnemies().forEach( enemy -> {
+            gc.fillOval(enemy.getX() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                    enemy.getY() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                    map.getCreatureSize(),
+                    map.getCreatureSize());
+        });
+        
+    }
 }

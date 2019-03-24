@@ -23,6 +23,13 @@ public class MapDrawer {
         
     }
     
+    public void drawAll() {
+        drawTiles();
+        drawGrid();
+        drawPlayer();
+        drawEnemies();
+    }
+    
     public void drawGrid() {
         
         gc.setStroke(Color.BLACK);

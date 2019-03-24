@@ -50,7 +50,6 @@ public class DungeonCrawlerSovellus extends Application {
     private MapDrawer mapDrawer;
     private TextArea textArea;
     private TextArea statscreen;
-    private List<Enemy> enemies;
 
     public void init() {
 
@@ -73,25 +72,16 @@ public class DungeonCrawlerSovellus extends Application {
 
         initializeLayout();
         initializeMapDrawer();
-        enemies = new ArrayList<>();
-        map.addEnemy(new Enemy("Rat",15,15,10,5,10,20,player));
-        
-//        Canvas canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
-//        GraphicsContext gc = canvas.getGraphicsContext2D();
-//        MapDrawer mapDrawer = new MapDrawer(map, gc);
-
-        int cameraMaxX = WIDTH / (2 * tileSize) + 1;
-        int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
-
-        mapDrawer.drawTiles();
-        mapDrawer.drawGrid();
-        mapDrawer.drawPlayer();
-//        drawEnemies(gc);
-        mapDrawer.drawEnemies();
-        
-//        screen.add(canvas, 1, 1, 1, 1); //1,1
         initializeTextArea();
         initializeStatScreen();
+        
+        map.addEnemy(new Enemy("Rat",15,15,10,5,10,20,player));
+        
+        int cameraMaxX = WIDTH / (2 * tileSize) + 1;
+        int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
+        
+        mapDrawer.drawAll();
+      
         Scene game = new Scene(screen, WIDTH + 300, HEIGHT + 200);
 
         game.setOnKeyPressed(event -> {
@@ -138,11 +128,7 @@ public class DungeonCrawlerSovellus extends Application {
                     textArea.appendText(enemy.getName() + " hit you for " + enemy.getDamageDealt() + " damage \n");                    
                 }
             });
-            mapDrawer.drawTiles();
-            mapDrawer.drawGrid();
-            mapDrawer.drawPlayer();
-//            drawEnemies(gc);
-            mapDrawer.drawEnemies();
+            mapDrawer.drawAll();
             initializeStatScreen();
 
         });
@@ -199,13 +185,4 @@ public class DungeonCrawlerSovellus extends Application {
         screen.add(statscreen, 0, 1, 1, 1);
         
     }
-    
-    private void drawEnemies(GraphicsContext gc) {
-        
-        enemies.forEach( enemy -> {
-            gc.fillOval(enemy.getX() * tileSize + (tileSize - playerSize) / 2, enemy.getY() * tileSize + (tileSize - playerSize) / 2, playerSize, playerSize);
-        });
-        
-    }
-
 }

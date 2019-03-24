@@ -18,8 +18,8 @@ public class Enemy extends Character {
     private Character target;
     private int  minDamage;
     private int maxDamage;
-    private boolean attacked;
-    private int lastDamageDealt;
+//    private boolean attacked;
+//    private int lastDamageDealt;
     private Random random = new Random();
     
     public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, Character target) {
@@ -29,8 +29,8 @@ public class Enemy extends Character {
         this.maxDamage = maxdamage;
         this.aggressionRange = aggressionRange;
         this.target = target;
-        this.lastDamageDealt = 0;
-        this.attacked = false;
+//        this.lastDamageDealt = 0;
+//        this.attacked = false;
     }
     
     public void moveTowards(int x, int y) {
@@ -58,7 +58,7 @@ public class Enemy extends Character {
     public void attack() {
         int damage =  random.nextInt(maxDamage - minDamage) + minDamage;
         target.loseHp(damage);
-        this.lastDamageDealt = damage;
+        this.attacked(damage);
         
     }
     
@@ -70,10 +70,9 @@ public class Enemy extends Character {
         
         if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
             moveTowards(target.getX(), target.getY());
-            this.attacked = false;
+            this.noAttack();
         } else if (fartherDistance == 1 && closerDistance == 0) {
             attack();
-            this.attacked = true;
         }
     }
     
@@ -81,12 +80,12 @@ public class Enemy extends Character {
         return name;
     }
     
-    public int getDamageDealt() {
-        return lastDamageDealt;
-    }
-    
-    public boolean getIfAttacked() {
-        return attacked;
-    }
+//    public int getDamageDealt() {
+//        return lastDamageDealt;
+//    }
+//    
+//    public boolean getIfAttacked() {
+//        return attacked;
+//    }
     
 }

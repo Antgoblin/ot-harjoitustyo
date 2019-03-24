@@ -16,18 +16,22 @@ import javafx.scene.shape.Rectangle;
  */
 public class Tile extends StackPane {
     
-    private Boolean solid;
+    private Tiletype type;
         
     public Tile() {
-        this.solid = false;
+        this.type = Tiletype.Void;
 
     }
   
     public void setWall() {
-        this.solid = true;
+        this.type = Tiletype.Wall;
     }
     
-    public Boolean isWall() {
-        return this.solid;
+    public void setType(Tiletype type) {
+        this.type = type;
+    }
+    
+    public Tiletype getType() {
+        return this.type;
     }
 }

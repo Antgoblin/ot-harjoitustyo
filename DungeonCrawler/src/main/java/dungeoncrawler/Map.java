@@ -68,8 +68,25 @@ public class Map {
         enemies.add(enemy);
     }
     
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+    
     public List<Enemy> getEnemies() {
         return enemies;
+    }
+    
+    public void createRoom(int TopLeftX, int TopLeftY, int BottomRightX, int BottomRightY) {
+        for( int x = TopLeftX; x <= BottomRightX; x++) {
+            for(int y = TopLeftY; y <= BottomRightY; y++) {
+                if(x == TopLeftX || x == BottomRightX || y == TopLeftY || y == BottomRightY) {
+                    getTile(x,y).setType(Tiletype.Wall);
+                } else {
+                    getTile(x,y).setType(Tiletype.Floor);
+                }
+            }
+        }
+        
     }
     
 //    public Boolean getSolid(double x, double y) {

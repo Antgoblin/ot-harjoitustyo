@@ -13,14 +13,34 @@ import javafx.scene.shape.Polygon;
  */
 public class Player extends Character {
     
-//    private int Size;
+    private Class playerClass;
+    private int Lvl;
+    private int exp;
+    private Weapon weapon;
     
-    public Player(int x, int y, int hp, int size) {
+    public Player(int x, int y, int hp) {
         super(x, y, hp);
-//        this.Size = size;
+        this.weapon = new Weapon("dagger", 2, 5);
+        this.playerClass = Class.Warrior;
+        this.Lvl = 1;
+        this.exp = 0;
     }
-
-//    public int getSize() {
-//        return this.Size;
-//    }
+    
+    public void attack(Character target) {
+        int damage = weapon.getDamage();
+        this.attacked(damage);
+        target.loseHp(damage);
+    }
+    
+    public Class getPlayerClass() {
+        return this.playerClass;
+    }
+    
+    public int getLvl() {
+        return this.Lvl;
+    }
+    
+    public int getExp() {
+        return this.exp;
+    }
 }

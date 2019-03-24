@@ -46,7 +46,7 @@ public class MapDrawer {
         
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
-                if (map.getTile(x, y).isWall()) {
+                if (map.getTile(x, y).getType() == Tiletype.Wall) {
                     gc.setFill(Color.BLACK);
                 } else {
                     gc.setFill(Color.WHITE);

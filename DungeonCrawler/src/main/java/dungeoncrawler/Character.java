@@ -13,22 +13,18 @@ import javafx.scene.shape.Polygon;
  */
 public class Character {
     
-    private int maxhp;
-    private int currenthp;
-    private Map map;
     private int x;
     private int y;
+    private int maxhp;
+    private int currenthp;
+    private boolean attacked;
+    private int lastDamageDealt;
     
     public Character(int x, int y, int hp) {
         this.maxhp = hp;
         this.currenthp = hp;
-        this.map = null;
         this.x = x;
         this.y = y;
-    }
-    
-    public void setOnMap(Map map) {
-        this.map = map;
     }
     
     public int getX() {
@@ -64,7 +60,31 @@ public class Character {
     }
     
     public void moveLeft() {
-        this.x -= 1;
-        
+        this.x -= 1;        
     }    
+    
+    public void attacked(int damage) {
+        this.attacked = true;
+        this.lastDamageDealt = damage;
+    }
+    
+    public void noAttack() {
+        this.attacked = false;
+    }
+    
+    public boolean getIfAttacked() {
+        return attacked;
+    }
+    
+    public int getLastDamage() {
+        return lastDamageDealt;
+    }
+    
+    public boolean checkIfDead() {
+        if (currenthp <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

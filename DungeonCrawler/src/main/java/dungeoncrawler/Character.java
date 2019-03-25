@@ -17,6 +17,7 @@ public class Character {
     private int y;
     private int maxhp;
     private int currenthp;
+    private boolean acted;
     private boolean moved;
     private boolean attacked;
     private int lastDamageDealt;
@@ -27,6 +28,7 @@ public class Character {
         this.x = x;
         this.y = y;
         this.moved = false;
+        this.acted = false;
     }
     
     public int getX() {
@@ -57,7 +59,19 @@ public class Character {
         this.x += dir.getX();
         this.y += dir.getY();
         this.moved = true;
-    }    
+    }
+    
+    public boolean ifActed() {
+        return this.acted;
+    }
+
+    public void acted() {
+        this.acted = true;
+    }
+    
+    public void didNotAct() {
+        this.acted = false;
+    }
     
     public void doNotMove() {
         this.moved = false;

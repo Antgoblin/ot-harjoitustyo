@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 
 /**
  *
@@ -45,7 +46,7 @@ public class DungeonCrawlerSovellus extends Application {
     private Map map;
     int mapSize = 100;
     private Player player;
-    private GridPane screen;
+    private GridPane grid;
     private Canvas canvas;
     private MapDrawer mapDrawer;
     private TextArea textArea;
@@ -61,10 +62,11 @@ public class DungeonCrawlerSovellus extends Application {
         map.createRoom(26, 3, 32, 21);
         map.createDoor(26, 6);
         map.createDoor(20, 6);
+
     }
 
     @Override
-    public void start(Stage Dungeon) {
+    public void start(Stage stage) {
 
         initializeLayout();
         initializeMapDrawer();
@@ -77,13 +79,13 @@ public class DungeonCrawlerSovellus extends Application {
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
 
         mapDrawer.drawAll();
-
-        Scene game = new Scene(screen, WIDTH + 300, HEIGHT + 200);
+        
+        Scene game = new Scene(grid, WIDTH + 300, HEIGHT + 200);
         
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
-                    mh.move(player, Direction.UP);
+                    mh.handle(player, Direction.UP);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
@@ -92,7 +94,7 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
                     
                 case DOWN:
-                    mh.move(player, Direction.DOWN);
+                    mh.handle(player, Direction.DOWN);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
@@ -101,7 +103,7 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
                     
                 case RIGHT:
-                    mh.move(player, Direction.RIGHT);
+                    mh.handle(player, Direction.RIGHT);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
@@ -110,38 +112,47 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
                     
                 case LEFT:
-                    mh.move(player, Direction.LEFT);
+                    mh.handle(player, Direction.LEFT);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);
                         }
                     }
                     break;
+                
+                case SPACE:
+                    player.acted();
+                    break;
                     
                 case C:
                     //Making player choose direction?
+                    textArea.appendText("Choose Direction \n");
+                    mh.setState(1);
+                    
                 default:
                     break;
 
             }
-            endTurn();
-            updateStatScreen();
+            if (player.ifActed()) {
+                endTurn();
+                updateStatScreen();               
+            }
         });
 
-        Dungeon.setTitle("DungeonCrawler");
-        Dungeon.setScene(game);
-        Dungeon.setResizable(false);
-        Dungeon.show();
+        stage.setTitle("DungeonCrawler");
+        stage.setScene(game);
+        stage.setResizable(false);
+        stage.show();
 
     }
 
     private void initializeLayout() {
 
         //Layout of the game
-        screen = new GridPane();
-        screen.setPrefSize(WIDTH, HEIGHT);
-        screen.setHgap(0);
-        screen.setVgap(0);
+        grid = new GridPane();
+        grid.setPrefSize(WIDTH, HEIGHT);
+        grid.setHgap(0);
+        grid.setVgap(0);
 //        screen.setPadding(new Insets(5, 5, 5, 5));
 
     }
@@ -151,7 +162,7 @@ public class DungeonCrawlerSovellus extends Application {
         canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         mapDrawer = new MapDrawer(map, gc);
-        screen.add(canvas, 1, 1, 1, 1); //1,1
+        grid.add(canvas, 1, 1, 1, 1); //1,1
 
     }
 
@@ -163,7 +174,7 @@ public class DungeonCrawlerSovellus extends Application {
         textArea.setEditable(false);
         textArea.setFocusTraversable(false);
         textArea.setMouseTransparent(true);
-        screen.add(textArea, 0, 0, 2, 1); //0,0
+        grid.add(textArea, 0, 0, 2, 1); //0,0
 
     }
 
@@ -175,7 +186,7 @@ public class DungeonCrawlerSovellus extends Application {
         statscreen.setEditable(false);
         statscreen.setFocusTraversable(false);
         statscreen.setMouseTransparent(true);
-        screen.add(statscreen, 0, 1, 1, 1);
+        grid.add(statscreen, 0, 1, 1, 1);
         updateStatScreen();
 
     }
@@ -238,6 +249,7 @@ public class DungeonCrawlerSovellus extends Application {
 
         player.noAttack();
         player.doNotMove();
+        player.didNotAct();
 
         //draws what happened
         mapDrawer.drawAll();

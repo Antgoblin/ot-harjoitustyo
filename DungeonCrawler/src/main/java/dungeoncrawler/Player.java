@@ -21,7 +21,7 @@ public class Player extends Character {
     
     public Player(int x, int y, int hp) {
         super(x, y, hp);
-        this.weapon = new Weapon("dagger", 2, 5);
+        this.weapon = new Weapon("dagger", 2, 5, 1);
         this.playerClass = Class.Warrior;
         this.Lvl = 1;
         this.exp = 0;
@@ -63,5 +63,13 @@ public class Player extends Character {
     
     public void loseGold(int amount) {
         this.gold -= amount;
+    }
+    
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
+    
+    public int getRange() {
+        return weapon.getRange();
     }
 }

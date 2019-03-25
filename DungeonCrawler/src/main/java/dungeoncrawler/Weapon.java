@@ -16,9 +16,10 @@ public class Weapon {
     private String name;
     private int minDamage;
     private int maxDamage;
+    private int range;
     private Random random = new Random();
     
-    public Weapon(String name, int min, int max) {
+    public Weapon(String name, int min, int max, int range) {
         this.name = name;
         this.minDamage = min;
         this.maxDamage = max;
@@ -31,6 +32,10 @@ public class Weapon {
     
     public String name() {
         return name;
+    }
+    
+    public int getRange() {
+        return range;
     }
     
 }

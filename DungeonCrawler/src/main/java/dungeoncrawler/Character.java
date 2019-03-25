@@ -73,6 +73,12 @@ public class Character {
         this.moved = true;          
     } 
     
+    public void move(Direction dir) {
+        this.x += dir.getX();
+        this.y += dir.getY();
+        this.moved = true;
+    }    
+    
     public void doNotMove() {
         this.moved = false;
     }

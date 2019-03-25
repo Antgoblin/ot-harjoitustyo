@@ -20,6 +20,30 @@ public class MovementHandler {
         this.map = map;
         this.textArea = textArea;
     }
+    
+    public void move(Player player, Direction dir) {
+        
+        //checks if enemies in way
+        map.getEnemies().forEach(enemy -> {
+            if (enemy.getX() == player.getX() + dir.getX() && enemy.getY() == player.getY() + dir.getY()) {
+                player.attack(enemy);
+                textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
+            }
+        });
+        
+        //checks what Tiletype
+        if (player.getIfAttacked() == false) {
+            Tile tile = map.getTile(player.getX() + dir.getX(), player.getY() + dir.getY());
+
+            if (tile.getType() == Tiletype.Floor) {
+                player.move(dir);
+                player.noAttack();
+            
+            } else if(tile.getType() == Tiletype.Door) {
+                tile.setType(Tiletype.Floor);
+            }
+        }
+    }
 
     public void moveUp(Player player) {
 

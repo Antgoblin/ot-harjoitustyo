@@ -18,19 +18,17 @@ public class Enemy extends Character {
     private Character target;
     private int  minDamage;
     private int maxDamage;
-//    private boolean attacked;
-//    private int lastDamageDealt;
+    private int exp;
     private Random random = new Random();
     
-    public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, Character target) {
+    public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
         super(x, y, hp);
         this.name = name;
         this.minDamage = mindamage;
         this.maxDamage = maxdamage;
         this.aggressionRange = aggressionRange;
+        this.exp = exp;
         this.target = target;
-//        this.lastDamageDealt = 0;
-//        this.attacked = false;
     }
     
     public void moveTowards(int x, int y) {
@@ -80,12 +78,8 @@ public class Enemy extends Character {
         return name;
     }
     
-//    public int getDamageDealt() {
-//        return lastDamageDealt;
-//    }
-//    
-//    public boolean getIfAttacked() {
-//        return attacked;
-//    }
-    
+    public int getExp() {
+        return exp;
+    }
+
 }

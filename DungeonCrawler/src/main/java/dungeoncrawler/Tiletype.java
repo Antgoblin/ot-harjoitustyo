@@ -10,6 +10,6 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Tiletype {
-    Void, Floor, Wall
+    Void, Floor, Wall, Door
     
 }

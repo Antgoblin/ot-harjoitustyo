@@ -17,6 +17,7 @@ public class Character {
     private int y;
     private int maxhp;
     private int currenthp;
+    private boolean moved;
     private boolean attacked;
     private int lastDamageDealt;
     
@@ -25,6 +26,7 @@ public class Character {
         this.currenthp = hp;
         this.x = x;
         this.y = y;
+        this.moved = false;
     }
     
     public int getX() {
@@ -43,25 +45,37 @@ public class Character {
         return this.currenthp;
     }
     
+    public void gainHp(int amount) {
+        this.currenthp += amount;
+    }
+    
     public void loseHp(int amount) {
         this.currenthp -= amount;
-    } 
+    }
     
     public void moveUp() {
-        this.y -= 1;        
+        this.y -= 1;
+        this.moved = true;
     }
     
     public void moveDown() {
         this.y += 1;
+        this.moved = true;
     }
     
     public void moveRight() {
         this.x += 1;
+        this.moved = true;
     }
     
     public void moveLeft() {
-        this.x -= 1;        
-    }    
+        this.x -= 1;
+        this.moved = true;          
+    } 
+    
+    public void doNotMove() {
+        this.moved = false;
+    }
     
     public void attacked(int damage) {
         this.attacked = true;
@@ -74,6 +88,10 @@ public class Character {
     
     public boolean getIfAttacked() {
         return attacked;
+    }
+    
+    public boolean getIfMoved() {
+        return moved;
     }
     
     public int getLastDamage() {

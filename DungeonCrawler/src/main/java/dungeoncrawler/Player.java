@@ -16,6 +16,7 @@ public class Player extends Character {
     private Class playerClass;
     private int Lvl;
     private int exp;
+    private int gold;
     private Weapon weapon;
     
     public Player(int x, int y, int hp) {
@@ -24,6 +25,7 @@ public class Player extends Character {
         this.playerClass = Class.Warrior;
         this.Lvl = 1;
         this.exp = 0;
+        this.gold = 0;
     }
     
     public void attack(Character target) {
@@ -42,5 +44,24 @@ public class Player extends Character {
     
     public int getExp() {
         return this.exp;
+    }
+    
+    public void gainExp(int amount) {
+        this.exp += amount;
+    }
+    public void loseExp(int amount) {
+        this.exp -= amount;
+    }
+    
+    public int getGold() {
+        return this.gold;
+    }
+    
+    public void gainGold(int amount) {
+        this.gold += amount;
+    }
+    
+    public void loseGold(int amount) {
+        this.gold -= amount;
     }
 }

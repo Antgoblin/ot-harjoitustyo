@@ -85,8 +85,11 @@ public class Map {
                     getTile(x,y).setType(Tiletype.Floor);
                 }
             }
-        }
-        
+        }        
+    }
+    
+    public void createDoor(int x, int y) {
+        getTile(x,y).setType(Tiletype.Door);
     }
     
 //    public Boolean getSolid(double x, double y) {

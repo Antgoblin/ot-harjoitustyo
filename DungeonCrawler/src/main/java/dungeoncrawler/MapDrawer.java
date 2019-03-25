@@ -48,6 +48,8 @@ public class MapDrawer {
             for (int x = 0; x < map.getSize(); x++) {
                 if (map.getTile(x, y).getType() == Tiletype.Wall) {
                     gc.setFill(Color.BLACK);
+                } else if (map.getTile(x, y).getType() == Tiletype.Door){
+                    gc.setFill(Color.SIENNA);
                 } else {
                     gc.setFill(Color.WHITE);
                 }

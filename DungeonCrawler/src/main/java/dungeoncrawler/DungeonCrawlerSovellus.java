@@ -57,16 +57,10 @@ public class DungeonCrawlerSovellus extends Application {
         map = new Map(mapSize, tileSize, player);
         
         map.createRoom(1, 1, 20, 16);
-
-//        for (int y = 0; y < map.getSize(); y++) {
-//            for (int x = 0; x < map.getSize(); x++) {
-//                Tile tile = map.getTile(x, y);
-//
-//                if (x == 1 || y == 1 || x == 17 || y == 17) {
-//                    tile.setWall();
-//                }
-//            }
-//        }
+        map.createRoom(20, 5, 26, 7);
+        map.createRoom(26, 3, 32, 21);
+        map.createDoor(26, 6);
+        map.createDoor(20, 6);
     }
 
     @Override
@@ -76,8 +70,8 @@ public class DungeonCrawlerSovellus extends Application {
         initializeMapDrawer();
         initializeTextArea();
         initializeStatScreen();
-
-        map.addEnemy(new Enemy("Rat", 15, 15, 10, 5, 10, 20, player));
+        MovementHandler mh = new MovementHandler(map, textArea);
+        map.addEnemy(new Enemy("Rat", 15, 15, 10, 5, 10, 20, 10, player));
 
         int cameraMaxX = WIDTH / (2 * tileSize) + 1;
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
@@ -88,83 +82,45 @@ public class DungeonCrawlerSovellus extends Application {
 
         game.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.UP) {
-                if (map.getTile(player.getX(), player.getY() - 1).getType() != Tiletype.Wall) {
-                    map.getEnemies().forEach(enemy -> {
-                        if (enemy.getX() == player.getX() && enemy.getY() == player.getY() - 1) {
-                            player.attack(enemy);
-                            textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
-
-                        }
-                    });
-                    if (player.getIfAttacked() == false) {
-                        player.moveUp();
+                mh.moveUp(player);
+                    if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
                         }
                         
                     }
-                }
 
             } else if (event.getCode() == KeyCode.DOWN) {
-                if (map.getTile(player.getX(), player.getY() + 1).getType() != Tiletype.Wall) {
-                    map.getEnemies().forEach(enemy -> {
-                        if (enemy.getX() == player.getX() && enemy.getY() == player.getY() + 1) {
-                            player.attack(enemy);
-                            textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
-
-                        }
-                    });
-                    if (player.getIfAttacked() == false) {
-                        player.moveDown();
+                mh.moveDown(player);
+                    if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
                         }
                         
                     }
 
-                }
-
             } else if (event.getCode() == KeyCode.RIGHT) {
-                if (map.getTile(player.getX() + 1, player.getY()).getType() != Tiletype.Wall) {
-                    map.getEnemies().forEach(enemy -> {
-                        if (enemy.getX() == player.getX() + 1 && enemy.getY() == player.getY()) {
-                            player.attack(enemy);
-                            textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
-
-                        }
-                    });
-                    if (player.getIfAttacked() == false) {
-                        player.moveRight();
+                mh.moveRight(player);
+                    if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
                         }                        
                     }
 
-                }
 
             } else if (event.getCode() == KeyCode.LEFT) {
-                if (map.getTile(player.getX() - 1, player.getY()).getType() != Tiletype.Wall) {
-                    map.getEnemies().forEach(enemy -> {
-                        if (enemy.getX() == player.getX() - 1 && enemy.getY() == player.getY()) {
-                            player.attack(enemy);
-                            textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
-
-                        }
-                    });
-                    if (player.getIfAttacked() == false) {
-                        player.moveLeft();
+                mh.moveLeft(player);
+                    if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);
                         }                        
                     } 
-                }
                 
             } else if (event.getCode() == KeyCode.SPACE) {
 
             }
             endTurn();
             updateStatScreen();
-//            initializeStatScreen(); 
 
         });
 
@@ -222,13 +178,12 @@ public class DungeonCrawlerSovellus extends Application {
     
     private void updateStatScreen() {
         statscreen.setText(player.getPlayerClass() +"   Lvl:"+player.getLvl() + "\n" +
+                "Exp( " + player.getExp() + " )    Gold( "+player.getGold()+" )\n" +
                 "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n" 
         );
     }
 
     private void endTurn() {
-        
-        player.noAttack();
         
         //checks if there are dead enemies
         List<Enemy> deadEnemies = new ArrayList<>();
@@ -241,7 +196,8 @@ public class DungeonCrawlerSovellus extends Application {
         //deletes dead enemies
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
-                textArea.appendText("You killed " + dead.getName() +"\n");
+                textArea.appendText("You killed " + dead.getName() +" \n");
+                player.gainExp(dead.getExp());
                 map.removeEnemy(dead);
             });
             
@@ -275,6 +231,9 @@ public class DungeonCrawlerSovellus extends Application {
             });
             
         }
+        
+        player.noAttack();
+        player.doNotMove();
         
         //draws what happened
         mapDrawer.drawAll();

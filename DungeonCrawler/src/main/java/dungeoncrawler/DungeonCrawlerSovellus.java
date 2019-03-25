@@ -55,7 +55,7 @@ public class DungeonCrawlerSovellus extends Application {
 
         player = new Player(5, 4, 100);
         map = new Map(mapSize, tileSize, player);
-        
+
         map.createRoom(1, 1, 20, 16);
         map.createRoom(20, 5, 26, 7);
         map.createRoom(26, 3, 32, 21);
@@ -79,47 +79,53 @@ public class DungeonCrawlerSovellus extends Application {
         mapDrawer.drawAll();
 
         Scene game = new Scene(screen, WIDTH + 300, HEIGHT + 200);
-
+        
         game.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.UP) {
-                mh.move(player, Direction.UP);
+            switch (event.getCode()) {
+                case UP:
+                    mh.move(player, Direction.UP);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
                         }
                     }
-
-            } else if (event.getCode() == KeyCode.DOWN) {
-                mh.move(player, Direction.DOWN);
+                    break;
+                    
+                case DOWN:
+                    mh.move(player, Direction.DOWN);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
-                        }                        
+                        }
                     }
-
-            } else if (event.getCode() == KeyCode.RIGHT) {
-                mh.move(player, Direction.RIGHT);
+                    break;
+                    
+                case RIGHT:
+                    mh.move(player, Direction.RIGHT);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
-                        }                        
+                        }
                     }
-
-
-            } else if (event.getCode() == KeyCode.LEFT) {
-                mh.move(player, Direction.LEFT);
+                    break;
+                    
+                case LEFT:
+                    mh.move(player, Direction.LEFT);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);
-                        }                        
-                    } 
-                
-            } else if (event.getCode() == KeyCode.SPACE) {
+                        }
+                    }
+                    break;
+                    
+                case C:
+                    //Making player choose direction?
+                default:
+                    break;
 
             }
             endTurn();
             updateStatScreen();
-
         });
 
         Dungeon.setTitle("DungeonCrawler");
@@ -162,7 +168,7 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     private void initializeStatScreen() {
-        
+
         //Area for characters stats & such
         statscreen = new TextArea();
         statscreen.setMinSize(WIDTH / 4, HEIGHT);
@@ -173,16 +179,16 @@ public class DungeonCrawlerSovellus extends Application {
         updateStatScreen();
 
     }
-    
+
     private void updateStatScreen() {
-        statscreen.setText(player.getPlayerClass() +"   Lvl:"+player.getLvl() + "\n" +
-                "Exp( " + player.getExp() + " )    Gold( "+player.getGold()+" )\n" +
-                "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n" 
+        statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
+                + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
+                + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n"
         );
     }
 
     private void endTurn() {
-        
+
         //checks if there are dead enemies
         List<Enemy> deadEnemies = new ArrayList<>();
         map.getEnemies().forEach(enemy -> {
@@ -190,17 +196,17 @@ public class DungeonCrawlerSovellus extends Application {
                 deadEnemies.add(enemy);
             }
         });
-        
+
         //deletes dead enemies
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
-                textArea.appendText("You killed " + dead.getName() +" \n");
+                textArea.appendText("You killed " + dead.getName() + " \n");
                 player.gainExp(dead.getExp());
                 map.removeEnemy(dead);
             });
-            
+
         }
-        
+
         //Enemies turn
         map.getEnemies().forEach(enemy -> {
             enemy.noAttack();
@@ -212,7 +218,7 @@ public class DungeonCrawlerSovellus extends Application {
         if (player.checkIfDead()) {
             textArea.appendText("You died \n");
         }
-        
+
         //checks if there are dead enemies again (if enemies kill each other)
         deadEnemies.clear();
         map.getEnemies().forEach(enemy -> {
@@ -220,19 +226,19 @@ public class DungeonCrawlerSovellus extends Application {
                 deadEnemies.add(enemy);
             }
         });
-        
+
         //deletes dead enemies
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
-                textArea.appendText(dead.getName() +" died \n");
+                textArea.appendText(dead.getName() + " died \n");
                 map.removeEnemy(dead);
             });
-            
+
         }
-        
+
         player.noAttack();
         player.doNotMove();
-        
+
         //draws what happened
         mapDrawer.drawAll();
 

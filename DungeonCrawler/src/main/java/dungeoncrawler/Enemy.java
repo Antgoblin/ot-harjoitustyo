@@ -37,16 +37,16 @@ public class Enemy extends Character {
         
         if(distanceY > distanceX) {
             if(y - this.getY() < 0) {
-                this.moveUp();
+                this.move(Direction.UP);
             } else {
-                this.moveDown();
+                this.move(Direction.DOWN);
             }
             
         } else if (distanceX >= distanceY) {
             if(x - this.getX() > 0) {
-                this.moveRight();
+                this.move(Direction.RIGHT);
             } else {
-                this.moveLeft();
+                this.move(Direction.LEFT);
             }
         }
         

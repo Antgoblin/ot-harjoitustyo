@@ -22,7 +22,6 @@ public class MovementHandler {
     }
     
     public void move(Player player, Direction dir) {
-        
         //checks if enemies in way
         map.getEnemies().forEach(enemy -> {
             if (enemy.getX() == player.getX() + dir.getX() && enemy.getY() == player.getY() + dir.getY()) {

@@ -51,26 +51,6 @@ public class Character {
     
     public void loseHp(int amount) {
         this.currenthp -= amount;
-    }
-    
-    public void moveUp() {
-        this.y -= 1;
-        this.moved = true;
-    }
-    
-    public void moveDown() {
-        this.y += 1;
-        this.moved = true;
-    }
-    
-    public void moveRight() {
-        this.x += 1;
-        this.moved = true;
-    }
-    
-    public void moveLeft() {
-        this.x -= 1;
-        this.moved = true;          
     } 
     
     public void move(Direction dir) {

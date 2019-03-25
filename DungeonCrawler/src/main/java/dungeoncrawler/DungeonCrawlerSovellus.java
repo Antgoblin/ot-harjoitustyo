@@ -83,27 +83,22 @@ public class DungeonCrawlerSovellus extends Application {
         game.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.UP) {
                 mh.move(player, Direction.UP);
-//                mh.moveUp(player);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
                         }
-                        
                     }
 
             } else if (event.getCode() == KeyCode.DOWN) {
                 mh.move(player, Direction.DOWN);
-//                mh.moveDown(player);
                     if (player.getIfMoved() == true) {
                         if (player.getY() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
-                        }
-                        
+                        }                        
                     }
 
             } else if (event.getCode() == KeyCode.RIGHT) {
                 mh.move(player, Direction.RIGHT);
-//                mh.moveRight(player);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
@@ -113,7 +108,6 @@ public class DungeonCrawlerSovellus extends Application {
 
             } else if (event.getCode() == KeyCode.LEFT) {
                 mh.move(player, Direction.LEFT);
-//                mh.moveLeft(player);
                     if (player.getIfMoved() == true) {
                         if (player.getX() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);

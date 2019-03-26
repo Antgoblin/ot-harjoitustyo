@@ -8,5 +8,4 @@
 
 [komentorivi.txt](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
-(Testi muokkaus)
-(Testi muokkaus numero 2)
+[määrittelydokumentti.txt](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/vaatimusm%C3%A4%C3%A4rittely.txt)

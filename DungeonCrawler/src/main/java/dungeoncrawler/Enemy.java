@@ -75,15 +75,19 @@ public class Enemy extends Character {
     }
     
     public String getName() {
-        return name;
+        return this.name;
     }
     
     public int getExp() {
-        return exp;
+        return this.exp;
     }
     
     public Character getTarget() {
-        return target;
+        return this.target;
+    }
+    
+    public int aggressionRange() {
+        return this.aggressionRange;
     }
 
 }

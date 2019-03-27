@@ -56,53 +56,63 @@ public class MovementHandler {
                 tile.setType(Tiletype.OpenDoor);
             }
         }
-        player.acted();
+        player.acted(true);
     }
     
     public void move(Enemy enemy) {
-        Direction dir = chooseDirection(enemy);
-        Tile tile = map.getTile(enemy.X() + dir.X(), enemy.Y() + dir.Y());
         
-        if(enemy.getTarget().X() == enemy.X() + dir.X() && enemy.getTarget().Y() == enemy.Y() + dir.Y()) {
-            enemy.attack();
-        }
-        
-        if (enemy.getIfAttacked() == false) {
-            
-            if (tile.occupied()) {
-                
-            } else if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor) {
-                enemy.move(map, dir);
-                enemy.noAttack();
-
-//            } else if (tile.getType() == Tiletype.Door) {
-//                tile.setType(Tiletype.OpenDoor);
-            }
-        }
-        enemy.acted();
-        
-        
-    }
-
-    public Direction chooseDirection(Enemy enemy) {
-        //IMPORTANT!
         int DistanceX = enemy.getTarget().X() - enemy.X();
         int DistanceY = enemy.getTarget().Y() - enemy.Y();
-        int closer = Math.min(Math.abs(DistanceX),Math.abs(DistanceY));
-        Direction dir = null;
+        //Jos target vieressä iskee
+        if(Math.abs(DistanceX) + Math.abs(DistanceY) == 1) {
+            enemy.attack();
         
-        if (closer == Math.abs(DistanceX) && DistanceY < 0) {
-            dir = Direction.UP;
-        } else if (closer == Math.abs(DistanceX) && DistanceY > 0) {
-            dir = Direction.DOWN;
-        } else if (closer == Math.abs(DistanceY) && DistanceX > 0) {
-            dir = Direction.RIGHT;
-        } else if (closer == Math.abs(DistanceY) && DistanceX < 0) {
-            dir = Direction.LEFT;
-        }  
-        
-        return dir;
-    }
+        //Jos target aggressionrangessa liikkuu päin
+        } else if (Math.max(Math.abs(DistanceY), Math.abs(DistanceX)) <= enemy.aggressionRange()){
+            Direction UPorDOWN = null;
+            Direction RIGHTorLEFT = null;
+            Tile UoD = null;
+            Tile RoL = null;
+                   
+            //Onko target ylä- vai alapuolella?
+            if (DistanceY > 0) {
+                UPorDOWN = Direction.DOWN;
+                UoD = map.getTile(enemy.X(), enemy.Y() +1);
+            } else {
+                UPorDOWN = Direction.UP;
+                UoD = map.getTile(enemy.X(), enemy.Y() -1);
+            }
+            //Onko target oikealla vai vasemmalla?
+            if (DistanceX > 0) {
+                RIGHTorLEFT = Direction.RIGHT;
+                RoL = map.getTile(enemy.X() +1, enemy.Y());
+            } else {
+                RIGHTorLEFT = Direction.LEFT;
+                RoL = map.getTile(enemy.X() -1, enemy.Y());
+            }
+            
+            //Liikkuu suuntaan jossa kohde on kauempana, paitsi jos siinä suunnassa on este
+            if (Math.abs(DistanceY) > Math.abs(DistanceX)) {
+                if (UoD.occupied() || UoD.getType() == Tiletype.Wall || UoD.getType() == Tiletype.Door) {
+                    if (!RoL.occupied() && RoL.getType() != Tiletype.Wall && RoL.getType() != Tiletype.Door) {
+                        enemy.move(map, RIGHTorLEFT); 
+                    }
+                } else {
+                    enemy.move(map, UPorDOWN);                    
+                }         
+            } else {
+                if (RoL.occupied() || RoL.getType() == Tiletype.Wall || RoL.getType() == Tiletype.Door) {
+                    if (!UoD.occupied() && UoD.getType() != Tiletype.Wall && UoD.getType() != Tiletype.Door) {
+                        enemy.move(map, UPorDOWN);
+                    }
+                } else {
+                    enemy.move(map, RIGHTorLEFT);
+                }
+            }
+        } else {
+            
+        }
+    }    
 
     public void closeDoor(Player player, Direction dir) {
 
@@ -113,7 +123,7 @@ public class MovementHandler {
                 tile.setType(Tiletype.Door);
                 textArea.appendText("You closed the door \n");
                 player.noAttack();
-                player.acted();
+                player.acted(true);
                 break;
 
             case Door:

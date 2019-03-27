@@ -87,7 +87,7 @@ public class DungeonCrawlerSovellus extends Application {
             switch (event.getCode()) {
                 case UP:
                     mh.handle(player, Direction.UP);
-                    if (player.getIfMoved() == true) {
+                    if (player.IfMoved()) {
                         if (player.Y() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
                         }
@@ -96,7 +96,7 @@ public class DungeonCrawlerSovellus extends Application {
                     
                 case DOWN:
                     mh.handle(player, Direction.DOWN);
-                    if (player.getIfMoved() == true) {
+                    if (player.IfMoved()) {
                         if (player.Y() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
                         }
@@ -105,7 +105,7 @@ public class DungeonCrawlerSovellus extends Application {
                     
                 case RIGHT:
                     mh.handle(player, Direction.RIGHT);
-                    if (player.getIfMoved() == true) {
+                    if (player.IfMoved()) {
                         if (player.X() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
                         }
@@ -114,7 +114,7 @@ public class DungeonCrawlerSovellus extends Application {
                     
                 case LEFT:
                     mh.handle(player, Direction.LEFT);
-                    if (player.getIfMoved() == true) {
+                    if (player.IfMoved()) {
                         if (player.X() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);
                         }
@@ -122,7 +122,7 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
                 
                 case SPACE:
-                    player.acted();
+                    player.acted(true);
                     break;
                     
                 case C:
@@ -248,8 +248,8 @@ public class DungeonCrawlerSovellus extends Application {
         }
 
         player.noAttack();
-        player.doNotMove();
-        player.didNotAct();
+        player.moved(false);
+        player.acted(false);
 
         //draws what happened
         mapDrawer.drawAll();

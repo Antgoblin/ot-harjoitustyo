@@ -72,16 +72,12 @@ public class Character {
         return this.acted;
     }
 
-    public void acted() {
-        this.acted = true;
+    public void acted(boolean status) {
+        this.acted = status;
     }
     
-    public void didNotAct() {
-        this.acted = false;
-    }
-    
-    public void doNotMove() {
-        this.moved = false;
+    public void moved(boolean status) {
+        this.moved = status;
     }
     
     public void attacked(int damage) {
@@ -97,7 +93,7 @@ public class Character {
         return attacked;
     }
     
-    public boolean getIfMoved() {
+    public boolean IfMoved() {
         return moved;
     }
     

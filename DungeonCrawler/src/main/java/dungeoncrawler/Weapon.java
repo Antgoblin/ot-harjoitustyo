@@ -27,7 +27,7 @@ public class Weapon {
     }
     
     public int getDamage() {
-        int damage =  random.nextInt(maxDamage - minDamage) + minDamage;
+        int damage =  random.nextInt(maxDamage - minDamage +1) + minDamage;
         return damage;
     }
     

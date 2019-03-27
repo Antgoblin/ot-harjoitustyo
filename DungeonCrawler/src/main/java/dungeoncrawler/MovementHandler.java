@@ -45,6 +45,8 @@ public class MovementHandler {
 //            move(player, dir);
 //        } else if (state == 1) {
 //            closeDoor(player, dir);
+//        } else if (state == 2) {
+//            shoot(player, dir);
 //        }
     }
 

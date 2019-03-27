@@ -60,6 +60,13 @@ public class Map {
         return this.creatureSize;
     }
     
+    public void setplayer(Player player) {
+        this.player = player;
+        enemies.forEach(enemy -> {
+            enemy.setTarget(player);
+        });
+    }
+    
     public Player getPlayer() {
         return this.player;
     }

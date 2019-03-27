@@ -82,6 +82,10 @@ public class Enemy extends Character {
         return this.target;
     }
     
+    public void setTarget(Character character) {
+        this.target = character;
+    }
+    
     public int aggressionRange() {
         return this.aggressionRange;
     }

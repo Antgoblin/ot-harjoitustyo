@@ -54,81 +54,120 @@ public class DungeonCrawlerSovellus extends Application {
     private MovementHandler mh;
 
     public void init() {
-
-        player = new Player(5, 5, 100);
+//
+        player = new Player(5, 5, 100, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
-
+////
         map.createRoom(1, 1, 20, 16);
         map.createRoom(20, 5, 26, 7);
         map.createRoom(26, 3, 32, 21);
         map.createDoor(26, 6);
         map.createDoor(20, 6);
-
+//
     }
 
     @Override
     public void start(Stage stage) {
 
+        //Character creation scene
+        Pane pane = new Pane();
+        Scene charactercreation = new Scene(pane, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+
+        //Game Scene
         initializeLayout();
         initializeMapDrawer();
         initializeTextArea();
         initializeStatScreen();
         mh = new MovementHandler(map, textArea);
-        map.addEnemy(EnemyList.RAT.spawn(5, 15, player));
-
+        Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+        map.addEnemy(EnemyList.RAT.spawn(3, 15, player));
         mapDrawer.drawAll();
-        
-        Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 -10);
-        
+
+        charactercreation.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case W:
+                    player = new Player(5, 5, 100, Class.Warrior);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
+
+                    break;
+                case R:
+                    player = new Player(5, 5, 100, Class.Ranger);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
+                    break;
+                case M:
+                    player = new Player(5, 5, 100, Class.Mage);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
+                    break;
+                default:
+                    break;
+
+            }
+        });
+
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
                     mh.handle(player, Direction.UP);
                     break;
-                    
+
                 case DOWN:
                     mh.handle(player, Direction.DOWN);
                     break;
-                    
+
                 case RIGHT:
                     mh.handle(player, Direction.RIGHT);
                     break;
-                    
+
                 case LEFT:
                     mh.handle(player, Direction.LEFT);
                     break;
-                
+
                 case SPACE:
                     player.acted(true);
                     break;
-                    
+
                 case C:
                     textArea.appendText("Choose Direction \n");
                     mh.setState(1);
                     break;
-                
+
                 case S:
-                    if(player.getRange() > 1) {
+                    if (player.getRange() > 1) {
                         textArea.appendText("Choose Direction \n");
                         mh.setState(2);
                     } else {
                         textArea.appendText("You dont have anything to shoot with \n");
                     }
                     break;
+
+                case Q:
+                    if (map.getEnemies().isEmpty()) {
+                        map.addEnemy(EnemyList.RAT.spawn(3, 15, player));
+                    }
+                    player.acted(true);
+                    break;
                     
+                case TAB:
+                    player.Switch();
                 default:
                     break;
 
             }
             updateCamera();
+            updateStatScreen();
             if (player.ifActed()) {
                 endTurn();
-                updateStatScreen();               
             }
         });
 
         stage.setTitle("DungeonCrawler");
-        stage.setScene(game);
+        stage.setScene(charactercreation);
         stage.setResizable(false);
         stage.show();
 
@@ -166,17 +205,17 @@ public class DungeonCrawlerSovellus extends Application {
         grid.add(textArea, 0, 0, 2, 1); //0,0
 
     }
-    
+
     public void updateCamera() {
-        int x = player.X()*tileSize - 11*tileSize;
-        if(x < 0) {
+        int x = player.X() * tileSize - 11 * tileSize;
+        if (x < 0) {
             x = 0;
         }
-        int y = player.Y()*tileSize - 9*tileSize;
-        if(y < 0) {
+        int y = player.Y() * tileSize - 9 * tileSize;
+        if (y < 0) {
             y = 0;
         }
-        
+
         canvas.setTranslateX(-x);
         canvas.setTranslateY(-y);
     }
@@ -197,8 +236,15 @@ public class DungeonCrawlerSovellus extends Application {
     private void updateStatScreen() {
         statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
                 + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
-                + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n"
+                + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n \n"
+                + "Weapon1 : " + player.getWeapon().name() + "\n"
         );
+
+        if (player.getWeapon2() != null) {
+            statscreen.appendText("Weapon2 : " + player.getWeapon2().name());
+        } else {
+            statscreen.appendText("Weapon2 : -" );
+        }
     }
 
     private void endTurn() {
@@ -216,6 +262,7 @@ public class DungeonCrawlerSovellus extends Application {
             deadEnemies.forEach(dead -> {
                 textArea.appendText("You killed " + dead.getName() + " \n");
                 player.gainExp(dead.getExp());
+                map.getTile(dead.X(), dead.Y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 
@@ -245,6 +292,7 @@ public class DungeonCrawlerSovellus extends Application {
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
                 textArea.appendText(dead.getName() + " died \n");
+                map.getTile(dead.X(), dead.Y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 

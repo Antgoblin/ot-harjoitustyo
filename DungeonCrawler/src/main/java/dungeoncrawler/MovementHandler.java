@@ -38,7 +38,7 @@ public class MovementHandler {
     public void move(Player player, Direction dir) {
         //checks if enemies in way
         map.getEnemies().forEach(enemy -> {
-            if (enemy.getX() == player.getX() + dir.getX() && enemy.getY() == player.getY() + dir.getY()) {
+            if (enemy.X() == player.X() + dir.X() && enemy.Y() == player.Y() + dir.Y()) {
                 player.attack(enemy);
                 textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
             }
@@ -46,10 +46,10 @@ public class MovementHandler {
 
         //checks what Tiletype
         if (player.getIfAttacked() == false) {
-            Tile tile = map.getTile(player.getX() + dir.getX(), player.getY() + dir.getY());
-
+            Tile tile = map.getTile(player.X() + dir.X(), player.Y() + dir.Y());
+            
             if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor) {
-                player.move(dir);
+                player.move(map, dir);
                 player.noAttack();
 
             } else if (tile.getType() == Tiletype.Door) {
@@ -58,21 +58,72 @@ public class MovementHandler {
         }
         player.acted();
     }
+    
+    public void move(Enemy enemy) {
+        Direction dir = chooseDirection(enemy);
+        Tile tile = map.getTile(enemy.X() + dir.X(), enemy.Y() + dir.Y());
+        
+        if(enemy.getTarget().X() == enemy.X() + dir.X() && enemy.getTarget().Y() == enemy.Y() + dir.Y()) {
+            enemy.attack();
+        }
+        
+        if (enemy.getIfAttacked() == false) {
+            
+            if (tile.occupied()) {
+                
+            } else if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor) {
+                enemy.move(map, dir);
+                enemy.noAttack();
+
+//            } else if (tile.getType() == Tiletype.Door) {
+//                tile.setType(Tiletype.OpenDoor);
+            }
+        }
+        enemy.acted();
+        
+        
+    }
+
+    public Direction chooseDirection(Enemy enemy) {
+        //IMPORTANT!
+        int DistanceX = enemy.getTarget().X() - enemy.X();
+        int DistanceY = enemy.getTarget().Y() - enemy.Y();
+        int closer = Math.min(Math.abs(DistanceX),Math.abs(DistanceY));
+        Direction dir = null;
+        
+        if (closer == Math.abs(DistanceX) && DistanceY < 0) {
+            dir = Direction.UP;
+        } else if (closer == Math.abs(DistanceX) && DistanceY > 0) {
+            dir = Direction.DOWN;
+        } else if (closer == Math.abs(DistanceY) && DistanceX > 0) {
+            dir = Direction.RIGHT;
+        } else if (closer == Math.abs(DistanceY) && DistanceX < 0) {
+            dir = Direction.LEFT;
+        }  
+        
+        return dir;
+    }
 
     public void closeDoor(Player player, Direction dir) {
 
-        Tile tile = map.getTile(player.getX() + dir.getX(), player.getY() + dir.getY());
+        Tile tile = map.getTile(player.X() + dir.X(), player.Y() + dir.Y());
 
-        if (tile.getType() == Tiletype.OpenDoor) {
-            tile.setType(Tiletype.Door);
-            textArea.appendText("You closed the door \n");
-            player.noAttack();
-        } else if (tile.getType() == Tiletype.Door) {
-            textArea.appendText("The door is already closed \n");
-        } else {
-            textArea.appendText("There is no door there \n");
+        switch (tile.getType()) {
+            case OpenDoor:
+                tile.setType(Tiletype.Door);
+                textArea.appendText("You closed the door \n");
+                player.noAttack();
+                player.acted();
+                break;
+
+            case Door:
+                textArea.appendText("The door is already closed \n");
+                break;
+
+            default:
+                textArea.appendText("There is no door there \n");
+                break;
         }
         this.state = 0;
-        player.acted();
     }
 }

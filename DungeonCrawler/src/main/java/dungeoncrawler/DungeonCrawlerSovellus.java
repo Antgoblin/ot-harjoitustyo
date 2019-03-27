@@ -51,6 +51,7 @@ public class DungeonCrawlerSovellus extends Application {
     private MapDrawer mapDrawer;
     private TextArea textArea;
     private TextArea statscreen;
+    private MovementHandler mh;
 
     public void init() {
 
@@ -72,8 +73,8 @@ public class DungeonCrawlerSovellus extends Application {
         initializeMapDrawer();
         initializeTextArea();
         initializeStatScreen();
-        MovementHandler mh = new MovementHandler(map, textArea);
-        map.addEnemy(new Enemy("Rat", 15, 5, 10, 5, 10, 20, 10, player));
+        mh = new MovementHandler(map, textArea);
+        map.addEnemy(EnemyList.RAT.spawn(5, 15, player));
 
         int cameraMaxX = WIDTH / (2 * tileSize) + 1;
         int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
@@ -87,7 +88,7 @@ public class DungeonCrawlerSovellus extends Application {
                 case UP:
                     mh.handle(player, Direction.UP);
                     if (player.getIfMoved() == true) {
-                        if (player.getY() >= cameraMaxY - 1) {
+                        if (player.Y() >= cameraMaxY - 1) {
                             canvas.setTranslateY(canvas.getTranslateY() + tileSize);
                         }
                     }
@@ -96,7 +97,7 @@ public class DungeonCrawlerSovellus extends Application {
                 case DOWN:
                     mh.handle(player, Direction.DOWN);
                     if (player.getIfMoved() == true) {
-                        if (player.getY() >= cameraMaxY) {
+                        if (player.Y() >= cameraMaxY) {
                             canvas.setTranslateY(canvas.getTranslateY() - tileSize);
                         }
                     }
@@ -105,7 +106,7 @@ public class DungeonCrawlerSovellus extends Application {
                 case RIGHT:
                     mh.handle(player, Direction.RIGHT);
                     if (player.getIfMoved() == true) {
-                        if (player.getX() >= cameraMaxX) {
+                        if (player.X() >= cameraMaxX) {
                             canvas.setTranslateX(canvas.getTranslateX() - tileSize);
                         }
                     }
@@ -114,7 +115,7 @@ public class DungeonCrawlerSovellus extends Application {
                 case LEFT:
                     mh.handle(player, Direction.LEFT);
                     if (player.getIfMoved() == true) {
-                        if (player.getX() >= cameraMaxX - 1) {
+                        if (player.X() >= cameraMaxX - 1) {
                             canvas.setTranslateX(canvas.getTranslateX() + tileSize);
                         }
                     }
@@ -125,7 +126,6 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
                     
                 case C:
-                    //Making player choose direction?
                     textArea.appendText("Choose Direction \n");
                     mh.setState(1);
                     
@@ -221,7 +221,7 @@ public class DungeonCrawlerSovellus extends Application {
         //Enemies turn
         map.getEnemies().forEach(enemy -> {
             enemy.noAttack();
-            enemy.act();
+            mh.move(enemy);
             if (enemy.getIfAttacked()) {
                 textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
             }

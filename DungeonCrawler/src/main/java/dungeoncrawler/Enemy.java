@@ -31,22 +31,22 @@ public class Enemy extends Character {
         this.target = target;
     }
     
-    public void moveTowards(int x, int y) {
-        int distanceX = Math.abs(x - this.getX());
-        int distanceY = Math.abs(y - this.getY());
+    public void moveTowards(Map map, int x, int y) {
+        int distanceX = Math.abs(x - this.X());
+        int distanceY = Math.abs(y - this.Y());
         
         if(distanceY > distanceX) {
-            if(y - this.getY() < 0) {
-                this.move(Direction.UP);
+            if(y - this.Y() < 0) {
+                this.move(map, Direction.UP);
             } else {
-                this.move(Direction.DOWN);
+                this.move(map, Direction.DOWN);
             }
             
         } else if (distanceX >= distanceY) {
-            if(x - this.getX() > 0) {
-                this.move(Direction.RIGHT);
+            if(x - this.X() > 0) {
+                this.move(map, Direction.RIGHT);
             } else {
-                this.move(Direction.LEFT);
+                this.move(map, Direction.LEFT);
             }
         }
         
@@ -60,14 +60,14 @@ public class Enemy extends Character {
         
     }
     
-    public void act() {
-        int distanceX = Math.abs(target.getX() - this.getX());
-        int distanceY = Math.abs(target.getY() - this.getY());
+    public void act(Map map) {
+        int distanceX = Math.abs(target.X() - this.X());
+        int distanceY = Math.abs(target.Y() - this.Y());
         int fartherDistance = Math.max(distanceX, distanceY);
         int closerDistance = Math.min(distanceX, distanceY);
         
         if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
-            moveTowards(target.getX(), target.getY());
+            moveTowards(map, target.X(), target.Y());
             this.noAttack();
         } else if (fartherDistance == 1 && closerDistance == 0) {
             attack();
@@ -80,6 +80,10 @@ public class Enemy extends Character {
     
     public int getExp() {
         return exp;
+    }
+    
+    public Character getTarget() {
+        return target;
     }
 
 }

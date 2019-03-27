@@ -66,6 +66,8 @@ public class Map {
     
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
+        Tile tile = getTile(enemy.X(), enemy.Y());
+        tile.setOccupied(true);
     }
     
     public void removeEnemy(Enemy enemy) {
@@ -91,28 +93,6 @@ public class Map {
     public void createDoor(int x, int y) {
         getTile(x,y).setType(Tiletype.Door);
     }
-    
-//    public Boolean getSolid(double x, double y) {
-//        List<Tile> memes = new ArrayList<>(); 
-//        tiles.forEach(tile -> {
-//            if(tile.getTranslateX() == x && tile.getTranslateY() == y) {
-//                memes.add(tile);
-//            }
-//            
-//        });
-//        System.out.println(memes.get(0).getSolid());
-//        return memes.get(0).getSolid();
-//    }
-//    public class Tile extends StackPane {
-//        public Tile() {
-//            Rectangle border = new Rectangle(50, 50);
-//            border.setFill(null);
-//            border.setStroke(Color.BLACK);
-//            
-//            setAlignment(Pos.CENTER);
-//            getChildren().addAll(border);
-//        }
-//    }
 }
 
 

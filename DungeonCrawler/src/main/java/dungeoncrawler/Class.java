@@ -10,5 +10,9 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Class {    
-    Warrior, Ranger, Mage
+    Warrior, Ranger, Mage;
+    
+    private Weapon weapon;
+    
+    
 }

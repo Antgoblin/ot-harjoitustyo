@@ -31,11 +31,11 @@ public class Character {
         this.acted = false;
     }
     
-    public int getX() {
+    public int X() {
         return this.x;
     }
     
-    public int getY() {
+    public int Y() {
         return this.y;
     }
     
@@ -49,15 +49,22 @@ public class Character {
     
     public void gainHp(int amount) {
         this.currenthp += amount;
+        if(this.currenthp > this.maxhp) {
+            this.currenthp = this.maxhp;
+        }
     }
     
     public void loseHp(int amount) {
         this.currenthp -= amount;
     } 
     
-    public void move(Direction dir) {
-        this.x += dir.getX();
-        this.y += dir.getY();
+    public void move(Map map, Direction dir) {
+        //old tile 
+        map.getTile(this.x, this.y).setOccupied(false);
+        //new tile 
+        this.x += dir.X();
+        this.y += dir.Y();
+        map.getTile(this.x, this.y).setOccupied(true);
         this.moved = true;
     }
     

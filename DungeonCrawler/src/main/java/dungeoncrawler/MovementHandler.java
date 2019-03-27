@@ -28,11 +28,24 @@ public class MovementHandler {
     }
 
     public void handle(Player player, Direction dir) {
-        if (state == 0) {
-            move(player, dir);
-        } else if (state == 1) {
-            closeDoor(player, dir);
-        }
+        switch(this.state) {
+            case 0:
+                move(player, dir);
+                break;
+            case 1:
+                closeDoor(player, dir);
+                break;
+            case 2:
+                shoot(player, dir);
+                break;
+            default:
+                break;
+        } 
+//        if (state == 0) {
+//            move(player, dir);
+//        } else if (state == 1) {
+//            closeDoor(player, dir);
+//        }
     }
 
     public void move(Player player, Direction dir) {
@@ -134,6 +147,21 @@ public class MovementHandler {
                 textArea.appendText("There is no door there \n");
                 break;
         }
+        this.state = 0;
+    }
+    
+    public void shoot(Player player, Direction dir) {
+        for(int i = 1; i <= player.getRange(); i++) {
+            Tile tile = map.getTile(player.X() + i*dir.X(), player.Y() + i*dir.Y());
+            if(tile.occupied()) {
+                player.attack(tile.getCharacter());
+                textArea.appendText("You hit " + tile.getCharacter().getName() + " for " + player.getLastDamage() + " damage \n");
+                break;
+            } else if (tile.getType() == Tiletype.Wall || tile.getType() == Tiletype.Door) {
+                break;
+            }
+        }
+        player.acted(true);
         this.state = 0;
     }
 }

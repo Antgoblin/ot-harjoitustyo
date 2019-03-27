@@ -13,6 +13,7 @@ import javafx.scene.shape.Polygon;
  */
 public class Character {
     
+    private String name;
     private int x;
     private int y;
     private int maxhp;
@@ -21,7 +22,8 @@ public class Character {
     private boolean attacked;
     private int lastDamageDealt;
     
-    public Character(int x, int y, int hp) {
+    public Character(String name, int x, int y, int hp) {
+        this.name = name;
         this.maxhp = hp;
         this.currenthp = hp;
         this.x = x;
@@ -58,11 +60,11 @@ public class Character {
     
     public void move(Map map, Direction dir) {
         //old tile 
-        map.getTile(this.x, this.y).setOccupied(false);
+        map.getTile(this.x, this.y).setCharacter(null);
         //new tile 
         this.x += dir.X();
         this.y += dir.Y();
-        map.getTile(this.x, this.y).setOccupied(true);
+        map.getTile(this.x, this.y).setCharacter(this);
     }
     
     public boolean ifActed() {
@@ -96,5 +98,9 @@ public class Character {
         } else {
             return false;
         }
+    }
+    
+    public String getName() {
+        return this.name;
     }
 }

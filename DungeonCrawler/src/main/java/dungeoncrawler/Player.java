@@ -20,7 +20,7 @@ public class Player extends Character {
     private Weapon weapon;
     
     public Player(int x, int y, int hp) {
-        super(x, y, hp);
+        super("You", x, y, hp);
         this.weapon = new Weapon("dagger", 2, 5, 1);
         this.playerClass = Class.Warrior;
         this.Lvl = 1;

@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Enemy extends Character {
     
-    private String name;
+//    private String name;
     private int aggressionRange;
     private Character target;
     private int  minDamage;
@@ -22,8 +22,8 @@ public class Enemy extends Character {
     private Random random = new Random();
     
     public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
-        super(x, y, hp);
-        this.name = name;
+        super(name, x, y, hp);
+//        this.name = name;
         this.minDamage = mindamage;
         this.maxDamage = maxdamage;
         this.aggressionRange = aggressionRange;
@@ -72,10 +72,6 @@ public class Enemy extends Character {
         } else if (fartherDistance == 1 && closerDistance == 0) {
             attack();
         }
-    }
-    
-    public String getName() {
-        return this.name;
     }
     
     public int getExp() {

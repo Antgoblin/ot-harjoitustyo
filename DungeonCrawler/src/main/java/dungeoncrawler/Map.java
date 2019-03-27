@@ -67,7 +67,7 @@ public class Map {
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
         Tile tile = getTile(enemy.X(), enemy.Y());
-        tile.setOccupied(true);
+        tile.setCharacter(enemy);
     }
     
     public void removeEnemy(Enemy enemy) {

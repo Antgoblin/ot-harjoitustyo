@@ -23,6 +23,7 @@ public class Weapon {
         this.name = name;
         this.minDamage = min;
         this.maxDamage = max;
+        this.range = range;
     }
     
     public int getDamage() {

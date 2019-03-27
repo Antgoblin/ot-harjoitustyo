@@ -55,7 +55,7 @@ public class DungeonCrawlerSovellus extends Application {
 
     public void init() {
 
-        player = new Player(10, 10, 100);
+        player = new Player(5, 5, 100);
         map = new Map(mapSize, tileSize, player);
 
         map.createRoom(1, 1, 20, 16);
@@ -105,6 +105,16 @@ public class DungeonCrawlerSovellus extends Application {
                 case C:
                     textArea.appendText("Choose Direction \n");
                     mh.setState(1);
+                    break;
+                
+                case S:
+                    if(player.getRange() > 1) {
+                        textArea.appendText("Choose Direction \n");
+                        mh.setState(2);
+                    } else {
+                        textArea.appendText("You dont have anything to shoot with \n");
+                    }
+                    break;
                     
                 default:
                     break;

@@ -18,7 +18,6 @@ public class Character {
     private int maxhp;
     private int currenthp;
     private boolean acted;
-    private boolean moved;
     private boolean attacked;
     private int lastDamageDealt;
     
@@ -27,7 +26,6 @@ public class Character {
         this.currenthp = hp;
         this.x = x;
         this.y = y;
-        this.moved = false;
         this.acted = false;
     }
     
@@ -65,7 +63,6 @@ public class Character {
         this.x += dir.X();
         this.y += dir.Y();
         map.getTile(this.x, this.y).setOccupied(true);
-        this.moved = true;
     }
     
     public boolean ifActed() {
@@ -74,10 +71,6 @@ public class Character {
 
     public void acted(boolean status) {
         this.acted = status;
-    }
-    
-    public void moved(boolean status) {
-        this.moved = status;
     }
     
     public void attacked(int damage) {
@@ -91,10 +84,6 @@ public class Character {
     
     public boolean getIfAttacked() {
         return attacked;
-    }
-    
-    public boolean IfMoved() {
-        return moved;
     }
     
     public int getLastDamage() {

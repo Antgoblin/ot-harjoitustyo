@@ -39,9 +39,9 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     //Jotkin muuttujat täällä että niitä helppo muuttaa.
-    public static int WIDTH = 950;   // 950?
-    public static int HEIGHT = 750;   // 750?
     public static int tileSize = 40;
+    public static int WIDTH = tileSize * 23;   // 950?
+    public static int HEIGHT = tileSize * 19;   // 750?
 //    public static int playerSize = tileSize*2/5;
     private Map map;
     int mapSize = 100;
@@ -55,7 +55,7 @@ public class DungeonCrawlerSovellus extends Application {
 
     public void init() {
 
-        player = new Player(5, 4, 100);
+        player = new Player(10, 10, 100);
         map = new Map(mapSize, tileSize, player);
 
         map.createRoom(1, 1, 20, 16);
@@ -76,49 +76,26 @@ public class DungeonCrawlerSovellus extends Application {
         mh = new MovementHandler(map, textArea);
         map.addEnemy(EnemyList.RAT.spawn(5, 15, player));
 
-        int cameraMaxX = WIDTH / (2 * tileSize) + 1;
-        int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
-
         mapDrawer.drawAll();
         
-        Scene game = new Scene(grid, WIDTH + 300, HEIGHT + 200);
+        Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 -10);
         
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
                     mh.handle(player, Direction.UP);
-                    if (player.IfMoved()) {
-                        if (player.Y() >= cameraMaxY - 1) {
-                            canvas.setTranslateY(canvas.getTranslateY() + tileSize);
-                        }
-                    }
                     break;
                     
                 case DOWN:
                     mh.handle(player, Direction.DOWN);
-                    if (player.IfMoved()) {
-                        if (player.Y() >= cameraMaxY) {
-                            canvas.setTranslateY(canvas.getTranslateY() - tileSize);
-                        }
-                    }
                     break;
                     
                 case RIGHT:
                     mh.handle(player, Direction.RIGHT);
-                    if (player.IfMoved()) {
-                        if (player.X() >= cameraMaxX) {
-                            canvas.setTranslateX(canvas.getTranslateX() - tileSize);
-                        }
-                    }
                     break;
                     
                 case LEFT:
                     mh.handle(player, Direction.LEFT);
-                    if (player.IfMoved()) {
-                        if (player.X() >= cameraMaxX - 1) {
-                            canvas.setTranslateX(canvas.getTranslateX() + tileSize);
-                        }
-                    }
                     break;
                 
                 case SPACE:
@@ -133,6 +110,7 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
 
             }
+            updateCamera();
             if (player.ifActed()) {
                 endTurn();
                 updateStatScreen();               
@@ -162,6 +140,7 @@ public class DungeonCrawlerSovellus extends Application {
         canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         mapDrawer = new MapDrawer(map, gc);
+        updateCamera();
         grid.add(canvas, 1, 1, 1, 1); //1,1
 
     }
@@ -170,19 +149,33 @@ public class DungeonCrawlerSovellus extends Application {
 
         //TextArea (Only display)
         textArea = new TextArea();
-        textArea.setMinSize(WIDTH * 5 / 4, HEIGHT / 4);
+        textArea.setMinSize(WIDTH + tileSize * 5, tileSize * 5);
         textArea.setEditable(false);
         textArea.setFocusTraversable(false);
         textArea.setMouseTransparent(true);
         grid.add(textArea, 0, 0, 2, 1); //0,0
 
     }
+    
+    public void updateCamera() {
+        int x = player.X()*tileSize - 11*tileSize;
+        if(x < 0) {
+            x = 0;
+        }
+        int y = player.Y()*tileSize - 9*tileSize;
+        if(y < 0) {
+            y = 0;
+        }
+        
+        canvas.setTranslateX(-x);
+        canvas.setTranslateY(-y);
+    }
 
     private void initializeStatScreen() {
 
         //Area for characters stats & such
         statscreen = new TextArea();
-        statscreen.setMinSize(WIDTH / 4, HEIGHT);
+        statscreen.setMinSize(tileSize * 5, HEIGHT + tileSize * 5);
         statscreen.setEditable(false);
         statscreen.setFocusTraversable(false);
         statscreen.setMouseTransparent(true);
@@ -248,7 +241,6 @@ public class DungeonCrawlerSovellus extends Application {
         }
 
         player.noAttack();
-        player.moved(false);
         player.acted(false);
 
         //draws what happened

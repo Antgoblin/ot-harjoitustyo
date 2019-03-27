@@ -23,9 +23,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
 /**
@@ -71,6 +73,27 @@ public class DungeonCrawlerSovellus extends Application {
 
         //Character creation scene
         Pane pane = new Pane();
+        Label choose = new Label("Choose Class");
+        choose.setTranslateX(500);
+        choose.setTranslateY(300);
+        choose.setScaleX(3);
+        choose.setScaleY(3);
+        Label warrior = new Label("W = Warrior");
+        warrior.setTranslateX(500);
+        warrior.setTranslateY(400);
+        warrior.setScaleX(1.5);
+        warrior.setScaleY(1.5);
+        Label ranger = new Label("R = Ranger");
+        ranger.setTranslateX(500);
+        ranger.setTranslateY(420);
+        ranger.setScaleX(1.5);
+        ranger.setScaleY(1.5);
+        Label mage = new Label("M = mage");
+        mage.setTranslateX(500);
+        mage.setTranslateY(440);
+        mage.setScaleX(1.5);
+        mage.setScaleY(1.5);
+        pane.getChildren().addAll(choose, warrior, ranger, mage);
         Scene charactercreation = new Scene(pane, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
 
         //Game Scene
@@ -155,6 +178,7 @@ public class DungeonCrawlerSovellus extends Application {
                     
                 case TAB:
                     player.Switch();
+                    break;
                 default:
                     break;
 

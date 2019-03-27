@@ -60,19 +60,19 @@ public class Enemy extends Character {
         
     }
     
-    public void act(Map map) {
-        int distanceX = Math.abs(target.X() - this.X());
-        int distanceY = Math.abs(target.Y() - this.Y());
-        int fartherDistance = Math.max(distanceX, distanceY);
-        int closerDistance = Math.min(distanceX, distanceY);
-        
-        if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
-            moveTowards(map, target.X(), target.Y());
-            this.noAttack();
-        } else if (fartherDistance == 1 && closerDistance == 0) {
-            attack();
-        }
-    }
+//    public void act(Map map) {
+//        int distanceX = Math.abs(target.X() - this.X());
+//        int distanceY = Math.abs(target.Y() - this.Y());
+//        int fartherDistance = Math.max(distanceX, distanceY);
+//        int closerDistance = Math.min(distanceX, distanceY);
+//        
+//        if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
+//            moveTowards(map, target.X(), target.Y());
+//            this.noAttack();
+//        } else if (fartherDistance == 1 && closerDistance == 0) {
+//            attack();
+//        }
+//    }
     
     public int getExp() {
         return this.exp;

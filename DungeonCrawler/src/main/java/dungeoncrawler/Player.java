@@ -17,17 +17,21 @@ public class Player extends Character {
     private int Lvl;
     private int exp;
     private int gold;
+    private int maxMana;
+    private int currentMana;
     private Weapon weapon;
     private Weapon weapon2;
 
-    public Player(int x, int y, int hp, Class playerclass) {
-        super("You", x, y, hp);
+    public Player(int x, int y, Class playerclass) {
+        super("You", x, y, playerclass.Hp());
         this.weapon = playerclass.StartingWeapon();
         this.weapon2 = playerclass.SecondWeapon();
         this.playerClass = playerclass;
         this.Lvl = 1;
         this.exp = 0;
         this.gold = 0;
+        this.maxMana = playerclass.mana();
+        this.currentMana = playerclass.mana();
     }
 
     public void attack(Character target) {
@@ -54,6 +58,22 @@ public class Player extends Character {
 
     public void loseExp(int amount) {
         this.exp -= amount;
+    }
+    
+    public int maxMana() {
+        return this.maxMana;
+    }
+    
+    public int currentMana() {
+        return this.currentMana;
+    }
+    
+    public void gainMana(int amount) {
+        this.currentMana += amount;
+    }
+
+    public void loseMana(int amount) {
+        this.currentMana -= amount;
     }
 
     public int getGold() {

@@ -13,17 +13,26 @@ import javafx.scene.layout.StackPane;
  */
 public class Tile extends StackPane {
     
+    private int x;
+    private int y;
     private Tiletype type;
-//    private boolean occupied;
     private Character character;
         
-    public Tile() {
+    public Tile(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.type = Tiletype.Void;
-//        this.occupied = false;
         this.character = null;
 
     }
-  
+    
+    public int X() {
+        return this.x;
+    }
+    
+    public int Y() {
+        return this.y;
+    }
     
     public void setType(Tiletype type) {
         this.type = type;
@@ -36,10 +45,6 @@ public class Tile extends StackPane {
     public boolean occupied() {
         return this.character != null;
     }
-    
-//    public void setOccupied(boolean bool) {
-//        this.occupied = bool;
-//    }
     
     public void setCharacter(Character character) {
         this.character = character;

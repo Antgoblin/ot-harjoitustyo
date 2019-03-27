@@ -57,7 +57,7 @@ public class DungeonCrawlerSovellus extends Application {
 
     public void init() {
 //
-        player = new Player(5, 5, 100, Class.Warrior);
+        player = new Player(5, 5, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
 ////
         map.createRoom(1, 1, 20, 16);
@@ -103,26 +103,30 @@ public class DungeonCrawlerSovellus extends Application {
         initializeStatScreen();
         mh = new MovementHandler(map, textArea);
         Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
-        map.addEnemy(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
         mapDrawer.drawAll();
 
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
-                    player = new Player(5, 5, 100, Class.Warrior);
+                    player = new Player(5, 5, Class.Warrior);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
 
                     break;
                 case R:
-                    player = new Player(5, 5, 100, Class.Ranger);
+                    player = new Player(5, 5, Class.Ranger);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
                     break;
                 case M:
-                    player = new Player(5, 5, 100, Class.Mage);
+                    player = new Player(5, 5, Class.Mage);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
@@ -171,7 +175,7 @@ public class DungeonCrawlerSovellus extends Application {
 
                 case Q:
                     if (map.getEnemies().isEmpty()) {
-                        map.addEnemy(EnemyList.RAT.spawn(3, 15, player));
+                        map.spawnEnemy(EnemyList.RAT.spawn(3, 15, player));
                     }
                     player.acted(true);
                     break;
@@ -260,7 +264,8 @@ public class DungeonCrawlerSovellus extends Application {
     private void updateStatScreen() {
         statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
                 + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
-                + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n \n"
+                + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n"
+                + "Mana: " + player.currentMana() + " / " + player.maxMana() + "\n \n"
                 + "Weapon1 : " + player.getWeapon().name() + "\n"
         );
 
@@ -321,7 +326,8 @@ public class DungeonCrawlerSovellus extends Application {
             });
 
         }
-
+        
+        updateStatScreen();
         player.noAttack();
         player.acted(false);
 

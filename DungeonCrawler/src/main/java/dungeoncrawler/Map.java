@@ -6,6 +6,7 @@
 package dungeoncrawler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
@@ -34,7 +35,7 @@ public class Map {
         this.tiles = new Tile[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                tiles[x][y] = new Tile();
+                tiles[x][y] = new Tile(y, x);
             } 
         }
     }
@@ -71,10 +72,29 @@ public class Map {
         return this.player;
     }
     
-    public void addEnemy(Enemy enemy) {
+    public void spawnEnemy(Enemy enemy) {
         enemies.add(enemy);
         Tile tile = getTile(enemy.X(), enemy.Y());
         tile.setCharacter(enemy);
+    }
+    
+    public void spawnEnemyRandom(Enemy enemy) {
+        List<Tile> vapaat = new ArrayList<>(); 
+        for(int i = 0; i < this.size; i++) {
+            for(int j = 0; j < this.size; j++) {
+                Tile tile = getTile(i, j);
+               if(tile.getType() == Tiletype.Floor && !tile.occupied()) {
+                   vapaat.add(tile);
+               }  
+            }
+        }
+        Collections.shuffle(vapaat);
+        Tile tile = vapaat.get(0);
+        enemy.setX(tile.X());
+        enemy.setY(tile.Y());
+        this.enemies.add(enemy);
+        tile.setCharacter(enemy);
+        
     }
     
     public void removeEnemy(Enemy enemy) {

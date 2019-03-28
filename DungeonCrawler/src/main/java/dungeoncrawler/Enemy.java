@@ -6,6 +6,7 @@
 package dungeoncrawler;
 
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -21,8 +22,8 @@ public class Enemy extends Character {
     private int exp;
     private Random random = new Random();
     
-    public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
-        super(name, x, y, hp);
+    public Enemy(String name, int x, int y, int hp, Color color, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
+        super(name, x, y, hp, color);
 //        this.name = name;
         this.minDamage = mindamage;
         this.maxDamage = maxdamage;
@@ -31,48 +32,12 @@ public class Enemy extends Character {
         this.target = target;
     }
     
-    public void moveTowards(Map map, int x, int y) {
-        int distanceX = Math.abs(x - this.X());
-        int distanceY = Math.abs(y - this.Y());
-        
-        if(distanceY > distanceX) {
-            if(y - this.Y() < 0) {
-                this.move(map, Direction.UP);
-            } else {
-                this.move(map, Direction.DOWN);
-            }
-            
-        } else if (distanceX >= distanceY) {
-            if(x - this.X() > 0) {
-                this.move(map, Direction.RIGHT);
-            } else {
-                this.move(map, Direction.LEFT);
-            }
-        }
-        
-        
-    }
-    
     public void attack() {
         int damage =  random.nextInt(maxDamage - minDamage) + minDamage;
         target.loseHp(damage);
         this.attacked(damage);
         
     }
-    
-//    public void act(Map map) {
-//        int distanceX = Math.abs(target.X() - this.X());
-//        int distanceY = Math.abs(target.Y() - this.Y());
-//        int fartherDistance = Math.max(distanceX, distanceY);
-//        int closerDistance = Math.min(distanceX, distanceY);
-//        
-//        if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
-//            moveTowards(map, target.X(), target.Y());
-//            this.noAttack();
-//        } else if (fartherDistance == 1 && closerDistance == 0) {
-//            attack();
-//        }
-//    }
     
     public int getExp() {
         return this.exp;

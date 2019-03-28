@@ -86,6 +86,7 @@ public class MapDrawer {
     public void drawEnemies() {
         
         map.getEnemies().forEach( enemy -> {
+            gc.setFill(enemy.color());
             gc.fillOval(enemy.X() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
                     enemy.Y() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
                     map.getCreatureSize(),

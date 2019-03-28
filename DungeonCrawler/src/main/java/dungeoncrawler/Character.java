@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -21,14 +22,16 @@ public class Character {
     private boolean acted;
     private boolean attacked;
     private int lastDamageDealt;
+    private Color color;
     
-    public Character(String name, int x, int y, int hp) {
+    public Character(String name, int x, int y, int hp, Color color) {
         this.name = name;
         this.maxhp = hp;
         this.currenthp = hp;
         this.x = x;
         this.y = y;
         this.acted = false;
+        this.color = color;
     }
     
     public int X() {
@@ -109,5 +112,9 @@ public class Character {
     
     public String getName() {
         return this.name;
+    }
+    
+    public Color color() {
+        return this.color;
     }
 }

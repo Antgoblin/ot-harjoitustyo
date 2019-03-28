@@ -12,15 +12,14 @@ import java.util.Random;
  *
  * @author jy
  */
-public class Weapon {
-    private String name;
+public class Weapon extends Item{
     private int minDamage;
     private int maxDamage;
     private int range;
     private Random random = new Random();
     
     public Weapon(String name, int min, int max, int range) {
-        this.name = name;
+        super(name);
         this.minDamage = min;
         this.maxDamage = max;
         this.range = range;
@@ -29,10 +28,6 @@ public class Weapon {
     public int getDamage() {
         int damage =  random.nextInt(maxDamage - minDamage +1) + minDamage;
         return damage;
-    }
-    
-    public String name() {
-        return name;
     }
     
     public int getRange() {

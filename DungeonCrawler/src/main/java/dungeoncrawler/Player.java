@@ -5,6 +5,9 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -21,11 +24,14 @@ public class Player extends Character {
     private int currentMana;
     private Weapon weapon;
     private Weapon weapon2;
+    private List<Item> inventory = new ArrayList<>();
 
     public Player(int x, int y, Class playerclass) {
-        super("You", x, y, playerclass.Hp());
+        super("You", x, y, playerclass.Hp(), Color.BLACK);
         this.weapon = playerclass.StartingWeapon();
         this.weapon2 = playerclass.SecondWeapon();
+        this.inventory.add(this.weapon);
+        this.inventory.add(this.weapon2);
         this.playerClass = playerclass;
         this.Lvl = 1;
         this.exp = 0;
@@ -94,6 +100,14 @@ public class Player extends Character {
 
     public Weapon getWeapon2() {
         return this.weapon2;
+    }
+    
+    public List<Item> inventory() {
+        return this.inventory;
+    }
+    
+    public void addItem(Item item) {
+        this.inventory.add(item);
     }
 
     public void Switch() {

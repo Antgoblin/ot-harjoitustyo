@@ -15,7 +15,8 @@ public enum EnemyList {
     
     //(name, hp, mindmg, maxdmg, aggro, exp)
     RAT("Rat", 10, 5, 10, 20, 10, Color.GRAY),
-    CAT("Cat", 15, 4, 6, 5, 5, Color.BLACK);
+    CAT("Cat", 15, 4, 6, 5, 5, Color.BLACK),
+    BEAR("Bear", 30, 4, 10, 5, 50, Color.BROWN);
     
     
     private int hp;

@@ -16,13 +16,12 @@ public class Tile extends StackPane {
     private int x;
     private int y;
     private Tiletype type;
-    private Character character;
+    private Character character = null;
         
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
         this.type = Tiletype.Void;
-        this.character = null;
 
     }
     
@@ -44,6 +43,10 @@ public class Tile extends StackPane {
     
     public boolean occupied() {
         return this.character != null;
+    }
+    
+    public void setCharacter(Enemy enemy) {
+        this.character = enemy;
     }
     
     public void setCharacter(Character character) {

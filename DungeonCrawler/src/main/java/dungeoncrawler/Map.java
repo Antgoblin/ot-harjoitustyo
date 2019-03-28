@@ -105,6 +105,18 @@ public class Map {
         return enemies;
     }
     
+    public Enemy getEnemy(int x, int y) {
+        List<Enemy> enemiesInTile = new ArrayList<>();
+        enemies.forEach(enemy -> {
+            if(enemy.Y() == y && enemy.X() == x) {
+                enemiesInTile.add(enemy);
+            } 
+                
+        });
+        return enemiesInTile.get(0);
+    } 
+            
+    
     public void createRoom(int TopLeftX, int TopLeftY, int BottomRightX, int BottomRightY) {
         for( int x = TopLeftX; x <= BottomRightX; x++) {
             for(int y = TopLeftY; y <= BottomRightY; y++) {

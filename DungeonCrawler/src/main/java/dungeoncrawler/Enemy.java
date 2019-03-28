@@ -54,5 +54,8 @@ public class Enemy extends Character {
     public int aggressionRange() {
         return this.aggressionRange;
     }
-
+    
+    public void rage() {
+        this.aggressionRange = 100;
+    }
 }

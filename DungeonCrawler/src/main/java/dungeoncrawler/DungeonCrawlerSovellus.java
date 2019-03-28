@@ -108,6 +108,7 @@ public class DungeonCrawlerSovellus extends Application {
         map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
         map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
         map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.BEAR.spawn(3, 15, player));
         mapDrawer.drawAll();
 
         charactercreation.setOnKeyPressed(event -> {

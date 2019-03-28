@@ -39,8 +39,16 @@ public class Player extends Character {
         this.maxMana = playerclass.mana();
         this.currentMana = playerclass.mana();
     }
-
+    
+    public void attack(Enemy target) {
+        target.rage();
+        int damage = weapon.getDamage();
+        this.attacked(damage);
+        target.loseHp(damage);
+    }
+    
     public void attack(Character target) {
+        
         int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);

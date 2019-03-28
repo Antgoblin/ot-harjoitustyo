@@ -55,6 +55,7 @@ public class MovementHandler {
         map.getEnemies().forEach(enemy -> {
             if (enemy.X() == player.X() + dir.X() && enemy.Y() == player.Y() + dir.Y()) {
                 player.attack(enemy);
+//                enemy.rage();
                 textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
             }
         });
@@ -155,9 +156,10 @@ public class MovementHandler {
     public void shoot(Player player, Direction dir) {
         for(int i = 1; i <= player.getRange(); i++) {
             Tile tile = map.getTile(player.X() + i*dir.X(), player.Y() + i*dir.Y());
-            if(tile.occupied()) {
+            if(tile.occupied() && tile.getCharacter() != null) {
                 player.attack(tile.getCharacter());
                 textArea.appendText("You hit " + tile.getCharacter().getName() + " for " + player.getLastDamage() + " damage \n");
+                map.getEnemy(tile.X(), tile.Y()).rage();
                 break;
             } else if (tile.getType() == Tiletype.Wall || tile.getType() == Tiletype.Door) {
                 break;

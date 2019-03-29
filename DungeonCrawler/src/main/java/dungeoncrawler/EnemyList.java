@@ -5,6 +5,9 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javafx.scene.paint.Color;
 
 /**
@@ -37,8 +40,30 @@ public enum EnemyList {
         this.color = color;
     }
     
+    public Enemy spawn( Character target) {
+        return new Enemy(name, 0, 0, hp, color, minDamage, maxDamage, aggressionRange, exp, target);
+    }
+    
     public Enemy spawn(int x, int y, Character target) {
         return new Enemy(name, x, y, hp, color, minDamage, maxDamage, aggressionRange, exp, target);
     }
+    
+    public EnemyList Randomize() {
+        List<EnemyList> enemytypes = getAll();
+        Collections.shuffle(enemytypes);
+        
+        return enemytypes.get(0);
+    }
+    
+    private List<EnemyList> getAll() {
+        List<EnemyList> enemytypes = new ArrayList<>();
+        enemytypes.add(RAT);
+        enemytypes.add(CAT);
+        enemytypes.add(BEAR);
+        
+        return enemytypes;
+    }
+    
+    
     
 }

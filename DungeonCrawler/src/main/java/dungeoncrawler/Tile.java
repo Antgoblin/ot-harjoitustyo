@@ -45,10 +45,6 @@ public class Tile extends StackPane {
         return this.character != null;
     }
     
-    public void setCharacter(Enemy enemy) {
-        this.character = enemy;
-    }
-    
     public void setCharacter(Character character) {
         this.character = character;
     }

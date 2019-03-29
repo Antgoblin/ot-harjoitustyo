@@ -41,9 +41,9 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     //Jotkin muuttujat täällä että niitä helppo muuttaa.
-    public static int tileSize = 40;
-    public static int WIDTH = tileSize * 23;   // 950?
-    public static int HEIGHT = tileSize * 19;   // 750?
+    public static int tileSize = 6; //40
+    public static int WIDTH = tileSize * 230;   // 950?
+    public static int HEIGHT = tileSize * 190;   // 750?
 //    public static int playerSize = tileSize*2/5;
     private Map map;
     int mapSize = 100;
@@ -59,12 +59,14 @@ public class DungeonCrawlerSovellus extends Application {
 //
         player = new Player(5, 5, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
-////
-        map.createRoom(1, 1, 20, 16);
+
+        map.createRoom(2, 2, 20, 16);
         map.createRoom(20, 5, 26, 7);
         map.createRoom(26, 3, 32, 21);
         map.createDoor(26, 6);
+        map.createDoor(32, 6);
         map.createDoor(20, 6);
+        map.createLevel();
 //
     }
 
@@ -103,12 +105,13 @@ public class DungeonCrawlerSovellus extends Application {
         initializeStatScreen();
         mh = new MovementHandler(map, textArea);
         Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
-        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
-        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
-        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
-        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
-        map.spawnEnemyRandom(EnemyList.RAT.spawn(3, 15, player));
-        map.spawnEnemyRandom(EnemyList.BEAR.spawn(3, 15, player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+        
         mapDrawer.drawAll();
 
         charactercreation.setOnKeyPressed(event -> {

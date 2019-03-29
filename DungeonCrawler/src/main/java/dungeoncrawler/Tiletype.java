@@ -10,6 +10,6 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Tiletype {
-    Void, Floor, Wall, Door, OpenDoor;
+    Void, Floor, Wall, Door, OpenDoor, StairsUp, TempFloor, TempWall, RoomIndicator, OutOfMap;
     
 }

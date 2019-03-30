@@ -75,6 +75,12 @@ public class MapDrawer {
                     case Corner:
                         gc.setFill(Color.AQUAMARINE);
                         break;
+                    case CheckedFloor:
+                        gc.setFill(Color.ORANGE);
+                        break;
+                    case CheckedDoor:
+                        gc.setFill(Color.CHARTREUSE);
+                        break;    
                     default:
                         gc.setFill(Color.GRAY);
                         break;

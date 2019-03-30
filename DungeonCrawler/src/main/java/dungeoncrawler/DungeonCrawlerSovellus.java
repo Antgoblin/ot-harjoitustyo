@@ -46,7 +46,7 @@ public class DungeonCrawlerSovellus extends Application {
     public static int HEIGHT = tileSize * 190;   // 750?
 //    public static int playerSize = tileSize*2/5;
     private Map map;
-    int mapSize = 100;
+    int mapSize = 80;
     private Player player;
     private GridPane grid;
     private Canvas canvas;

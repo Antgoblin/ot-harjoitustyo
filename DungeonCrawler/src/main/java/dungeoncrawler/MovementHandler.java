@@ -64,7 +64,7 @@ public class MovementHandler {
         if (player.getIfAttacked() == false) {
             Tile tile = map.getTile(player.X() + dir.X(), player.Y() + dir.Y());
             
-            if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor ||  tile.getType() == Tiletype.Void) {
+            if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor ||  tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
                 player.move(map, dir);
                 player.noAttack();
 

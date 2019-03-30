@@ -72,14 +72,8 @@ public class MapDrawer {
                     case StairsUp:
                         gc.setFill(Color.BLUEVIOLET);
                         break;
-                    case Corner:
+                    case StairsDown:
                         gc.setFill(Color.AQUAMARINE);
-                        break;
-                    case CheckedFloor:
-                        gc.setFill(Color.ORANGE);
-                        break;
-                    case CheckedDoor:
-                        gc.setFill(Color.CHARTREUSE);
                         break;    
                     default:
                         gc.setFill(Color.GRAY);

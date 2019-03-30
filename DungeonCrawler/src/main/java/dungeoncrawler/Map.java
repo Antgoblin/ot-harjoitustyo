@@ -28,6 +28,7 @@ public class Map {
     private List<Enemy> enemies = new ArrayList<>();
     private Player player;
     private Random random = new Random();
+    private int Level = 0;
 
     public Map(int size, int tileSize, Player player) {
         this.size = size;
@@ -133,6 +134,10 @@ public class Map {
 
     public int getCreatureSize() {
         return this.creatureSize;
+    }
+    
+    public int Level() {
+        return this.Level;
     }
 
     public void setplayer(Player player) {
@@ -281,9 +286,9 @@ public class Map {
             for (int y = Math.min(tile1.Y(), tile2.Y()); y <= Math.max(tile1.Y(), tile2.Y()); y++) {
                 Tile tile = getTile(x, y);
                 Tiletype type = tile.getType();
-                if (x == tile2.X() && type != Tiletype.StairsUp && type != Tiletype.Door) {
+                if (x == tile2.X() && type != Tiletype.StairsUp && type != Tiletype.StairsDown && type != Tiletype.Door) {
                     tile.setType(Tiletype.Floor);
-                } else if (type != Tiletype.StairsUp && type != Tiletype.Floor && type != Tiletype.TempFloor && type != Tiletype.Door) {
+                } else if (type != Tiletype.StairsUp && type != Tiletype.StairsDown && type != Tiletype.Floor && type != Tiletype.TempFloor && type != Tiletype.Door) {
                     tile.setType(Tiletype.Wall);
                 }
             }
@@ -358,8 +363,11 @@ public class Map {
             for (int x = searchtile.X() - 1; x <= searchtile.X() + 1; x++) {
                 for (int y = searchtile.Y() - 1; y <= searchtile.Y() + 1; y++) {
                     Tile tile = getTile(x, y);
-                    if (tile != null && tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.TempFloor) {
+                    if (tile != null && tile.getType() == Tiletype.Floor) {
                         tile.setType(Tiletype.CheckedFloor);
+                        searched.add(tile);
+                    } else if (tile != null && tile.getType() == Tiletype.TempFloor) {
+                        tile.setType(Tiletype.CheckedTempFloor);
                         searched.add(tile);
                     } else if (tile != null && tile.getType() == Tiletype.Door) {
                         tile.setType(Tiletype.CheckedDoor);
@@ -374,12 +382,26 @@ public class Map {
 
     public void createLevel() {
 
+        //Makes all tiles Void
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile tile = getTile(x, y);
+                tile.setType(Tiletype.Void);
+                tile.setCharacter(null);
+            }
+        }
+        
+        enemies.removeAll(enemies);
+        
+        
+        // creates rooms
         int roomscreated = 0;
         int roomswanted = random.nextInt(7) + 10;
+        
         while (roomscreated < roomswanted) {
             Tile randomtile = getRandomTile(Tiletype.Void);
-            int x = random.nextInt(15) + 5;
-            int y = random.nextInt(15) + 5;
+            int x = random.nextInt(10) + 5;
+            int y = random.nextInt(10) + 5;
             if (randomtile == null) {
                 break;
             }
@@ -390,45 +412,50 @@ public class Map {
             }
 
         }
-
-        Tile stairs = getRandomTile(Tiletype.TempFloor);
-        stairs.setType(Tiletype.StairsUp);
+//        // creates stairs up and down
+//        Tile stairs = getRandomTile(Tiletype.TempFloor);
+//        stairs.setType(Tiletype.StairsUp);
+//        
+//        int stairsDown = random.nextInt(3);
+//        for (int s = 0; s <= stairsDown; s++ ) {
+//            getRandomTile(Tiletype.TempFloor).setType(Tiletype.StairsDown);
+//        }
         
-        boolean floorIsUnited = false;
 
+        boolean floorIsUnited = false;
+        
+        // creates hallways
         while (!floorIsUnited) {
 
             List<Tile> floorTiles = new ArrayList<>();
-            floorTiles.add(stairs);
+            floorTiles.add(getRandomTile(Tiletype.TempFloor));
 
             //Creates hallway
-            for (int k = 0; k < 5; k++) {
-
-                Tile randomtile = getRandomTile(Tiletype.TempWall);
-                Direction dir = Direction.DOWN;
-                if (getTile(randomtile.X(), randomtile.Y() + 1).getType() == Tiletype.TempFloor) {
-                    dir = Direction.UP;
-                } else if (getTile(randomtile.X() + 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
-                    dir = Direction.LEFT;
-                } else if (getTile(randomtile.X() - 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
-                    dir = Direction.RIGHT;
-                }
-
-                Tile secondrandomtile = getRandomTile(Tiletype.TempWall, randomtile, dir);
-                if (secondrandomtile != null) {
-                    createHallway(randomtile, secondrandomtile);
-                }
+            Tile randomtile = getRandomTile(Tiletype.TempWall);
+            Direction dir = Direction.DOWN;
+            if (getTile(randomtile.X(), randomtile.Y() + 1).getType() == Tiletype.TempFloor) {
+                dir = Direction.UP;
+            } else if (getTile(randomtile.X() + 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
+                dir = Direction.LEFT;
+            } else if (getTile(randomtile.X() - 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
+                dir = Direction.RIGHT;
             }
+
+            Tile secondrandomtile = getRandomTile(Tiletype.TempWall, randomtile, dir);
+            if (secondrandomtile != null) {
+                createHallway(randomtile, secondrandomtile);
+            }
+
             //Then checks if all the floor tiles are connected (meaning that every room can be accessed)
             // Makes floor tiles from floor-tiles into checkedfloor-tiles
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 5000; i++) {
                 floorTiles = checkIfUnited(floorTiles);
             }
 
             //if there are no floor tiles on the map the level structure is done and both Tiles are null
             Tile floor = getRandomTile(Tiletype.Floor);
             Tile TempFloor = getRandomTile(Tiletype.TempFloor);
-            
+
             // turns all checked tiles back to normals
             for (int x = 0; x < size; x++) {
                 for (int y = 0; y < size; y++) {
@@ -437,15 +464,26 @@ public class Map {
                         tile.setType(Tiletype.Floor);
                     } else if (tile.getType() == Tiletype.CheckedDoor) {
                         tile.setType(Tiletype.Door);
+                    } else if (tile.getType() == Tiletype.CheckedTempFloor) {
+                        tile.setType(Tiletype.TempFloor);
                     }
                 }
             }
-                
+
             // if both tiles are null ends the Level creation
             if (floor == null && TempFloor == null) {
                 floorIsUnited = true;
             }
 
+        }
+        
+        // creates stairs up and down
+        Tile stairs = getRandomTile(Tiletype.TempFloor);
+        stairs.setType(Tiletype.StairsUp);
+        
+        int stairsDown = random.nextInt(3);
+        for (int s = 0; s <= stairsDown; s++ ) {
+            getRandomTile(Tiletype.TempFloor).setType(Tiletype.StairsDown);
         }
 
         for (int x = 0; x < size; x++) {
@@ -469,7 +507,30 @@ public class Map {
                 }
             }
         }
+        
+        //Spawn enemies
+        int enemies = roomswanted + 10 + random.nextInt(10);
+        for(int e = 0; e <= enemies; e++) {
+            spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+            
+        }
 
+    }
+    
+    public void goDown() {
+        this.Level++;
+        createLevel();
+        Tile stairs = getRandomTile(Tiletype.StairsUp);
+        player.setX(stairs.X());
+        player.setY(stairs.Y());
+    }
+    
+    public void goUp() {
+        this.Level--;
+        createLevel();
+        Tile stairs = getRandomTile(Tiletype.StairsDown);
+        player.setX(stairs.X());
+        player.setY(stairs.Y());
     }
 
 }

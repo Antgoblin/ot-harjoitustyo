@@ -41,9 +41,9 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     //Jotkin muuttujat täällä että niitä helppo muuttaa.
-    public static int tileSize = 6; //40
-    public static int WIDTH = tileSize * 230;   // 950?
-    public static int HEIGHT = tileSize * 190;   // 750?
+    public static int tileSize = 40; //40
+    public static int WIDTH = tileSize * 23;   // 950?
+    public static int HEIGHT = tileSize * 19;   // 750?
 //    public static int playerSize = tileSize*2/5;
     private Map map;
     int mapSize = 80;
@@ -57,17 +57,11 @@ public class DungeonCrawlerSovellus extends Application {
 
     public void init() {
 //
-        player = new Player(5, 5, Class.Warrior);
+        player = new Player(11, 11, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
 
-//        map.createRoom(2, 2, 20, 16);
-//        map.createRoom(20, 5, 26, 7);
-//        map.createRoom(26, 3, 32, 21);
-//        map.createDoor(26, 6);
-//        map.createDoor(32, 6);
-//        map.createDoor(20, 6);
-        map.createLevel();
-//
+        map.createRoom(10, 10, 14, 14);
+        map.getTile(12, 12).setType(Tiletype.StairsDown);
     }
 
     @Override
@@ -105,32 +99,31 @@ public class DungeonCrawlerSovellus extends Application {
         initializeStatScreen();
         mh = new MovementHandler(map, textArea);
         Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-        
-        mapDrawer.drawAll();
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+
 
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
-                    player = new Player(5, 5, Class.Warrior);
+                    player = new Player(11, 11, Class.Warrior);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
 
                     break;
                 case R:
-                    player = new Player(5, 5, Class.Ranger);
+                    player = new Player(11, 11, Class.Ranger);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
                     break;
                 case M:
-                    player = new Player(5, 5, Class.Mage);
+                    player = new Player(11, 11, Class.Mage);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
@@ -140,6 +133,8 @@ public class DungeonCrawlerSovellus extends Application {
 
             }
         });
+
+        mapDrawer.drawAll();
 
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -183,10 +178,21 @@ public class DungeonCrawlerSovellus extends Application {
                     }
                     player.acted(true);
                     break;
-                    
+
                 case TAB:
                     player.Switch();
                     break;
+
+                case ENTER:
+                    if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsDown) {
+                        map.goDown();
+                        mapDrawer.drawAll();
+                    } else if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsUp) {
+                        map.goUp();
+                        mapDrawer.drawAll();
+                    }
+                    break;
+                        
                 default:
                     break;
 
@@ -276,8 +282,10 @@ public class DungeonCrawlerSovellus extends Application {
         if (player.getWeapon2() != null) {
             statscreen.appendText("Weapon2 : " + player.getWeapon2().name());
         } else {
-            statscreen.appendText("Weapon2 : -" );
+            statscreen.appendText("Weapon2 : -");
         }
+        statscreen.appendText(" \n \n \n \n Level: " + map.Level());
+        
     }
 
     private void endTurn() {
@@ -330,7 +338,7 @@ public class DungeonCrawlerSovellus extends Application {
             });
 
         }
-        
+
         updateStatScreen();
         player.noAttack();
         player.acted(false);

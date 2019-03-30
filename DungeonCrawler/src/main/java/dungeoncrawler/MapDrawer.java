@@ -69,11 +69,11 @@ public class MapDrawer {
                     case TempWall:
                         gc.setFill(Color.RED);
                         break;
-                    case RoomIndicator:
-                        gc.setFill(Color.GOLD);
-                        break;
                     case StairsUp:
                         gc.setFill(Color.BLUEVIOLET);
+                        break;
+                    case Corner:
+                        gc.setFill(Color.AQUAMARINE);
                         break;
                     default:
                         gc.setFill(Color.GRAY);

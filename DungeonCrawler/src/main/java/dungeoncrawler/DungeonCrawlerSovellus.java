@@ -60,12 +60,12 @@ public class DungeonCrawlerSovellus extends Application {
         player = new Player(5, 5, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
 
-        map.createRoom(2, 2, 20, 16);
-        map.createRoom(20, 5, 26, 7);
-        map.createRoom(26, 3, 32, 21);
-        map.createDoor(26, 6);
-        map.createDoor(32, 6);
-        map.createDoor(20, 6);
+//        map.createRoom(2, 2, 20, 16);
+//        map.createRoom(20, 5, 26, 7);
+//        map.createRoom(26, 3, 32, 21);
+//        map.createDoor(26, 6);
+//        map.createDoor(32, 6);
+//        map.createDoor(20, 6);
         map.createLevel();
 //
     }

@@ -57,7 +57,7 @@ public class MapDrawer {
                         break;
                         
                     case OpenDoor:
-                        gc.setFill(Color.WHITE);
+                        gc.setFill(Color.BURLYWOOD);
                         break;
                     
                     case Wall:

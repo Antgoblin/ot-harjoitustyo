@@ -135,7 +135,7 @@ public class Map {
     public int getCreatureSize() {
         return this.creatureSize;
     }
-    
+
     public int Level() {
         return this.Level;
     }
@@ -390,14 +390,13 @@ public class Map {
                 tile.setCharacter(null);
             }
         }
-        
+
         enemies.removeAll(enemies);
-        
-        
+
         // creates rooms
         int roomscreated = 0;
         int roomswanted = random.nextInt(7) + 10;
-        
+
         while (roomscreated < roomswanted) {
             Tile randomtile = getRandomTile(Tiletype.Void);
             int x = random.nextInt(10) + 5;
@@ -420,10 +419,9 @@ public class Map {
 //        for (int s = 0; s <= stairsDown; s++ ) {
 //            getRandomTile(Tiletype.TempFloor).setType(Tiletype.StairsDown);
 //        }
-        
 
         boolean floorIsUnited = false;
-        
+
         // creates hallways
         while (!floorIsUnited) {
 
@@ -476,13 +474,13 @@ public class Map {
             }
 
         }
-        
+
         // creates stairs up and down
         Tile stairs = getRandomTile(Tiletype.TempFloor);
         stairs.setType(Tiletype.StairsUp);
-        
+
         int stairsDown = random.nextInt(3);
-        for (int s = 0; s <= stairsDown; s++ ) {
+        for (int s = 0; s <= stairsDown; s++) {
             getRandomTile(Tiletype.TempFloor).setType(Tiletype.StairsDown);
         }
 
@@ -507,16 +505,19 @@ public class Map {
                 }
             }
         }
-        
+
         //Spawn enemies
-        int enemies = roomswanted + 10 + random.nextInt(10);
-        for(int e = 0; e <= enemies; e++) {
-            spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
-            
-        }
+        int amount = roomswanted + random.nextInt(10);
+        List<EnemyList> enemies = EnemyList.RAT.Randomize(Level, amount); 
+        
+        enemies.forEach(enemy -> {
+            spawnEnemyRandom(enemy.spawn(player));
+        });
+        
+        
 
     }
-    
+
     public void goDown() {
         this.Level++;
         createLevel();
@@ -524,13 +525,31 @@ public class Map {
         player.setX(stairs.X());
         player.setY(stairs.Y());
     }
-    
+
     public void goUp() {
         this.Level--;
-        createLevel();
+        if (this.Level == 0) {
+            for (int x = 0; x < size; x++) {
+                for (int y = 0; y < size; y++) {
+                    Tile tile = getTile(x, y);
+                    tile.setType(Tiletype.Void);
+                    tile.setCharacter(null);
+                }
+            }
+
+            enemies.removeAll(enemies);
+            createRoom(10, 10, 14, 14);
+            getTile(12, 12).setType(Tiletype.StairsDown);
+
+        } else {
+            createLevel();
+        }
+
         Tile stairs = getRandomTile(Tiletype.StairsDown);
         player.setX(stairs.X());
         player.setY(stairs.Y());
     }
+
+    
 
 }

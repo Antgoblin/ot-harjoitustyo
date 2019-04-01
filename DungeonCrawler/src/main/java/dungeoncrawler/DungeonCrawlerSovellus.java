@@ -155,7 +155,7 @@ public class DungeonCrawlerSovellus extends Application {
                     break;
 
                 case SPACE:
-                    player.acted(true);
+                    player.setActed(true);
                     break;
 
                 case C:
@@ -176,7 +176,7 @@ public class DungeonCrawlerSovellus extends Application {
                     if (map.getEnemies().isEmpty()) {
                         map.spawnEnemy(EnemyList.RAT.spawn(3, 15, player));
                     }
-                    player.acted(true);
+                    player.setActed(true);
                     break;
 
                 case TAB:
@@ -199,7 +199,7 @@ public class DungeonCrawlerSovellus extends Application {
             }
             updateCamera();
             updateStatScreen();
-            if (player.ifActed()) {
+            if (player.hasActed()) {
                 endTurn();
             }
         });
@@ -245,13 +245,17 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     public void updateCamera() {
-        int x = player.X() * tileSize - 11 * tileSize;
+        int x = (player.X() - 11) * tileSize;
         if (x < 0) {
             x = 0;
+        } else if (x > map.getSize() * tileSize - WIDTH ) {
+            x = map.getSize() * tileSize - WIDTH;
         }
-        int y = player.Y() * tileSize - 9 * tileSize;
+        int y = (player.Y() - 9) * tileSize;
         if (y < 0) {
             y = 0;
+        } else if (y > map.getSize() * tileSize - HEIGHT ) {
+            y = map.getSize() * tileSize - HEIGHT;
         }
 
         canvas.setTranslateX(-x);
@@ -313,7 +317,7 @@ public class DungeonCrawlerSovellus extends Application {
         map.getEnemies().forEach(enemy -> {
             enemy.noAttack();
             mh.move(enemy);
-            if (enemy.getIfAttacked()) {
+            if (enemy.hasAttacked()) {
                 textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
             }
         });
@@ -341,7 +345,7 @@ public class DungeonCrawlerSovellus extends Application {
 
         updateStatScreen();
         player.noAttack();
-        player.acted(false);
+        player.setActed(false);
 
         //draws what happened
         mapDrawer.drawAll();

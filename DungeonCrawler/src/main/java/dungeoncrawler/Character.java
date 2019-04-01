@@ -77,11 +77,11 @@ public class Character {
         map.getTile(this.x, this.y).setCharacter(this);
     }
     
-    public boolean ifActed() {
+    public boolean hasActed() {
         return this.acted;
     }
 
-    public void acted(boolean status) {
+    public void setActed(boolean status) {
         this.acted = status;
     }
     
@@ -94,7 +94,7 @@ public class Character {
         this.attacked = false;
     }
     
-    public boolean getIfAttacked() {
+    public boolean hasAttacked() {
         return attacked;
     }
     

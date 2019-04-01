@@ -61,7 +61,7 @@ public class MovementHandler {
         });
 
         //checks what Tiletype
-        if (player.getIfAttacked() == false) {
+        if (!player.hasAttacked()) {
             Tile tile = map.getTile(player.X() + dir.X(), player.Y() + dir.Y());
             
             if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor ||  tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
@@ -72,7 +72,7 @@ public class MovementHandler {
                 tile.setType(Tiletype.OpenDoor);
             }
         }
-        player.acted(true);
+        player.setActed(true);
     }
     
     public void move(Enemy enemy) {
@@ -136,10 +136,13 @@ public class MovementHandler {
 
         switch (tile.getType()) {
             case OpenDoor:
-                tile.setType(Tiletype.Door);
-                textArea.appendText("You closed the door \n");
-                player.noAttack();
-                player.acted(true);
+                if (!tile.occupied()) {
+                    tile.setType(Tiletype.Door);
+                    textArea.appendText("You closed the door \n");
+                    player.noAttack();
+                    player.setActed(true);
+                    
+                }
                 break;
 
             case Door:
@@ -165,7 +168,7 @@ public class MovementHandler {
                 break;
             }
         }
-        player.acted(true);
+        player.setActed(true);
         this.state = 0;
     }
 }

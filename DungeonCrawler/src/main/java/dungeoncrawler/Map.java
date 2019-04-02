@@ -505,16 +505,24 @@ public class Map {
                 }
             }
         }
+        // Destroys faulty doors
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if(getTile(x, y).getType() == Tiletype.Door) {
+                    if ((getTile(x + 1, y).getType() != Tiletype.Wall || getTile(x - 1, y).getType() != Tiletype.Wall) && (getTile(x, y + 1).getType() != Tiletype.Wall || getTile(x, y - 1).getType() != Tiletype.Wall)) {
+                        getTile(x,y).setType(Tiletype.Floor);
+                    }
+                }               
+            }
+        }
 
         //Spawn enemies
         int amount = roomswanted + random.nextInt(10);
-        List<EnemyList> enemies = EnemyList.RAT.Randomize(Level, amount); 
-        
+        List<EnemyList> enemies = EnemyList.RAT.Randomize(Level, amount);
+
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));
         });
-        
-        
 
     }
 
@@ -549,7 +557,5 @@ public class Map {
         player.setX(stairs.X());
         player.setY(stairs.Y());
     }
-
-    
 
 }

@@ -24,7 +24,7 @@ public enum EnemyList {
     RAT("Rat", 10, 5, 10, 20, 10, Color.GRAY, 5, 1),
     CAT("Cat", 15, 4, 6, 5, 5, Color.ORANGE, 3, 1), 
     BEAR("Bear", 30, 4, 10, 5, 50, Color.BROWN, 3, 3),
-    MORGOTH("Morgoth", 50, 1, 1000, 100, 9999, Color.BLACK, 1, 99);
+    DEATH("Death", 50, 1, 1000, 100, 9999, Color.BLACK, 1, 40);
 
     private int hp;
     private String name;
@@ -125,7 +125,7 @@ public enum EnemyList {
         enemytypes.add(RAT);
         enemytypes.add(CAT);
         enemytypes.add(BEAR);
-        enemytypes.add(MORGOTH);
+        enemytypes.add(DEATH);
 
         return enemytypes;
     }

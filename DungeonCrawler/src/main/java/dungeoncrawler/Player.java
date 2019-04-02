@@ -5,6 +5,9 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -12,63 +15,119 @@ import javafx.scene.shape.Polygon;
  * @author jy
  */
 public class Player extends Character {
-    
+
     private Class playerClass;
     private int Lvl;
     private int exp;
     private int gold;
+    private int maxMana;
+    private int currentMana;
     private Weapon weapon;
-    
-    public Player(int x, int y, int hp) {
-        super(x, y, hp);
-        this.weapon = new Weapon("dagger", 2, 5, 1);
-        this.playerClass = Class.Warrior;
+    private Weapon weapon2;
+    private List<Item> inventory = new ArrayList<>();
+
+    public Player(int x, int y, Class playerclass) {
+        super("You", x, y, playerclass.Hp(), Color.BLACK);
+        this.weapon = playerclass.StartingWeapon();
+        this.weapon2 = playerclass.SecondWeapon();
+        this.inventory.add(this.weapon);
+        this.inventory.add(this.weapon2);
+        this.playerClass = playerclass;
         this.Lvl = 1;
         this.exp = 0;
         this.gold = 0;
+        this.maxMana = playerclass.mana();
+        this.currentMana = playerclass.mana();
     }
     
-    public void attack(Character target) {
+    public void attack(Enemy target) {
+        target.rage();
         int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }
     
+    public void attack(Character target) {
+        
+        int damage = weapon.getDamage();
+        this.attacked(damage);
+        target.loseHp(damage);
+    }
+
     public Class getPlayerClass() {
         return this.playerClass;
     }
-    
+
     public int getLvl() {
         return this.Lvl;
     }
-    
+
     public int getExp() {
         return this.exp;
     }
-    
+
     public void gainExp(int amount) {
         this.exp += amount;
     }
+
     public void loseExp(int amount) {
         this.exp -= amount;
     }
     
+    public int maxMana() {
+        return this.maxMana;
+    }
+    
+    public int currentMana() {
+        return this.currentMana;
+    }
+    
+    public void gainMana(int amount) {
+        this.currentMana += amount;
+    }
+
+    public void loseMana(int amount) {
+        this.currentMana -= amount;
+    }
+
     public int getGold() {
         return this.gold;
     }
-    
+
     public void gainGold(int amount) {
         this.gold += amount;
     }
-    
+
     public void loseGold(int amount) {
         this.gold -= amount;
     }
-    
+
     public Weapon getWeapon() {
         return this.weapon;
     }
+
+    public Weapon getWeapon2() {
+        return this.weapon2;
+    }
     
+    public List<Item> inventory() {
+        return this.inventory;
+    }
+    
+    public void addItem(Item item) {
+        this.inventory.add(item);
+    }
+
+    public void Switch() {
+        if (this.weapon != null && this.weapon2 != null) {
+            Weapon one = this.weapon;
+            Weapon two = this.weapon2;
+            this.weapon = two;
+            this.weapon2 = one;
+
+        }
+    }
+
     public int getRange() {
         return weapon.getRange();
     }

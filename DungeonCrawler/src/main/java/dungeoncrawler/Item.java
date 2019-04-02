@@ -9,7 +9,16 @@ package dungeoncrawler;
  *
  * @author jy
  */
-public enum Tiletype {
-    Void, Floor, Wall, Door, OpenDoor, StairsUp, StairsDown, TempFloor, TempWall, OutOfMap, Corner, CheckedFloor, CheckedDoor, CheckedTempFloor;
+public class Item {
+    
+    private String name;
+    
+    public Item(String name) {
+        this.name = name;
+    }
+    
+    public String name() {
+        return this.name;
+    }
     
 }

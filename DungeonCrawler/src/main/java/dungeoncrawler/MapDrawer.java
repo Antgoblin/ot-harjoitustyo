@@ -46,12 +46,38 @@ public class MapDrawer {
         
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
-                if (map.getTile(x, y).getType() == Tiletype.Wall) {
-                    gc.setFill(Color.BLACK);
-                } else if (map.getTile(x, y).getType() == Tiletype.Door){
-                    gc.setFill(Color.SIENNA);
-                } else {
-                    gc.setFill(Color.WHITE);
+               
+                switch (map.getTile(x, y).getType()) {
+                    case Floor:
+                        gc.setFill(Color.WHITE);
+                        break;
+                        
+                    case Door:                        
+                        gc.setFill(Color.SIENNA);
+                        break;
+                        
+                    case OpenDoor:
+                        gc.setFill(Color.BURLYWOOD);
+                        break;
+                    
+                    case Wall:
+                        gc.setFill(Color.BLACK);
+                        break;
+                    case TempFloor:
+                        gc.setFill(Color.LIGHTBLUE);
+                        break;
+                    case TempWall:
+                        gc.setFill(Color.RED);
+                        break;
+                    case StairsUp:
+                        gc.setFill(Color.BLUEVIOLET);
+                        break;
+                    case StairsDown:
+                        gc.setFill(Color.AQUAMARINE);
+                        break;    
+                    default:
+                        gc.setFill(Color.GRAY);
+                        break;
                 }
                 gc.fillRect(x * map.getTileSize(), y * map.getTileSize(), map.getTileSize(), map.getTileSize());
             }
@@ -61,8 +87,8 @@ public class MapDrawer {
     public void drawPlayer() {
         
         gc.setFill(Color.BLACK);
-        gc.fillRect(map.getPlayer().getX() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
-                map.getPlayer().getY() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+        gc.fillRect(map.getPlayer().X() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                map.getPlayer().Y() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
                 map.getCreatureSize(),
                 map.getCreatureSize());
         
@@ -71,8 +97,9 @@ public class MapDrawer {
     public void drawEnemies() {
         
         map.getEnemies().forEach( enemy -> {
-            gc.fillOval(enemy.getX() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
-                    enemy.getY() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+            gc.setFill(enemy.color());
+            gc.fillOval(enemy.X() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
+                    enemy.Y() * map.getTileSize() + (map.getTileSize() - map.getCreatureSize()) / 2,
                     map.getCreatureSize(),
                     map.getCreatureSize());
         });

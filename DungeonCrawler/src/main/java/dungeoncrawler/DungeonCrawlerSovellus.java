@@ -23,9 +23,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
 /**
@@ -39,108 +41,171 @@ public class DungeonCrawlerSovellus extends Application {
     }
 
     //Jotkin muuttujat täällä että niitä helppo muuttaa.
-    public static int WIDTH = 950;   // 950?
-    public static int HEIGHT = 750;   // 750?
-    public static int tileSize = 40;
+    public static int tileSize = 40; //40
+    public static int WIDTH = tileSize * 23;   // 950?
+    public static int HEIGHT = tileSize * 19;   // 750?
 //    public static int playerSize = tileSize*2/5;
     private Map map;
-    int mapSize = 100;
+    int mapSize = 80;
     private Player player;
     private GridPane grid;
     private Canvas canvas;
     private MapDrawer mapDrawer;
     private TextArea textArea;
     private TextArea statscreen;
+    private MovementHandler mh;
 
     public void init() {
-
-        player = new Player(5, 4, 100);
+//
+        player = new Player(11, 11, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
 
-        map.createRoom(1, 1, 20, 16);
-        map.createRoom(20, 5, 26, 7);
-        map.createRoom(26, 3, 32, 21);
-        map.createDoor(26, 6);
-        map.createDoor(20, 6);
-
+        map.createRoom(10, 10, 14, 14);
+        map.getTile(12, 12).setType(Tiletype.StairsDown);
     }
 
     @Override
     public void start(Stage stage) {
 
+        //Character creation scene
+        Pane pane = new Pane();
+        Label choose = new Label("Choose Class");
+        choose.setTranslateX(500);
+        choose.setTranslateY(300);
+        choose.setScaleX(3);
+        choose.setScaleY(3);
+        Label warrior = new Label("W = Warrior");
+        warrior.setTranslateX(500);
+        warrior.setTranslateY(400);
+        warrior.setScaleX(1.5);
+        warrior.setScaleY(1.5);
+        Label ranger = new Label("R = Ranger");
+        ranger.setTranslateX(500);
+        ranger.setTranslateY(420);
+        ranger.setScaleX(1.5);
+        ranger.setScaleY(1.5);
+        Label mage = new Label("M = mage");
+        mage.setTranslateX(500);
+        mage.setTranslateY(440);
+        mage.setScaleX(1.5);
+        mage.setScaleY(1.5);
+        pane.getChildren().addAll(choose, warrior, ranger, mage);
+        Scene charactercreation = new Scene(pane, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+
+        //Game Scene
         initializeLayout();
         initializeMapDrawer();
         initializeTextArea();
         initializeStatScreen();
-        MovementHandler mh = new MovementHandler(map, textArea);
-        map.addEnemy(new Enemy("Rat", 15, 5, 10, 5, 10, 20, 10, player));
+        mh = new MovementHandler(map, textArea);
+        Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
+//        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
 
-        int cameraMaxX = WIDTH / (2 * tileSize) + 1;
-        int cameraMaxY = HEIGHT / (2 * tileSize) + 1;
 
-        mapDrawer.drawAll();
-        
-        Scene game = new Scene(grid, WIDTH + 300, HEIGHT + 200);
-        
-        game.setOnKeyPressed(event -> {
+        charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case UP:
-                    mh.handle(player, Direction.UP);
-                    if (player.getIfMoved() == true) {
-                        if (player.getY() >= cameraMaxY - 1) {
-                            canvas.setTranslateY(canvas.getTranslateY() + tileSize);
-                        }
-                    }
+                case W:
+                    player = new Player(11, 11, Class.Warrior);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
+
                     break;
-                    
-                case DOWN:
-                    mh.handle(player, Direction.DOWN);
-                    if (player.getIfMoved() == true) {
-                        if (player.getY() >= cameraMaxY) {
-                            canvas.setTranslateY(canvas.getTranslateY() - tileSize);
-                        }
-                    }
+                case R:
+                    player = new Player(11, 11, Class.Ranger);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
                     break;
-                    
-                case RIGHT:
-                    mh.handle(player, Direction.RIGHT);
-                    if (player.getIfMoved() == true) {
-                        if (player.getX() >= cameraMaxX) {
-                            canvas.setTranslateX(canvas.getTranslateX() - tileSize);
-                        }
-                    }
+                case M:
+                    player = new Player(11, 11, Class.Mage);
+                    map.setplayer(player);
+                    updateStatScreen();
+                    stage.setScene(game);
                     break;
-                    
-                case LEFT:
-                    mh.handle(player, Direction.LEFT);
-                    if (player.getIfMoved() == true) {
-                        if (player.getX() >= cameraMaxX - 1) {
-                            canvas.setTranslateX(canvas.getTranslateX() + tileSize);
-                        }
-                    }
-                    break;
-                
-                case SPACE:
-                    player.acted();
-                    break;
-                    
-                case C:
-                    //Making player choose direction?
-                    textArea.appendText("Choose Direction \n");
-                    mh.setState(1);
-                    
                 default:
                     break;
 
             }
-            if (player.ifActed()) {
+        });
+
+        mapDrawer.drawAll();
+
+        game.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case UP:
+                    mh.handle(player, Direction.UP);
+                    break;
+
+                case DOWN:
+                    mh.handle(player, Direction.DOWN);
+                    break;
+
+                case RIGHT:
+                    mh.handle(player, Direction.RIGHT);
+                    break;
+
+                case LEFT:
+                    mh.handle(player, Direction.LEFT);
+                    break;
+
+                case SPACE:
+                    player.setActed(true);
+                    break;
+
+                case C:
+                    textArea.appendText("Choose Direction \n");
+                    mh.setState(1);
+                    break;
+
+                case S:
+                    if (player.getRange() > 1) {
+                        textArea.appendText("Choose Direction \n");
+                        mh.setState(2);
+                    } else {
+                        textArea.appendText("You dont have anything to shoot with \n");
+                    }
+                    break;
+
+                case Q:
+                    if (map.getEnemies().isEmpty()) {
+                        map.spawnEnemy(EnemyList.RAT.spawn(3, 15, player));
+                    }
+                    player.setActed(true);
+                    break;
+
+                case TAB:
+                    player.Switch();
+                    break;
+
+                case ENTER:
+                    if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsDown) {
+                        map.goDown();
+                        mapDrawer.drawAll();
+                    } else if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsUp) {
+                        map.goUp();
+                        mapDrawer.drawAll();
+                    }
+                    break;
+                        
+                default:
+                    break;
+
+            }
+            updateCamera();
+            updateStatScreen();
+            if (player.hasActed()) {
                 endTurn();
-                updateStatScreen();               
             }
         });
 
         stage.setTitle("DungeonCrawler");
-        stage.setScene(game);
+        stage.setScene(charactercreation);
         stage.setResizable(false);
         stage.show();
 
@@ -162,6 +227,7 @@ public class DungeonCrawlerSovellus extends Application {
         canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         mapDrawer = new MapDrawer(map, gc);
+        updateCamera();
         grid.add(canvas, 1, 1, 1, 1); //1,1
 
     }
@@ -170,7 +236,7 @@ public class DungeonCrawlerSovellus extends Application {
 
         //TextArea (Only display)
         textArea = new TextArea();
-        textArea.setMinSize(WIDTH * 5 / 4, HEIGHT / 4);
+        textArea.setMinSize(WIDTH + tileSize * 5, tileSize * 5);
         textArea.setEditable(false);
         textArea.setFocusTraversable(false);
         textArea.setMouseTransparent(true);
@@ -178,11 +244,29 @@ public class DungeonCrawlerSovellus extends Application {
 
     }
 
+    public void updateCamera() {
+        int x = (player.X() - 11) * tileSize;
+        if (x < 0) {
+            x = 0;
+        } else if (x > map.getSize() * tileSize - WIDTH ) {
+            x = map.getSize() * tileSize - WIDTH;
+        }
+        int y = (player.Y() - 9) * tileSize;
+        if (y < 0) {
+            y = 0;
+        } else if (y > map.getSize() * tileSize - HEIGHT ) {
+            y = map.getSize() * tileSize - HEIGHT;
+        }
+
+        canvas.setTranslateX(-x);
+        canvas.setTranslateY(-y);
+    }
+
     private void initializeStatScreen() {
 
         //Area for characters stats & such
         statscreen = new TextArea();
-        statscreen.setMinSize(WIDTH / 4, HEIGHT);
+        statscreen.setMinSize(tileSize * 5, HEIGHT + tileSize * 5);
         statscreen.setEditable(false);
         statscreen.setFocusTraversable(false);
         statscreen.setMouseTransparent(true);
@@ -195,7 +279,17 @@ public class DungeonCrawlerSovellus extends Application {
         statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
                 + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
                 + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n"
+                + "Mana: " + player.currentMana() + " / " + player.maxMana() + "\n \n"
+                + "Weapon1 : " + player.getWeapon().name() + "\n"
         );
+
+        if (player.getWeapon2() != null) {
+            statscreen.appendText("Weapon2 : " + player.getWeapon2().name());
+        } else {
+            statscreen.appendText("Weapon2 : -");
+        }
+        statscreen.appendText(" \n \n \n \n Level: " + map.Level());
+        
     }
 
     private void endTurn() {
@@ -213,6 +307,7 @@ public class DungeonCrawlerSovellus extends Application {
             deadEnemies.forEach(dead -> {
                 textArea.appendText("You killed " + dead.getName() + " \n");
                 player.gainExp(dead.getExp());
+                map.getTile(dead.X(), dead.Y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 
@@ -221,8 +316,8 @@ public class DungeonCrawlerSovellus extends Application {
         //Enemies turn
         map.getEnemies().forEach(enemy -> {
             enemy.noAttack();
-            enemy.act();
-            if (enemy.getIfAttacked()) {
+            mh.move(enemy);
+            if (enemy.hasAttacked()) {
                 textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
             }
         });
@@ -242,14 +337,15 @@ public class DungeonCrawlerSovellus extends Application {
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
                 textArea.appendText(dead.getName() + " died \n");
+                map.getTile(dead.X(), dead.Y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 
         }
 
+        updateStatScreen();
         player.noAttack();
-        player.doNotMove();
-        player.didNotAct();
+        player.setActed(false);
 
         //draws what happened
         mapDrawer.drawAll();

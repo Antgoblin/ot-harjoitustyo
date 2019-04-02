@@ -6,6 +6,7 @@
 package dungeoncrawler;
 
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.util.Random;
  */
 public class Enemy extends Character {
     
-    private String name;
+//    private String name;
     private int aggressionRange;
     private Character target;
     private int  minDamage;
@@ -21,36 +22,14 @@ public class Enemy extends Character {
     private int exp;
     private Random random = new Random();
     
-    public Enemy(String name, int x, int y, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
-        super(x, y, hp);
-        this.name = name;
+    public Enemy(String name, int x, int y, int hp, Color color, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
+        super(name, x, y, hp, color);
+//        this.name = name;
         this.minDamage = mindamage;
         this.maxDamage = maxdamage;
         this.aggressionRange = aggressionRange;
         this.exp = exp;
         this.target = target;
-    }
-    
-    public void moveTowards(int x, int y) {
-        int distanceX = Math.abs(x - this.getX());
-        int distanceY = Math.abs(y - this.getY());
-        
-        if(distanceY > distanceX) {
-            if(y - this.getY() < 0) {
-                this.move(Direction.UP);
-            } else {
-                this.move(Direction.DOWN);
-            }
-            
-        } else if (distanceX >= distanceY) {
-            if(x - this.getX() > 0) {
-                this.move(Direction.RIGHT);
-            } else {
-                this.move(Direction.LEFT);
-            }
-        }
-        
-        
     }
     
     public void attack() {
@@ -60,26 +39,23 @@ public class Enemy extends Character {
         
     }
     
-    public void act() {
-        int distanceX = Math.abs(target.getX() - this.getX());
-        int distanceY = Math.abs(target.getY() - this.getY());
-        int fartherDistance = Math.max(distanceX, distanceY);
-        int closerDistance = Math.min(distanceX, distanceY);
-        
-        if(closerDistance > 0 || fartherDistance > 1 && distanceY <= aggressionRange && distanceX <= aggressionRange) {
-            moveTowards(target.getX(), target.getY());
-            this.noAttack();
-        } else if (fartherDistance == 1 && closerDistance == 0) {
-            attack();
-        }
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
     public int getExp() {
-        return exp;
+        return this.exp;
     }
-
+    
+    public Character getTarget() {
+        return this.target;
+    }
+    
+    public void setTarget(Character character) {
+        this.target = character;
+    }
+    
+    public int aggressionRange() {
+        return this.aggressionRange;
+    }
+    
+    public void rage() {
+        this.aggressionRange = 100;
+    }
 }

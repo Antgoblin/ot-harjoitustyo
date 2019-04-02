@@ -5,10 +5,7 @@
  */
 package dungeoncrawler;
 
-import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -16,15 +13,24 @@ import javafx.scene.shape.Rectangle;
  */
 public class Tile extends StackPane {
     
+    private int x;
+    private int y;
     private Tiletype type;
+    private Character character = null;
         
-    public Tile() {
+    public Tile(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.type = Tiletype.Void;
 
     }
-  
-    public void setWall() {
-        this.type = Tiletype.Wall;
+    
+    public int X() {
+        return this.x;
+    }
+    
+    public int Y() {
+        return this.y;
     }
     
     public void setType(Tiletype type) {
@@ -33,5 +39,17 @@ public class Tile extends StackPane {
     
     public Tiletype getType() {
         return this.type;
+    }
+    
+    public boolean occupied() {
+        return this.character != null;
+    }
+    
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+    
+    public Character getCharacter() {
+        return this.character;
     }
 }

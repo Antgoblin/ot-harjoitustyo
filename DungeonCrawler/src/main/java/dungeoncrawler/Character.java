@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -13,30 +14,39 @@ import javafx.scene.shape.Polygon;
  */
 public class Character {
     
+    private String name;
     private int x;
     private int y;
     private int maxhp;
     private int currenthp;
     private boolean acted;
-    private boolean moved;
     private boolean attacked;
     private int lastDamageDealt;
+    private Color color;
     
-    public Character(int x, int y, int hp) {
+    public Character(String name, int x, int y, int hp, Color color) {
+        this.name = name;
         this.maxhp = hp;
         this.currenthp = hp;
         this.x = x;
         this.y = y;
-        this.moved = false;
         this.acted = false;
+        this.color = color;
     }
     
-    public int getX() {
+    public int X() {
         return this.x;
     }
     
-    public int getY() {
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    public int Y() {
         return this.y;
+    }
+    public void setY(int y) {
+        this.y = y;
     }
     
     public int getMaxHp() {
@@ -49,32 +59,30 @@ public class Character {
     
     public void gainHp(int amount) {
         this.currenthp += amount;
+        if(this.currenthp > this.maxhp) {
+            this.currenthp = this.maxhp;
+        }
     }
     
     public void loseHp(int amount) {
         this.currenthp -= amount;
     } 
     
-    public void move(Direction dir) {
-        this.x += dir.getX();
-        this.y += dir.getY();
-        this.moved = true;
+    public void move(Map map, Direction dir) {
+        //old tile 
+        map.getTile(this.x, this.y).setCharacter(null);
+        //new tile 
+        this.x += dir.X();
+        this.y += dir.Y();
+        map.getTile(this.x, this.y).setCharacter(this);
     }
     
-    public boolean ifActed() {
+    public boolean hasActed() {
         return this.acted;
     }
 
-    public void acted() {
-        this.acted = true;
-    }
-    
-    public void didNotAct() {
-        this.acted = false;
-    }
-    
-    public void doNotMove() {
-        this.moved = false;
+    public void setActed(boolean status) {
+        this.acted = status;
     }
     
     public void attacked(int damage) {
@@ -86,12 +94,8 @@ public class Character {
         this.attacked = false;
     }
     
-    public boolean getIfAttacked() {
+    public boolean hasAttacked() {
         return attacked;
-    }
-    
-    public boolean getIfMoved() {
-        return moved;
     }
     
     public int getLastDamage() {
@@ -104,5 +108,13 @@ public class Character {
         } else {
             return false;
         }
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public Color color() {
+        return this.color;
     }
 }

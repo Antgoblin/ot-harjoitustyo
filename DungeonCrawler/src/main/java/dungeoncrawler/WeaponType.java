@@ -13,8 +13,8 @@ import java.util.Random;
  */
 public enum WeaponType {
 
-    DAGGER("Dagger", 1, 2, 1),
-    SWORD("Sword", 4, 7, 1),
+    DAGGER("Dagger", 3, 5, 1),
+    LONGSWORD("Longsword", 5, 10, 1),
     BOW("Bow", 2, 3, 10);
     
     private String name;

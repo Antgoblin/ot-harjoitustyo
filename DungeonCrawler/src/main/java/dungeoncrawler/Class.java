@@ -10,7 +10,7 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Class {    
-    Warrior(100, 0, new Weapon(WeaponType.SWORD), null),
+    Warrior(100, 0, new Weapon(WeaponType.LONGSWORD), null),
     Ranger(60, 10, new Weapon(WeaponType.BOW), new Weapon(WeaponType.DAGGER)),
     Mage(50, 25, new Weapon(WeaponType.DAGGER), null);
     

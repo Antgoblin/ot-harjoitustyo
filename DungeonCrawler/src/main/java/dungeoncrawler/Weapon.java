@@ -13,25 +13,20 @@ import java.util.Random;
  * @author jy
  */
 public class Weapon extends Item{
-    private int minDamage;
-    private int maxDamage;
-    private int range;
-    private Random random = new Random();
     
-    public Weapon(String name, int min, int max, int range) {
-        super(name);
-        this.minDamage = min;
-        this.maxDamage = max;
-        this.range = range;
+    private WeaponType weapon;
+    
+    public Weapon(WeaponType w) {
+        super(w.getName());
+        this.weapon = w;
     }
     
-    public int getDamage() {
-        int damage =  random.nextInt(maxDamage - minDamage +1) + minDamage;
-        return damage;
-    }
+    public WeaponType getWeaponType() {
+        return this.weapon;
+    } 
     
     public int getRange() {
-        return range;
+        return this.weapon.getRange();
     }
     
 }

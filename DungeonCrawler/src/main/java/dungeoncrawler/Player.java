@@ -42,14 +42,14 @@ public class Player extends Character {
     
     public void attack(Enemy target) {
         target.rage();
-        int damage = weapon.getDamage();
+        int damage = weapon.getWeaponType().getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }
     
     public void attack(Character target) {
         
-        int damage = weapon.getDamage();
+        int damage = weapon.getWeaponType().getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }

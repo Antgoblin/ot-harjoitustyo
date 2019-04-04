@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
  *
  * @author jy
  */
-public enum EnemyList {
+public enum EnemyType {
 
     //(name, hp, mindmg, maxdmg, aggro, exp)
     RAT("Rat", 10, 5, 10, 20, 10, Color.GRAY, 5, 1),
@@ -37,7 +37,7 @@ public enum EnemyList {
     private double spawnrate;
     private int depth;
 
-    private EnemyList(String name, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Color color, double spawnrate, int depth) {
+    private EnemyType(String name, int hp, int mindamage, int maxdamage, int aggressionRange, int exp, Color color, double spawnrate, int depth) {
         this.hp = hp;
         this.name = name;
         this.aggressionRange = aggressionRange;
@@ -65,10 +65,10 @@ public enum EnemyList {
 //        
 //    }
 
-    public List<EnemyList> Randomize(int depth, int amount) {
-        List<EnemyList> enemies = getAll();
+    public List<EnemyType> Randomize(int depth, int amount) {
+        List<EnemyType> enemies = getAll();
         System.out.println(enemies.size());
-        List<EnemyList> result = new ArrayList<>();
+        List<EnemyType> result = new ArrayList<>();
         
 //        double total = 0;
 //        List<Double> ws = new ArrayList<>();
@@ -102,26 +102,10 @@ public enum EnemyList {
         
         return result;
                 
-        
-        
-//        int x = random.nextInt(100);
-//        if (x <= 51) {
-//            return RAT;
-//        } else if (x <= 81) {
-//            return CAT;
-//        } else if (x <= 99) {
-//            return BEAR;
-//        } else {
-//            return MORGOTH;
-//        }
-//        List<EnemyList> enemytypes = getAll();
-//        Collections.shuffle(enemytypes);
-//        
-//        return enemytypes.get(0);
     }
 
-    public List<EnemyList> getAll() {
-        List<EnemyList> enemytypes = new ArrayList<>();
+    public List<EnemyType> getAll() {
+        List<EnemyType> enemytypes = new ArrayList<>();
         enemytypes.add(RAT);
         enemytypes.add(CAT);
         enemytypes.add(BEAR);

@@ -10,9 +10,9 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Class {    
-    Warrior(100, 0, new Weapon("Sword",4,7,1), null),
-    Ranger(60, 10, new Weapon ("Bow",2,3,10), new Weapon("Dagger",3,5,1)),
-    Mage(50, 25, new Weapon ("Dagger",3,5,1), null);
+    Warrior(100, 0, new Weapon(WeaponType.SWORD), null),
+    Ranger(60, 10, new Weapon(WeaponType.BOW), new Weapon(WeaponType.DAGGER)),
+    Mage(50, 25, new Weapon(WeaponType.DAGGER), null);
     
     private int hp;
     private int mana;

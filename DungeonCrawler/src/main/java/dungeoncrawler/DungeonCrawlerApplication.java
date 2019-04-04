@@ -34,7 +34,7 @@ import javafx.stage.Screen;
  *
  * @author jy
  */
-public class DungeonCrawlerSovellus extends Application {
+public class DungeonCrawlerApplication extends Application {
 
     public static void main(String[] args) {
         launch();
@@ -174,7 +174,7 @@ public class DungeonCrawlerSovellus extends Application {
 
                 case Q:
                     if (map.getEnemies().isEmpty()) {
-                        map.spawnEnemy(EnemyList.RAT.spawn(3, 15, player));
+                        map.spawnEnemy(EnemyType.RAT.spawn(3, 15, player));
                     }
                     player.setActed(true);
                     break;
@@ -315,7 +315,7 @@ public class DungeonCrawlerSovellus extends Application {
 
         //Enemies turn
         map.getEnemies().forEach(enemy -> {
-            enemy.noAttack();
+            enemy.hasNotAttacked();
             mh.move(enemy);
             if (enemy.hasAttacked()) {
                 textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
@@ -344,7 +344,7 @@ public class DungeonCrawlerSovellus extends Application {
         }
 
         updateStatScreen();
-        player.noAttack();
+        player.hasNotAttacked();
         player.setActed(false);
 
         //draws what happened

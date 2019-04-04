@@ -518,7 +518,7 @@ public class Map {
 
         //Spawn enemies
         int amount = roomswanted + random.nextInt(10);
-        List<EnemyList> enemies = EnemyList.RAT.Randomize(Level, amount);
+        List<EnemyType> enemies = EnemyType.RAT.Randomize(Level, amount);
 
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));

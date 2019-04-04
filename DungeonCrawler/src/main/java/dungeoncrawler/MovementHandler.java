@@ -66,7 +66,7 @@ public class MovementHandler {
             
             if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor ||  tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
                 player.move(map, dir);
-                player.noAttack();
+                player.hasNotAttacked();
 
             } else if (tile.getType() == Tiletype.Door) {
                 tile.setType(Tiletype.OpenDoor);
@@ -139,7 +139,7 @@ public class MovementHandler {
                 if (!tile.occupied()) {
                     tile.setType(Tiletype.Door);
                     textArea.appendText("You closed the door \n");
-                    player.noAttack();
+                    player.hasNotAttacked();
                     player.setActed(true);
                     
                 }

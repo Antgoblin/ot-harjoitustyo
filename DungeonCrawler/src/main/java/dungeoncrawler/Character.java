@@ -90,7 +90,7 @@ public class Character {
         this.lastDamageDealt = damage;
     }
     
-    public void noAttack() {
+    public void hasNotAttacked() {
         this.attacked = false;
     }
     

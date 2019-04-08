@@ -12,7 +12,8 @@ import java.util.Random;
  * @author antonpaa
  */
 public enum WeaponType {
-
+    
+    // Name, mindmg, maxdmg, range, rarity, depth
     DAGGER("Dagger", 3, 5, 1),
     LONGSWORD("Longsword", 5, 10, 1),
     BOW("Bow", 2, 3, 10);
@@ -21,6 +22,8 @@ public enum WeaponType {
     private int minDamage;
     private int maxDamage;
     private int range;
+//    private double rarity;
+//    private int depth;
     private Random random = new Random();
 
 

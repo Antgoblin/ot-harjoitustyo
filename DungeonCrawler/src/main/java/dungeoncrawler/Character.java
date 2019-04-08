@@ -19,8 +19,8 @@ public class Character {
     private int y;
     private int maxhp;
     private int currenthp;
-    private boolean acted;
-    private boolean attacked;
+    private boolean acted = false;
+    private boolean attacked = false;
     private int lastDamageDealt;
     private Color color;
     
@@ -30,7 +30,6 @@ public class Character {
         this.currenthp = hp;
         this.x = x;
         this.y = y;
-        this.acted = false;
         this.color = color;
     }
     

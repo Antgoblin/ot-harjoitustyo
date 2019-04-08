@@ -11,10 +11,17 @@ package dungeoncrawler;
  */
 public class Item {
     
-    private String name;
+    public enum ItemType {
+        WEAPON;
+    }
     
-    public Item(String name) {
+    private String name;
+    private ItemType type;
+    
+    public Item(String name, ItemType i) {
         this.name = name;
+        this.type = i;
+        
     }
     
     public String name() {

@@ -28,6 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 import javafx.stage.Screen;
 
 /**
@@ -192,7 +193,10 @@ public class DungeonCrawlerApplication extends Application {
                         mapDrawer.drawAll();
                     }
                     break;
-                        
+                     
+                case I:
+                    openInventory(stage);
+                    break;
                 default:
                     break;
 
@@ -218,7 +222,6 @@ public class DungeonCrawlerApplication extends Application {
         grid.setPrefSize(WIDTH, HEIGHT);
         grid.setHgap(0);
         grid.setVgap(0);
-//        screen.setPadding(new Insets(5, 5, 5, 5));
 
     }
 
@@ -289,6 +292,30 @@ public class DungeonCrawlerApplication extends Application {
             statscreen.appendText("Weapon2 : -");
         }
         statscreen.appendText(" \n \n \n \n Level: " + map.Level());
+        
+    }
+    
+    private void openInventory(Stage stage) {
+        Stage inventoryscreen = new Stage();
+        inventoryscreen.setTitle("Inventory");
+        inventoryscreen.setHeight(400);
+        inventoryscreen.setWidth(200);
+        
+        VBox inventory = new VBox();
+        List<Item> items = player.inventory();
+        
+        items.forEach(i -> {
+            String item = i.name();
+            Label label = new Label(item);
+            inventory.getChildren().add(label);
+            System.out.println(item);
+        });
+    
+        Scene scene = new Scene(inventory);
+        inventoryscreen.setScene(scene);
+        inventoryscreen.setResizable(false);
+        inventoryscreen.setAlwaysOnTop(true);
+        inventoryscreen.showAndWait();
         
     }
 

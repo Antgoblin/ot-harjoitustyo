@@ -30,8 +30,12 @@ public class Player extends Character {
         super("You", x, y, playerclass.Hp(), Color.BLACK);
         this.weapon = playerclass.StartingWeapon();
         this.weapon2 = playerclass.SecondWeapon();
-        this.inventory.add(this.weapon);
-        this.inventory.add(this.weapon2);
+        if (this.weapon != null) {
+            this.inventory.add(this.weapon);
+        }
+        if (this.weapon2 != null) {
+            this.inventory.add(this.weapon2);
+        }
         this.playerClass = playerclass;
         this.Lvl = 1;
         this.exp = 0;
@@ -42,14 +46,14 @@ public class Player extends Character {
     
     public void attack(Enemy target) {
         target.rage();
-        int damage = weapon.getWeaponType().getDamage();
+        int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }
     
     public void attack(Character target) {
         
-        int damage = weapon.getWeaponType().getDamage();
+        int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }

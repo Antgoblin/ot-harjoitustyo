@@ -26,6 +26,10 @@ public class MovementHandler {
     public void setState(int state) {
         this.state = state;
     }
+    
+    public int getState() {
+        return this.state;
+    }
 
     public void handle(Player player, Direction dir) {
         switch(this.state) {

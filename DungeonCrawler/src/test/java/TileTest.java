@@ -5,6 +5,9 @@
  */
 
 import dungeoncrawler.Tile;
+import dungeoncrawler.Character;
+import dungeoncrawler.Tiletype;
+import javafx.scene.paint.Color;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,25 +23,48 @@ public class TileTest {
     
     Tile tile;
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
+        tile = new Tile(1,10);     
     }
     
-    @After
-    public void tearDown() {
+    @Test
+    public void gettingX() {
+        assertEquals(1, tile.X());
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void gettingY() {
+        assertEquals(10, tile.Y());
+    }
+    
+    @Test
+    public void TiletypeIsVoid() {
+        assertEquals(Tiletype.Void, tile.getType());
+    }
+    
+    @Test
+    public void TiletypyAfterSettingIT() {
+        tile.setType(Tiletype.Floor);
+        assertEquals(Tiletype.Floor, tile.getType());
+    }
+    
+    @Test
+    public void occupiedIsFalse() {
+        assertEquals(false, tile.occupied());
+    }
+    
+    @Test
+    public void occupiedIsTrueIfCharacter() {
+        tile.setCharacter(new Character("Test", 2, 2, 10, Color.BLACK));
+        assertEquals(true, tile.occupied());
+    }
+    
+    @Test
+    public void GettingCharacter() {
+        assertEquals(null, tile.getCharacter());
+        Character Test = new Character("Test", 2, 2, 10, Color.BLACK);
+        tile.setCharacter(Test);
+        assertEquals(Test, tile.getCharacter());
+    }
 }

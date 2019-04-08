@@ -43,16 +43,16 @@ public class Player extends Character {
         this.maxMana = playerclass.mana();
         this.currentMana = playerclass.mana();
     }
-    
+
     public void attack(Enemy target) {
         target.rage();
         int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);
     }
-    
+
     public void attack(Character target) {
-        
+
         int damage = weapon.getDamage();
         this.attacked(damage);
         target.loseHp(damage);
@@ -76,22 +76,33 @@ public class Player extends Character {
 
     public void loseExp(int amount) {
         this.exp -= amount;
+        if (this.exp < 0) {
+            this.exp = 0;
+        }
     }
-    
+
     public int maxMana() {
         return this.maxMana;
     }
-    
+
     public int currentMana() {
         return this.currentMana;
     }
-    
+
     public void gainMana(int amount) {
         this.currentMana += amount;
+        if (this.currentMana > this.maxMana) {
+            this.currentMana = this.maxMana;
+        }
     }
 
-    public void loseMana(int amount) {
-        this.currentMana -= amount;
+    public boolean loseMana(int amount) {
+        if (this.currentMana >= amount) {
+            this.currentMana -= amount;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getGold() {
@@ -104,6 +115,9 @@ public class Player extends Character {
 
     public void loseGold(int amount) {
         this.gold -= amount;
+        if (this.gold < 0) {
+            this.gold = 0;
+        }
     }
 
     public Weapon getWeapon() {
@@ -113,11 +127,11 @@ public class Player extends Character {
     public Weapon getWeapon2() {
         return this.weapon2;
     }
-    
+
     public List<Item> inventory() {
         return this.inventory;
     }
-    
+
     public void addItem(Item item) {
         this.inventory.add(item);
     }

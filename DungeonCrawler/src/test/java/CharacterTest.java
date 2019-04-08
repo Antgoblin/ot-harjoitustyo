@@ -130,6 +130,15 @@ public class CharacterTest {
         
     }
     
+    @Test
+    public void SetXAndSetY() {
+        character.setX(5);
+        character.setY(10);
+        assertEquals(10, character.Y());
+        assertEquals(5, character.X());
+        
+    }
+    
     
     
     

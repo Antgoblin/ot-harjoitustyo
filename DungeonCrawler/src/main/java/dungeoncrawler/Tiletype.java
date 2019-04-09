@@ -5,11 +5,37 @@
  */
 package dungeoncrawler;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author jy
  */
 public enum Tiletype {
-    Void, Floor, Wall, Door, OpenDoor, StairsUp, StairsDown, TempFloor, TempWall, OutOfMap, Corner, CheckedFloor, CheckedDoor, CheckedTempFloor;
+    Void(Color.GRAY), 
+    Floor(Color.WHITE),
+    Wall(Color.BLACK),
+    Door(Color.SIENNA),
+    OpenDoor(Color.BURLYWOOD),
+    StairsUp(Color.AQUAMARINE),
+    StairsDown(Color.VIOLET),
+    TempFloor(Color.WHITE),
+    TempWall(Color.BLACK),
+    OutOfMap(Color.BLACK),
+    Corner(Color.BLACK),
+    CheckedFloor(Color.WHITE),
+    CheckedDoor(Color.SIENNA),
+    CheckedTempFloor(Color.WHITE);
+    
+    private Color color;
+    
+    private Tiletype(Color color) {
+        this.color = color;
+    }
+    
+    public Color getColor() {
+        return this.color;
+    }
+            
     
 }

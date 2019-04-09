@@ -111,22 +111,22 @@ public class PlayerTest {
     
     @Test
     public void GettingWeaponAndWeapon2() {
-        assertEquals(Class.Ranger.StartingWeapon(), player.getWeapon());
-        assertEquals(Class.Ranger.SecondWeapon(), player.getWeapon2());
+        assertEquals(Class.Ranger.startingWeapon(), player.getWeapon());
+        assertEquals(Class.Ranger.secondWeapon(), player.getWeapon2());
     }
     
     @Test
     public void SwitchingWeaponAndWeapon2() {
-        player.Switch();
-        assertEquals(Class.Ranger.SecondWeapon(), player.getWeapon());
-        assertEquals(Class.Ranger.StartingWeapon(), player.getWeapon2());
+        player.switchWeapons();
+        assertEquals(Class.Ranger.secondWeapon(), player.getWeapon());
+        assertEquals(Class.Ranger.startingWeapon(), player.getWeapon2());
     }
     
     @Test
     public void GettingInventory() {
         List<Item> items = new ArrayList<>();
-        items.add(Class.Ranger.StartingWeapon());
-        items.add(Class.Ranger.SecondWeapon());
+        items.add(Class.Ranger.startingWeapon());
+        items.add(Class.Ranger.secondWeapon());
         assertEquals(items, player.inventory());
     }
     

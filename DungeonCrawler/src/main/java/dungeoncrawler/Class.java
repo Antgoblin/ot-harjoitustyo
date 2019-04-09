@@ -9,38 +9,38 @@ package dungeoncrawler;
  *
  * @author jy
  */
-public enum Class {    
+public enum Class {
     Warrior(100, 0, new Weapon(WeaponType.LONGSWORD), null),
     Ranger(60, 10, new Weapon(WeaponType.BOW), new Weapon(WeaponType.DAGGER)),
     Mage(50, 25, new Weapon(WeaponType.DAGGER), null);
-    
+
     private int hp;
     private int mana;
     private Weapon weapon;
     private Weapon weapon2;
-    
+
     private Class(int hp, int mana, Weapon weapon, Weapon weapon2) {
         this.hp = hp;
         this.mana = mana;
         this.weapon = weapon;
         this.weapon2 = weapon2;
-        
+
     }
-    
-    public Weapon StartingWeapon() {
+
+    public Weapon startingWeapon() {
         return this.weapon;
     }
-    
-    public Weapon SecondWeapon() {
+
+    public Weapon secondWeapon() {
         return this.weapon2;
     }
-    
-    public int Hp() {
+
+    public int hp() {
         return this.hp;
     }
-    
+
     public int mana() {
         return this.mana;
     }
-    
+
 }

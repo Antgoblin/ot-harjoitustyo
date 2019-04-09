@@ -30,12 +30,12 @@ public class TileTest {
     
     @Test
     public void gettingX() {
-        assertEquals(1, tile.X());
+        assertEquals(1, tile.x());
     }
     
     @Test
     public void gettingY() {
-        assertEquals(10, tile.Y());
+        assertEquals(10, tile.y());
     }
     
     @Test

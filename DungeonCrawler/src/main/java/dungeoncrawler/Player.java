@@ -17,7 +17,7 @@ import javafx.scene.shape.Polygon;
 public class Player extends Character {
 
     private Class playerClass;
-    private int Lvl;
+    private int lvl;
     private int exp;
     private int gold;
     private int maxMana;
@@ -27,9 +27,9 @@ public class Player extends Character {
     private List<Item> inventory = new ArrayList<>();
 
     public Player(int x, int y, Class playerclass) {
-        super("You", x, y, playerclass.Hp(), Color.BLACK);
-        this.weapon = playerclass.StartingWeapon();
-        this.weapon2 = playerclass.SecondWeapon();
+        super("You", x, y, playerclass.hp(), Color.BLACK);
+        this.weapon = playerclass.startingWeapon();
+        this.weapon2 = playerclass.secondWeapon();
         if (this.weapon != null) {
             this.inventory.add(this.weapon);
         }
@@ -37,7 +37,7 @@ public class Player extends Character {
             this.inventory.add(this.weapon2);
         }
         this.playerClass = playerclass;
-        this.Lvl = 1;
+        this.lvl = 1;
         this.exp = 0;
         this.gold = 0;
         this.maxMana = playerclass.mana();
@@ -63,7 +63,7 @@ public class Player extends Character {
     }
 
     public int getLvl() {
-        return this.Lvl;
+        return this.lvl;
     }
 
     public int getExp() {
@@ -136,7 +136,7 @@ public class Player extends Character {
         this.inventory.add(item);
     }
 
-    public void Switch() {
+    public void switchWeapons() {
         if (this.weapon != null && this.weapon2 != null) {
             Weapon one = this.weapon;
             Weapon two = this.weapon2;

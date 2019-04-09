@@ -22,7 +22,7 @@ public enum EnemyType {
 
     //(name, hp, mindmg, maxdmg, aggro, exp)
     RAT("Rat", 10, 5, 10, 20, 10, Color.GRAY, 5, 1),
-    CAT("Cat", 15, 4, 6, 5, 5, Color.ORANGE, 3, 1), 
+    CAT("Cat", 15, 4, 6, 5, 5, Color.ORANGE, 3, 1),
     BEAR("Bear", 30, 4, 10, 5, 50, Color.BROWN, 3, 3),
     DEATH("Death", 50, 1, 1000, 100, 9999, Color.BLACK, 1, 40);
 
@@ -56,41 +56,27 @@ public enum EnemyType {
     public Enemy spawn(int x, int y, Character target) {
         return new Enemy(name, x, y, hp, color, minDamage, maxDamage, aggressionRange, exp, target);
     }
-    
+
     public double getWeight(int depth) {
-        return this.spawnrate / (Math.abs(this.depth - depth )+1);
+        return this.spawnrate / (Math.abs(this.depth - depth) + 1);
     }
-    
+
 //    public List<Double> getWeights(int depth) {
 //        
 //    }
-
-    public List<EnemyType> Randomize(int depth, int amount) {
+    public List<EnemyType> randomize(int depth, int amount) {
         List<EnemyType> enemies = getAll();
-        System.out.println(enemies.size());
         List<EnemyType> result = new ArrayList<>();
-        
-//        double total = 0;
-//        List<Double> ws = new ArrayList<>();
-//            for(int i = 0; i < enemies.size(); i++) {
-//                System.out.println(enemies.get(i).getWeight(depth));
-//                ws.add(enemies.get(i).getWeight(depth));
-//                total += enemies.get(i).getWeight(depth);
-//            }
-        
-        Stream<Double> weights = getAll().stream()
-                .map(e -> e.spawnrate / (Math.abs(e.depth - depth ) +1));
-        
-        int nEnemies = 0;
-        double total = weights.reduce(0.0, (a,b) -> a+b);
-        
-        System.out.println("Total = " + total);
-        
-        while(nEnemies < amount) {
+        Stream<Double> weights = getAll().stream().map(e -> e.spawnrate / (Math.abs(e.depth - depth) + 1));
+
+        int nEnemies = 0; 
+        double total = weights.reduce(0.0, (a, b) -> a + b);
+
+        while (nEnemies < amount) {
             double cumsum = 0;
             double random = Math.random() * total;
-            
-            for(int i = 0; i < enemies.size(); i++) {
+
+            for (int i = 0; i < enemies.size(); i++) {
                 cumsum += enemies.get(i).getWeight(depth);
                 if (random <= cumsum) {
                     result.add(enemies.get(i));
@@ -98,10 +84,8 @@ public enum EnemyType {
                     break;
                 }
             }
-        } 
-        
+        }
         return result;
-                
     }
 
     public List<EnemyType> getAll() {

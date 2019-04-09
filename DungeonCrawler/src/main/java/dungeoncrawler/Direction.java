@@ -10,8 +10,8 @@ package dungeoncrawler;
  * @author jy
  */
 public enum Direction {
-    UP(0,-1),DOWN(0,1),RIGHT(1,0),LEFT(-1,0);
-    
+    UP(0, -1), DOWN(0, 1), RIGHT(1, 0), LEFT(-1, 0);
+
     private int x;
     private int y;
 
@@ -19,12 +19,12 @@ public enum Direction {
         this.x = x;
         this.y = y;
     }
-    
-    public int X() {
+
+    public int x() {
         return x;
     }
-    
-    public int Y() {
+
+    public int y() {
         return y;
     }
 }

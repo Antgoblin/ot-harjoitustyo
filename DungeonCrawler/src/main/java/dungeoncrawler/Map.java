@@ -81,36 +81,36 @@ public class Map {
     public Tile getRandomTile(Tiletype type, Tile limit, Direction dir) {
         // Area where to look for another tile
         // +2/-2 to not get the tile too close from map edges
-        int TLx = 2;
-        int TLy = 2;
-        int BRx = size - 2;
-        int BRy = size - 2;
+        int tLx = 2;
+        int tLy = 2;
+        int bRx = size - 2;
+        int bRy = size - 2;
 
         //Direction where to search
         // +2/-2 to not get the other tile from too close
         switch (dir) {
             case UP:
-                BRy = limit.Y() - 2;
+                bRy = limit.y() - 2;
                 break;
             case DOWN:
-                TLy = limit.Y() + 2;
+                tLy = limit.y() + 2;
                 break;
             case RIGHT:
-                TLx = limit.X() + 2;
+                tLx = limit.x() + 2;
                 break;
             case LEFT:
-                BRx = limit.X() - 2;
+                bRx = limit.x() - 2;
                 break;
         }
 
         // All possible tiles
         List<Tile> tiles = new ArrayList<>();
-        for (int x = TLx; x < BRx; x++) {
-            for (int y = TLy; y < BRy; y++) {
+        for (int x = tLx; x < bRx; x++) {
+            for (int y = tLy; y < bRy; y++) {
                 Tile tile = getTile(x, y);
                 // Making sure the tile is not on the same side of room as the first tile 
                 // for example if both tiles where on the Right side of different rooms the hallway would look weird
-                if (tile.getType() == type && (getTile(tile.X() - dir.X(), tile.Y() - dir.Y()).getType() != Tiletype.TempFloor)) {
+                if (tile.getType() == type && (getTile(tile.x() - dir.x(), tile.y() - dir.y()).getType() != Tiletype.TempFloor)) {
                     tiles.add(tile);
                 }
             }
@@ -136,7 +136,7 @@ public class Map {
         return this.creatureSize;
     }
 
-    public int Level() {
+    public int level() {
         return this.Level;
     }
 
@@ -153,7 +153,7 @@ public class Map {
 
     public void spawnEnemy(Enemy enemy) {
         enemies.add(enemy);
-        Tile tile = getTile(enemy.X(), enemy.Y());
+        Tile tile = getTile(enemy.x(), enemy.y());
         tile.setCharacter(enemy);
     }
 
@@ -169,8 +169,8 @@ public class Map {
         }
         Collections.shuffle(vapaat);
         Tile tile = vapaat.get(0);
-        enemy.setX(tile.X());
-        enemy.setY(tile.Y());
+        enemy.setX(tile.x());
+        enemy.setY(tile.y());
         this.enemies.add(enemy);
         tile.setCharacter(enemy);
 
@@ -187,7 +187,7 @@ public class Map {
     public Enemy getEnemy(int x, int y) {
         List<Enemy> enemiesInTile = new ArrayList<>();
         enemies.forEach(enemy -> {
-            if (enemy.Y() == y && enemy.X() == x) {
+            if (enemy.y() == y && enemy.x() == x) {
                 enemiesInTile.add(enemy);
             }
 
@@ -195,10 +195,10 @@ public class Map {
         return enemiesInTile.get(0);
     }
 
-    public void createRoom(int TopLeftX, int TopLeftY, int BottomRightX, int BottomRightY) {
-        for (int x = TopLeftX; x <= BottomRightX; x++) {
-            for (int y = TopLeftY; y <= BottomRightY; y++) {
-                if (x == TopLeftX || x == BottomRightX || y == TopLeftY || y == BottomRightY) {
+    public void createRoom(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY) {
+        for (int x = topLeftX; x <= bottomRightX; x++) {
+            for (int y = topLeftY; y <= bottomRightY; y++) {
+                if (x == topLeftX || x == bottomRightX || y == topLeftY || y == bottomRightY) {
                     getTile(x, y).setType(Tiletype.Wall);
                 } else {
                     getTile(x, y).setType(Tiletype.Floor);
@@ -212,13 +212,13 @@ public class Map {
         // 2x3 tile parts coming from rooms to make hallways look better
         Direction dir = Direction.UP;
         // Tile 1      
-        if (getTile(tile1.X(), tile1.Y() + 1).getType() == Tiletype.TempFloor) {
+        if (getTile(tile1.x(), tile1.y() + 1).getType() == Tiletype.TempFloor) {
             dir = Direction.UP;
-        } else if (getTile(tile1.X(), tile1.Y() - 1).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile1.x(), tile1.y() - 1).getType() == Tiletype.TempFloor) {
             dir = Direction.DOWN;
-        } else if (getTile(tile1.X() + 1, tile1.Y()).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile1.x() + 1, tile1.y()).getType() == Tiletype.TempFloor) {
             dir = Direction.LEFT;
-        } else if (getTile(tile1.X() - 1, tile1.Y()).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile1.x() - 1, tile1.y()).getType() == Tiletype.TempFloor) {
             dir = Direction.RIGHT;
         }
 
@@ -228,11 +228,11 @@ public class Map {
             tile1.setType(Tiletype.Floor);
         }
 
-        tile1 = getTile(tile1.X() + dir.X(), tile1.Y() + dir.Y());
+        tile1 = getTile(tile1.x() + dir.x(), tile1.y() + dir.y());
         tile1.setType(Tiletype.Floor);
 
-        for (int x = tile1.X() - 1; x <= tile1.X() + 1; x++) {
-            for (int y = tile1.Y() - 1; y <= tile1.Y() + 1; y++) {
+        for (int x = tile1.x() - 1; x <= tile1.x() + 1; x++) {
+            for (int y = tile1.y() - 1; y <= tile1.y() + 1; y++) {
                 Tile tile = getTile(x, y);
                 if (tile.getType() != Tiletype.Floor && tile.getType() != Tiletype.StairsUp && tile.getType() != Tiletype.Door) {
                     tile.setType(Tiletype.Wall);
@@ -241,13 +241,13 @@ public class Map {
         }
 
         //Tile 2
-        if (getTile(tile2.X(), tile2.Y() + 1).getType() == Tiletype.TempFloor) {
+        if (getTile(tile2.x(), tile2.y() + 1).getType() == Tiletype.TempFloor) {
             dir = Direction.UP;
-        } else if (getTile(tile2.X(), tile2.Y() - 1).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile2.x(), tile2.y() - 1).getType() == Tiletype.TempFloor) {
             dir = Direction.DOWN;
-        } else if (getTile(tile2.X() + 1, tile2.Y()).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile2.x() + 1, tile2.y()).getType() == Tiletype.TempFloor) {
             dir = Direction.LEFT;
-        } else if (getTile(tile2.X() - 1, tile2.Y()).getType() == Tiletype.TempFloor) {
+        } else if (getTile(tile2.x() - 1, tile2.y()).getType() == Tiletype.TempFloor) {
             dir = Direction.RIGHT;
         }
 
@@ -256,11 +256,11 @@ public class Map {
         } else {
             tile2.setType(Tiletype.Floor);
         }
-        tile2 = getTile(tile2.X() + dir.X(), tile2.Y() + dir.Y());
+        tile2 = getTile(tile2.x() + dir.x(), tile2.y() + dir.y());
         tile2.setType(Tiletype.Floor);
 
-        for (int x = tile2.X() - 1; x <= tile2.X() + 1; x++) {
-            for (int y = tile2.Y() - 1; y <= tile2.Y() + 1; y++) {
+        for (int x = tile2.x() - 1; x <= tile2.x() + 1; x++) {
+            for (int y = tile2.y() - 1; y <= tile2.y() + 1; y++) {
                 Tile tile = getTile(x, y);
                 if (tile.getType() != Tiletype.Floor && tile.getType() != Tiletype.StairsUp && tile.getType() != Tiletype.Door) {
                     tile.setType(Tiletype.Wall);
@@ -269,11 +269,11 @@ public class Map {
         }
 
         //Horizontal Part
-        for (int x = Math.min(tile1.X(), tile2.X()); x <= Math.max(tile1.X(), tile2.X()); x++) {
-            for (int y = tile1.Y() - 1; y <= tile1.Y() + 1; y++) {
+        for (int x = Math.min(tile1.x(), tile2.x()); x <= Math.max(tile1.x(), tile2.x()); x++) {
+            for (int y = tile1.y() - 1; y <= tile1.y() + 1; y++) {
                 Tile tile = getTile(x, y);
                 Tiletype type = tile.getType();
-                if (y == tile1.Y() && type != Tiletype.StairsUp && type != Tiletype.Door) {
+                if (y == tile1.y() && type != Tiletype.StairsUp && type != Tiletype.Door) {
                     tile.setType(Tiletype.Floor);
                 } else if (type != Tiletype.StairsUp && type != Tiletype.Floor && type != Tiletype.TempFloor && type != Tiletype.Door) {
                     tile.setType(Tiletype.Wall);
@@ -282,11 +282,11 @@ public class Map {
         }
 
         //Vertical Part
-        for (int x = tile2.X() - 1; x <= tile2.X() + 1; x++) {
-            for (int y = Math.min(tile1.Y(), tile2.Y()); y <= Math.max(tile1.Y(), tile2.Y()); y++) {
+        for (int x = tile2.x() - 1; x <= tile2.x() + 1; x++) {
+            for (int y = Math.min(tile1.y(), tile2.y()); y <= Math.max(tile1.y(), tile2.y()); y++) {
                 Tile tile = getTile(x, y);
                 Tiletype type = tile.getType();
-                if (x == tile2.X() && type != Tiletype.StairsUp && type != Tiletype.StairsDown && type != Tiletype.Door) {
+                if (x == tile2.x() && type != Tiletype.StairsUp && type != Tiletype.StairsDown && type != Tiletype.Door) {
                     tile.setType(Tiletype.Floor);
                 } else if (type != Tiletype.StairsUp && type != Tiletype.StairsDown && type != Tiletype.Floor && type != Tiletype.TempFloor && type != Tiletype.Door) {
                     tile.setType(Tiletype.Wall);
@@ -296,14 +296,14 @@ public class Map {
 
         //Corner piece
         Tile tile = null;
-        if (tile1.Y() > tile2.Y() && tile1.X() > tile2.X()) {
-            tile = getTile(tile2.X() - 1, tile1.Y() + 1);
-        } else if (tile1.Y() > tile2.Y() && tile1.X() < tile2.X()) {
-            tile = getTile(tile2.X() + 1, tile1.Y() + 1);
-        } else if (tile1.Y() < tile2.Y() && tile1.X() > tile2.X()) {
-            tile = getTile(tile2.X() - 1, tile1.Y() - 1);
-        } else if (tile1.Y() < tile2.Y() && tile1.X() < tile2.X()) {
-            tile = getTile(tile2.X() + 1, tile1.Y() - 1);
+        if (tile1.y() > tile2.y() && tile1.x() > tile2.x()) {
+            tile = getTile(tile2.x() - 1, tile1.y() + 1);
+        } else if (tile1.y() > tile2.y() && tile1.x() < tile2.x()) {
+            tile = getTile(tile2.x() + 1, tile1.y() + 1);
+        } else if (tile1.y() < tile2.y() && tile1.x() > tile2.x()) {
+            tile = getTile(tile2.x() - 1, tile1.y() - 1);
+        } else if (tile1.y() < tile2.y() && tile1.x() < tile2.x()) {
+            tile = getTile(tile2.x() + 1, tile1.y() - 1);
         }
 
         if (tile != null) {
@@ -315,14 +315,14 @@ public class Map {
 
     }
 
-    public void createTempRoom(int TopLeftX, int TopLeftY, int BottomRightX, int BottomRightY) {
-        for (int x = TopLeftX; x <= BottomRightX; x++) {
-            for (int y = TopLeftY; y <= BottomRightY; y++) {
+    public void createTempRoom(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY) {
+        for (int x = topLeftX; x <= bottomRightX; x++) {
+            for (int y = topLeftY; y <= bottomRightY; y++) {
                 //corners
-                if ((x == TopLeftX && y == TopLeftY) || (x == BottomRightX && y == BottomRightY) || (x == TopLeftX && y == BottomRightY) || (x == BottomRightX && y == TopLeftY)) {
+                if ((x == topLeftX && y == topLeftY) || (x == bottomRightX && y == bottomRightY) || (x == topLeftX && y == bottomRightY) || (x == bottomRightX && y == topLeftY)) {
                     getTile(x, y).setType(Tiletype.Corner);
                     //walls
-                } else if (x == TopLeftX || x == BottomRightX || y == TopLeftY || y == BottomRightY) {
+                } else if (x == topLeftX || x == bottomRightX || y == topLeftY || y == bottomRightY) {
                     getTile(x, y).setType(Tiletype.TempWall);
                     //floor    
                 } else {
@@ -341,8 +341,8 @@ public class Map {
         List<Tile> area = new ArrayList<>();
         Tiletype type = topLeft.getType();
 
-        for (int i = topLeft.X(); i <= topLeft.X() + x; i++) {
-            for (int j = topLeft.Y(); j <= topLeft.Y() + y; j++) {
+        for (int i = topLeft.x(); i <= topLeft.x() + x; i++) {
+            for (int j = topLeft.y(); j <= topLeft.y() + y; j++) {
                 Tile tile = getTile(i, j);
                 if (tile.getType() == type) {
                     area.add(tile);
@@ -360,8 +360,8 @@ public class Map {
     public List<Tile> checkIfUnited(List<Tile> tiles) {
         List<Tile> searched = new ArrayList<>();
         tiles.forEach(searchtile -> {
-            for (int x = searchtile.X() - 1; x <= searchtile.X() + 1; x++) {
-                for (int y = searchtile.Y() - 1; y <= searchtile.Y() + 1; y++) {
+            for (int x = searchtile.x() - 1; x <= searchtile.x() + 1; x++) {
+                for (int y = searchtile.y() - 1; y <= searchtile.y() + 1; y++) {
                     Tile tile = getTile(x, y);
                     if (tile != null && tile.getType() == Tiletype.Floor) {
                         tile.setType(Tiletype.CheckedFloor);
@@ -376,7 +376,6 @@ public class Map {
                 }
             }
         });
-
         return searched;
     }
 
@@ -406,7 +405,7 @@ public class Map {
             }
             List<Tile> area = getArea(randomtile, x, y);
             if (area != null) {
-                createTempRoom(randomtile.X(), randomtile.Y(), randomtile.X() + x, randomtile.Y() + y);
+                createTempRoom(randomtile.x(), randomtile.y(), randomtile.x() + x, randomtile.y() + y);
                 roomscreated++;
             }
 
@@ -431,11 +430,11 @@ public class Map {
             //Creates hallway
             Tile randomtile = getRandomTile(Tiletype.TempWall);
             Direction dir = Direction.DOWN;
-            if (getTile(randomtile.X(), randomtile.Y() + 1).getType() == Tiletype.TempFloor) {
+            if (getTile(randomtile.x(), randomtile.y() + 1).getType() == Tiletype.TempFloor) {
                 dir = Direction.UP;
-            } else if (getTile(randomtile.X() + 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
+            } else if (getTile(randomtile.x() + 1, randomtile.y()).getType() == Tiletype.TempFloor) {
                 dir = Direction.LEFT;
-            } else if (getTile(randomtile.X() - 1, randomtile.Y()).getType() == Tiletype.TempFloor) {
+            } else if (getTile(randomtile.x() - 1, randomtile.y()).getType() == Tiletype.TempFloor) {
                 dir = Direction.RIGHT;
             }
 
@@ -452,7 +451,7 @@ public class Map {
 
             //if there are no floor tiles on the map the level structure is done and both Tiles are null
             Tile floor = getRandomTile(Tiletype.Floor);
-            Tile TempFloor = getRandomTile(Tiletype.TempFloor);
+            Tile tempFloor = getRandomTile(Tiletype.TempFloor);
 
             // turns all checked tiles back to normals
             for (int x = 0; x < size; x++) {
@@ -469,7 +468,7 @@ public class Map {
             }
 
             // if both tiles are null ends the Level creation
-            if (floor == null && TempFloor == null) {
+            if (floor == null && tempFloor == null) {
                 floorIsUnited = true;
             }
 
@@ -508,17 +507,17 @@ public class Map {
         // Destroys faulty doors
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                if(getTile(x, y).getType() == Tiletype.Door) {
+                if (getTile(x, y).getType() == Tiletype.Door) {
                     if ((getTile(x + 1, y).getType() != Tiletype.Wall || getTile(x - 1, y).getType() != Tiletype.Wall) && (getTile(x, y + 1).getType() != Tiletype.Wall || getTile(x, y - 1).getType() != Tiletype.Wall)) {
-                        getTile(x,y).setType(Tiletype.Floor);
+                        getTile(x, y).setType(Tiletype.Floor);
                     }
-                }               
+                }
             }
         }
 
         //Spawn enemies
         int amount = roomswanted + random.nextInt(10);
-        List<EnemyType> enemies = EnemyType.RAT.Randomize(Level, amount);
+        List<EnemyType> enemies = EnemyType.RAT.randomize(Level, amount);
 
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));
@@ -530,8 +529,8 @@ public class Map {
         this.Level++;
         createLevel();
         Tile stairs = getRandomTile(Tiletype.StairsUp);
-        player.setX(stairs.X());
-        player.setY(stairs.Y());
+        player.setX(stairs.x());
+        player.setY(stairs.y());
     }
 
     public void goUp() {
@@ -554,8 +553,8 @@ public class Map {
         }
 
         Tile stairs = getRandomTile(Tiletype.StairsDown);
-        player.setX(stairs.X());
-        player.setY(stairs.Y());
+        player.setX(stairs.x());
+        player.setY(stairs.y());
     }
 
 }

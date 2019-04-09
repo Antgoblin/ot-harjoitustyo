@@ -10,22 +10,22 @@ package dungeoncrawler;
  * @author jy
  */
 public class Item {
-    
+
     public enum ItemType {
         WEAPON;
     }
-    
+
     private String name;
     private ItemType type;
-    
+
     public Item(String name, ItemType i) {
         this.name = name;
         this.type = i;
-        
+
     }
-    
+
     public String name() {
         return this.name;
     }
-    
+
 }

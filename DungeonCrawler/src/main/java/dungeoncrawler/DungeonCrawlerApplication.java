@@ -107,7 +107,6 @@ public class DungeonCrawlerApplication extends Application {
 //        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
 //        map.spawnEnemyRandom(EnemyList.RAT.Randomize().spawn(player));
 
-
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
@@ -181,19 +180,19 @@ public class DungeonCrawlerApplication extends Application {
                     break;
 
                 case TAB:
-                    player.Switch();
+                    player.switchWeapons();
                     break;
 
                 case ENTER:
-                    if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsDown) {
+                    if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
                         map.goDown();
                         mapDrawer.drawAll();
-                    } else if (map.getTile(player.X(), player.Y()).getType() == Tiletype.StairsUp) {
+                    } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsUp) {
                         map.goUp();
                         mapDrawer.drawAll();
                     }
                     break;
-                     
+
                 case I:
                     openInventory(stage);
                     break;
@@ -248,16 +247,16 @@ public class DungeonCrawlerApplication extends Application {
     }
 
     public void updateCamera() {
-        int x = (player.X() - 11) * tileSize;
+        int x = (player.x() - 11) * tileSize;
         if (x < 0) {
             x = 0;
-        } else if (x > map.getSize() * tileSize - WIDTH ) {
+        } else if (x > map.getSize() * tileSize - WIDTH) {
             x = map.getSize() * tileSize - WIDTH;
         }
-        int y = (player.Y() - 9) * tileSize;
+        int y = (player.y() - 9) * tileSize;
         if (y < 0) {
             y = 0;
-        } else if (y > map.getSize() * tileSize - HEIGHT ) {
+        } else if (y > map.getSize() * tileSize - HEIGHT) {
             y = map.getSize() * tileSize - HEIGHT;
         }
 
@@ -291,32 +290,32 @@ public class DungeonCrawlerApplication extends Application {
         } else {
             statscreen.appendText("Weapon2 : -");
         }
-        statscreen.appendText(" \n \n \n \n Level: " + map.Level());
-        
+        statscreen.appendText(" \n \n \n \n Level: " + map.level());
+
     }
-    
+
     private void openInventory(Stage stage) {
         Stage inventoryscreen = new Stage();
         inventoryscreen.setTitle("Inventory");
         inventoryscreen.setHeight(400);
         inventoryscreen.setWidth(200);
-        
+
         VBox inventory = new VBox();
         List<Item> items = player.inventory();
-        
+
         items.forEach(i -> {
             String item = i.name();
             Label label = new Label(item);
             inventory.getChildren().add(label);
             System.out.println(item);
         });
-    
+
         Scene scene = new Scene(inventory);
         inventoryscreen.setScene(scene);
         inventoryscreen.setResizable(false);
         inventoryscreen.setAlwaysOnTop(true);
         inventoryscreen.showAndWait();
-        
+
     }
 
     private void endTurn() {
@@ -334,7 +333,7 @@ public class DungeonCrawlerApplication extends Application {
             deadEnemies.forEach(dead -> {
                 textArea.appendText("You killed " + dead.getName() + " \n");
                 player.gainExp(dead.getExp());
-                map.getTile(dead.X(), dead.Y()).setCharacter(null);
+                map.getTile(dead.x(), dead.y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 
@@ -364,7 +363,7 @@ public class DungeonCrawlerApplication extends Application {
         if (deadEnemies.isEmpty() == false) {
             deadEnemies.forEach(dead -> {
                 textArea.appendText(dead.getName() + " died \n");
-                map.getTile(dead.X(), dead.Y()).setCharacter(null);
+                map.getTile(dead.x(), dead.y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
 

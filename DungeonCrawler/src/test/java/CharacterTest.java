@@ -32,12 +32,12 @@ public class CharacterTest {
     
     @Test
     public void GettingX(){
-        assertEquals( 1, character.X());
+        assertEquals( 1, character.x());
     }
     
     @Test
     public void GettingY(){
-        assertEquals( 2, character.Y());
+        assertEquals( 2, character.y());
     }
     
     @Test
@@ -125,8 +125,8 @@ public class CharacterTest {
         Map map = new Map(100, 50, new Player(3,3,Class.Warrior));
         character.move(map, Direction.DOWN);
         character.move(map, Direction.RIGHT);
-        assertEquals(2, character.X());
-        assertEquals(3, character.Y());
+        assertEquals(2, character.x());
+        assertEquals(3, character.y());
         
     }
     
@@ -134,8 +134,8 @@ public class CharacterTest {
     public void SetXAndSetY() {
         character.setX(5);
         character.setY(10);
-        assertEquals(10, character.Y());
-        assertEquals(5, character.X());
+        assertEquals(10, character.y());
+        assertEquals(5, character.x());
         
     }
     

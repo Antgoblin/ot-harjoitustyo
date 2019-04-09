@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import java.util.Random;
 import javafx.scene.control.TextArea;
 
 /**
@@ -16,6 +17,7 @@ public class MovementHandler {
     private Map map;
     private TextArea textArea;
     private int state;
+    private Random random = new Random();
 
     public MovementHandler(Map map, TextArea textArea) {
         this.map = map;
@@ -45,6 +47,27 @@ public class MovementHandler {
             default:
                 break;
         }
+    }
+    
+    public Direction randomDirection() {
+        Direction dir = Direction.DOWN;
+        switch(random.nextInt(4)) {
+            case 0:
+                dir = Direction.UP;
+                break;
+            case 1:
+                dir = Direction.DOWN;
+                break;
+            case 2:
+                dir = Direction.LEFT;
+                break;
+            case 3:
+                dir = Direction.RIGHT;
+                break;
+            default:
+                break;
+        }
+        return dir;
     }
 
     public void move(Player player, Direction dir) {
@@ -121,6 +144,11 @@ public class MovementHandler {
                 } else {
                     enemy.move(map, rightOrLeft);
                 }
+            }
+        } else {
+            Direction random = randomDirection();
+            if(map.getTile(enemy.x() + random.x(), enemy.y() + random.y()).getType() == Tiletype.Floor && !map.getTile(enemy.x() + random.x(), enemy.y() + random.y()).occupied()) {
+                enemy.move(map, random); 
             }
         }
     }

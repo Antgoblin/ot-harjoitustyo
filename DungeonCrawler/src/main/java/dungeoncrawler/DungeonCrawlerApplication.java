@@ -205,6 +205,7 @@ public class DungeonCrawlerApplication extends Application {
             if (player.hasActed()) {
                 endTurn();
             }
+            mapDrawer.drawAll();
         });
 
         stage.setTitle("DungeonCrawler");

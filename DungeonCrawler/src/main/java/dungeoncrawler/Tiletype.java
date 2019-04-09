@@ -19,13 +19,13 @@ public enum Tiletype {
     OpenDoor(Color.BURLYWOOD),
     StairsUp(Color.AQUAMARINE),
     StairsDown(Color.VIOLET),
-    TempFloor(Color.WHITE),
-    TempWall(Color.BLACK),
+    TempFloor(Color.RED),
+    TempWall(Color.BLUE),
     OutOfMap(Color.BLACK),
     Corner(Color.BLACK),
-    CheckedFloor(Color.WHITE),
+    CheckedFloor(Color.ORANGE),
     CheckedDoor(Color.SIENNA),
-    CheckedTempFloor(Color.WHITE);
+    CheckedTempFloor(Color.RED);
     
     private Color color;
     

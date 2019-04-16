@@ -29,6 +29,7 @@ public class MapDrawer {
         drawGrid();
         drawPlayer();
         drawEnemies();
+        drawItems();
     }
 
     public void drawGrid() {
@@ -73,6 +74,18 @@ public class MapDrawer {
                     map.getCreatureSize(),
                     map.getCreatureSize());
         });
+
+    }
+
+    public void drawItems() {
+        for (int y = 0; y < map.getSize(); y++) {
+            for (int x = 0; x < map.getSize(); x++) {
+                if (map.getTile(x, y).containsItem()) {
+                    gc.setFill(Color.BLACK);
+                    gc.strokeLine(x * map.getTileSize() + map.getTileSize() / 4, y * map.getTileSize() + map.getTileSize() / 4, (x + 1) * map.getTileSize() - map.getTileSize() / 4, (y + 1) * map.getTileSize() - map.getTileSize() / 4);
+                }
+            }
+        }
 
     }
 }

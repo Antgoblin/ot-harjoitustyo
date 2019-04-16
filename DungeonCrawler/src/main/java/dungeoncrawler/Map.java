@@ -173,7 +173,11 @@ public class Map {
         enemy.setY(tile.y());
         this.enemies.add(enemy);
         tile.setCharacter(enemy);
+    }
 
+    public void spawnItemRandom(Item item) {
+        Tile tile = getRandomTile(Tiletype.Floor);
+        tile.setItem(item);
     }
 
     public void removeEnemy(Enemy enemy) {
@@ -521,6 +525,12 @@ public class Map {
 
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));
+        });
+
+        //Spawn weapons
+        List<WeaponType> weapons = WeaponType.DAGGER.randomize(Level, amount);
+        weapons.forEach(w -> {
+            spawnItemRandom(new Weapon(w));
         });
 
     }

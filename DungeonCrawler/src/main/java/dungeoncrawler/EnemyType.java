@@ -20,10 +20,13 @@ import javafx.scene.paint.Color;
  */
 public enum EnemyType {
 
-    //(name, hp, mindmg, maxdmg, aggro, exp)
+    //(name, hp, mindmg, maxdmg, aggro, exp, color, spawnrate, depth)
     RAT("Rat", 10, 5, 10, 20, 10, Color.GRAY, 5, 1),
     CAT("Cat", 15, 4, 6, 5, 5, Color.ORANGE, 3, 1),
+    WOLF("Wolf", 20, 7, 7, 10, 20, Color.DARKGRAY, 4, 2),
     BEAR("Bear", 30, 4, 10, 5, 50, Color.BROWN, 3, 3),
+    GIANTSPIDER("Giant Spider", 10, 10, 15, 8, 35, Color.PURPLE, 5, 10),
+    DRAGON("Dragon", 150, 28, 54, 7, 500, Color.RED, 0.2, 24),
     DEATH("Death", 50, 1, 1000, 100, 9999, Color.BLACK, 1, 40);
 
     private int hp;
@@ -69,7 +72,7 @@ public enum EnemyType {
         List<EnemyType> result = new ArrayList<>();
         Stream<Double> weights = getAll().stream().map(e -> e.spawnrate / (Math.abs(e.depth - depth) + 1));
 
-        int nEnemies = 0; 
+        int nEnemies = 0;
         double total = weights.reduce(0.0, (a, b) -> a + b);
 
         while (nEnemies < amount) {

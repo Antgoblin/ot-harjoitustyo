@@ -91,12 +91,20 @@ public class MovementHandler {
             if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor || tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
                 player.move(map, dir);
                 player.hasNotAttacked();
+                seeItem(player);
                 
             } else if (tile.getType() == Tiletype.Door) {
                 tile.setType(Tiletype.OpenDoor);
             }
         }
         player.setActed(true);
+    }
+    
+    public void seeItem(Player player) {
+        Tile tile = map.getTile(player.x(), player.y());
+        if (tile.containsItem()) {
+            textArea.appendText("You see " + tile.getItem().name() + " on the ground \n");
+        }
     }
     
     public void act(Enemy enemy) {

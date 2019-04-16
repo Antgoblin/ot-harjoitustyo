@@ -5,6 +5,8 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -17,12 +19,33 @@ public class Tile extends StackPane {
     private int y;
     private Tiletype type;
     private Character character = null;
+    private List<Item> items = new ArrayList<>();
 
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
         this.type = Tiletype.Void;
 
+    }
+    
+    public void setItem(Item item) {
+        this.items.add(item);
+    }
+    
+    public Item getItem() {
+        if (!items.isEmpty()) {
+            return items.get(items.size() - 1);
+        } else {
+            return null;
+        }
+    }
+    
+    public boolean containsItem() {
+        if (items.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public int x() {

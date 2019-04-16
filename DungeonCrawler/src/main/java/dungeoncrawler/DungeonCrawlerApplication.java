@@ -162,7 +162,9 @@ public class DungeonCrawlerApplication extends Application {
                     textArea.appendText("Choose Direction \n");
                     mh.setState(1);
                     break;
-
+                case P:
+                    mh.pickUp(player);
+                    break;
                 case S:
                     if (player.getRange() > 1) {
                         textArea.appendText("Choose Direction \n");

@@ -27,11 +27,15 @@ public class Tile extends StackPane {
         this.type = Tiletype.Void;
 
     }
-    
+
     public void setItem(Item item) {
         this.items.add(item);
     }
-    
+
+    public void removeItem() {
+        this.items.remove(items.size() - 1);
+    }
+
     public Item getItem() {
         if (!items.isEmpty()) {
             return items.get(items.size() - 1);
@@ -39,7 +43,7 @@ public class Tile extends StackPane {
             return null;
         }
     }
-    
+
     public boolean containsItem() {
         if (items.isEmpty()) {
             return false;

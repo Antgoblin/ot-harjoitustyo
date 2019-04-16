@@ -28,7 +28,7 @@ public class Map {
     private List<Enemy> enemies = new ArrayList<>();
     private Player player;
     private Random random = new Random();
-    private int Level = 0;
+    private int level = 0;
 
     public Map(int size, int tileSize, Player player) {
         this.size = size;
@@ -81,32 +81,45 @@ public class Map {
     public Tile getRandomTile(Tiletype type, Tile limit, Direction dir) {
         // Area where to look for another tile
         // +2/-2 to not get the tile too close from map edges
-        int tLx = 2;
-        int tLy = 2;
-        int bRx = size - 2;
-        int bRy = size - 2;
+        int minX = 2;
+        int minY = 2;
+        int maxX = size - 2;
+        int maxY = size - 2;
 
         //Direction where to search
         // +2/-2 to not get the other tile from too close
-        switch (dir) {
-            case UP:
-                bRy = limit.y() - 2;
-                break;
-            case DOWN:
-                tLy = limit.y() + 2;
-                break;
-            case RIGHT:
-                tLx = limit.x() + 2;
-                break;
-            case LEFT:
-                bRx = limit.x() - 2;
-                break;
+        if (dir == Direction.UP) {
+            maxY = limit.y() - 2;
+        } else if (dir == Direction.DOWN) {
+            minY = limit.y() + 2;
+        } else if (dir == Direction.RIGHT) {
+            minX = limit.x() + 2;
+        } else if (dir == Direction.LEFT) {
+            maxX = limit.x() - 2;
         }
+//        switch (dir) {
+//            case UP:
+//                maxY = limit.y() - 2;
+//                break;
+//            case DOWN:
+//                minY = limit.y() + 2;
+//                break;
+//            case RIGHT:
+//                minX = limit.x() + 2;
+//                break;
+//            case LEFT:
+//                maxX = limit.x() - 2;
+//                break;
+//        }
 
-        // All possible tiles
+        return getRandomTile(minX, maxX, minY, maxY, type, dir);
+
+    }
+
+    public Tile getRandomTile(int minX, int maxX, int minY, int maxY, Tiletype type, Direction dir) {
         List<Tile> tiles = new ArrayList<>();
-        for (int x = tLx; x < bRx; x++) {
-            for (int y = tLy; y < bRy; y++) {
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
                 Tile tile = getTile(x, y);
                 // Making sure the tile is not on the same side of room as the first tile 
                 // for example if both tiles where on the Right side of different rooms the hallway would look weird
@@ -121,7 +134,6 @@ public class Map {
         } else {
             return null;
         }
-
     }
 
     public int getSize() {
@@ -137,7 +149,7 @@ public class Map {
     }
 
     public int level() {
-        return this.Level;
+        return this.level;
     }
 
     public void setplayer(Player player) {
@@ -367,20 +379,39 @@ public class Map {
             for (int x = searchtile.x() - 1; x <= searchtile.x() + 1; x++) {
                 for (int y = searchtile.y() - 1; y <= searchtile.y() + 1; y++) {
                     Tile tile = getTile(x, y);
-                    if (tile != null && tile.getType() == Tiletype.Floor) {
-                        tile.setType(Tiletype.CheckedFloor);
-                        searched.add(tile);
-                    } else if (tile != null && tile.getType() == Tiletype.TempFloor) {
-                        tile.setType(Tiletype.CheckedTempFloor);
-                        searched.add(tile);
-                    } else if (tile != null && tile.getType() == Tiletype.Door) {
-                        tile.setType(Tiletype.CheckedDoor);
+                    if (checkTile(tile)) {
                         searched.add(tile);
                     }
+//                    if (tile != null && tile.getType() == Tiletype.Floor) {
+//                        tile.setType(Tiletype.CheckedFloor);
+//                        searched.add(tile);
+//                    } else if (tile != null && tile.getType() == Tiletype.TempFloor) {
+//                        tile.setType(Tiletype.CheckedTempFloor);
+//                        searched.add(tile);
+//                    } else if (tile != null && tile.getType() == Tiletype.Door) {
+//                        tile.setType(Tiletype.CheckedDoor);
+//                        searched.add(tile);
+//                    }
                 }
             }
         });
         return searched;
+    }
+
+    public boolean checkTile(Tile tile) {
+        switch (tile.getType()) {
+            case Floor:
+                tile.setType(Tiletype.CheckedFloor);
+                return true;
+            case TempFloor:
+                tile.setType(Tiletype.CheckedTempFloor);
+                return true;
+            case Door:
+                tile.setType(Tiletype.CheckedDoor);
+                return true;
+            default:
+                return false;
+        }
     }
 
     public void createLevel() {
@@ -521,14 +552,14 @@ public class Map {
 
         //Spawn enemies
         int amount = roomswanted + random.nextInt(10);
-        List<EnemyType> enemies = EnemyType.RAT.randomize(Level, amount);
+        List<EnemyType> enemies = EnemyType.RAT.randomize(level, amount);
 
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));
         });
 
         //Spawn weapons
-        List<WeaponType> weapons = WeaponType.DAGGER.randomize(Level, amount);
+        List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount);
         weapons.forEach(w -> {
             spawnItemRandom(new Weapon(w));
         });
@@ -536,7 +567,7 @@ public class Map {
     }
 
     public void goDown() {
-        this.Level++;
+        this.level++;
         createLevel();
         Tile stairs = getRandomTile(Tiletype.StairsUp);
         player.setX(stairs.x());
@@ -544,8 +575,8 @@ public class Map {
     }
 
     public void goUp() {
-        this.Level--;
-        if (this.Level == 0) {
+        this.level--;
+        if (this.level == 0) {
             for (int x = 0; x < size; x++) {
                 for (int y = 0; y < size; y++) {
                     Tile tile = getTile(x, y);

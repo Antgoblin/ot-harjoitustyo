@@ -25,6 +25,7 @@ public class Player extends Character {
     private Weapon weapon;
     private Weapon weapon2;
     private int regenerationTimer = 6;
+    private int str = 0;
     private List<Item> inventory = new ArrayList<>();
 
     public Player(int x, int y, Class playerclass) {
@@ -160,6 +161,7 @@ public class Player extends Character {
     public void lvlUp() {
         this.gainMaxHp(this.lvl * 10);
         this.lvl++;
+        this.str++;
     }
 
     public void checkIfRegenerates() {

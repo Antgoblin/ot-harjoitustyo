@@ -21,6 +21,7 @@ public class Enemy extends Character {
     private int maxDamage;
     private int exp;
     private Random random = new Random();
+    private boolean sleeping;
 
     public Enemy(String name, int x, int y, int hp, Color color, int mindamage, int maxdamage, int aggressionRange, int exp, Character target) {
         super(name, x, y, hp, color);
@@ -30,6 +31,12 @@ public class Enemy extends Character {
         this.aggressionRange = aggressionRange;
         this.exp = exp;
         this.target = target;
+        int number = random.nextInt(10);
+        if (number < 7) {
+            this.sleeping = true;
+        } else {
+            this.sleeping = false;
+        }
     }
 
     public void attack() {
@@ -53,6 +60,18 @@ public class Enemy extends Character {
 
     public int aggressionRange() {
         return this.aggressionRange;
+    }
+
+    public boolean sleeping() {
+        return this.sleeping;
+    }
+
+    public void wakeUp() {
+        this.sleeping = false;
+    }
+
+    public void fallAsleep() {
+        this.sleeping = true;
     }
 
     public void rage() {

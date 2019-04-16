@@ -343,7 +343,7 @@ public class DungeonCrawlerApplication extends Application {
         //Enemies turn
         map.getEnemies().forEach(enemy -> {
             enemy.hasNotAttacked();
-            mh.move(enemy);
+            mh.act(enemy);
             if (enemy.hasAttacked()) {
                 textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
             }

@@ -37,13 +37,13 @@ public class MapTest {
     
     @Test
     public void GettingLevel() {
-        assertEquals(0, map.Level());
+        assertEquals(0, map.level());
     }
     
     @Test
     public void GoDownMakesLevelGoUp() {
         map.goDown();
-        assertEquals(1, map.Level());
+        assertEquals(1, map.level());
     }
     
     @Test
@@ -52,7 +52,7 @@ public class MapTest {
         map.goDown();
         map.goDown();
         map.goUp();
-        assertEquals(2, map.Level());
+        assertEquals(2, map.level());
     }
     
     

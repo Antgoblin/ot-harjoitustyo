@@ -24,6 +24,7 @@ public class Player extends Character {
     private int currentMana;
     private Weapon weapon;
     private Weapon weapon2;
+    private int regenerationTimer = 6;
     private List<Item> inventory = new ArrayList<>();
 
     public Player(int x, int y, Class playerclass) {
@@ -148,5 +149,25 @@ public class Player extends Character {
 
     public int getRange() {
         return weapon.getRange();
+    }
+
+    public void checkIfLevelUp() {
+        if (this.exp >= this.lvl * this.lvl * 100) {
+            lvlUp();
+        }
+    }
+
+    public void lvlUp() {
+        this.gainMaxHp(this.lvl * 10);
+        this.lvl++;
+    }
+
+    public void checkIfRegenerates() {
+        if (this.regenerationTimer > 0) {
+            this.regenerationTimer--;
+        } else {
+            this.gainHp(1);
+            this.regenerationTimer = 6;
+        }
     }
 }

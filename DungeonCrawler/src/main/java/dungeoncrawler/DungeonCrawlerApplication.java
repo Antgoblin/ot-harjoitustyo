@@ -371,7 +371,8 @@ public class DungeonCrawlerApplication extends Application {
             });
 
         }
-
+        player.checkIfRegenerates();
+        player.checkIfLevelUp();
         updateStatScreen();
         player.hasNotAttacked();
         player.setActed(false);

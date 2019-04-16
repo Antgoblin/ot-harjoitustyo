@@ -67,6 +67,10 @@ public class Character {
     public void loseHp(int amount) {
         this.currenthp -= amount;
     }
+    
+    public void gainMaxHp(int amount) {
+        this.maxhp += amount; 
+    }
 
     public void move(Map map, Direction dir) {
         //old tile 

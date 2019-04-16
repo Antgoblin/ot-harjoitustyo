@@ -16,3 +16,14 @@ Päivä    |     Aika:   |    Mitä tein:
 30.3            4h          Syvyys, portaat ja metodi joka generoi random luolaston
 31.3            1h          Vihollisten randomointi lisätty luolaston luontiin
 1.4             3h          Tehty Algoritmi joka luo vihollisia niiden esiintymisYleisyyden ja esiintymisSyvyyden perusteella 
+4.4             1h          Aseita muutettu
+4.4             1h          WeaponType Luokka
+7.4             3h          Testejä
+8.4             4h          Lisää Testejä
+9.4             4h          Checkstyle laitettu kuntoon
+9.4             2h          Vihollisille Random liikkuvuus kun pelaaja tarpeeksi kaukana
+14.4            2h          Inventory avautuu kun painaa i:tä
+15.4            3h          Viholliset saattavat nukkua ja voivat herätä
+16.4            3h          Tavaroita spawnaa luolastoon ja niitä voi kerätä (tosin ei oikeen voi tehdä vielä niillä mitään)
+16.4            4h          Checkstyle nyt vain 5 virhettä
+16.4            1h          LvlUp ja regeneration

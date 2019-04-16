@@ -27,3 +27,6 @@ Päivä    |     Aika:   |    Mitä tein:
 16.4            3h          Tavaroita spawnaa luolastoon ja niitä voi kerätä (tosin ei oikeen voi tehdä vielä niillä mitään)
 16.4            4h          Checkstyle nyt vain 5 virhettä
 16.4            1h          LvlUp ja regeneration
+
+
+yht:            54h

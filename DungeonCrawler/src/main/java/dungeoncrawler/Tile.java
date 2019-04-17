@@ -35,6 +35,10 @@ public class Tile extends StackPane {
     public void removeItem() {
         this.items.remove(items.size() - 1);
     }
+    
+    public void removeItems() {
+        this.items.clear();
+    }
 
     public Item getItem() {
         if (!items.isEmpty()) {

@@ -40,7 +40,7 @@ public class Enemy extends Character {
     }
 
     public void attack() {
-        int damage = random.nextInt(maxDamage - minDamage) + minDamage;
+        int damage = random.nextInt(maxDamage - minDamage + 1) + minDamage;
         target.loseHp(damage);
         this.attacked(damage);
 

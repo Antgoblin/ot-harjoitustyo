@@ -96,6 +96,9 @@ public enum EnemyType {
         enemytypes.add(RAT);
         enemytypes.add(CAT);
         enemytypes.add(BEAR);
+        enemytypes.add(WOLF);
+        enemytypes.add(GIANTSPIDER);
+        enemytypes.add(DRAGON);
         enemytypes.add(DEATH);
 
         return enemytypes;

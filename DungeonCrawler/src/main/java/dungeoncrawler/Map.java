@@ -426,6 +426,7 @@ public class Map {
         }
 
         enemies.removeAll(enemies);
+        clearItems();
 
         // creates rooms
         int roomscreated = 0;
@@ -566,6 +567,15 @@ public class Map {
 
     }
 
+    public void clearItems() {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile tile = getTile(x, y);
+                tile.removeItems();
+            }
+        }
+    }
+
     public void goDown() {
         this.level++;
         createLevel();
@@ -586,6 +596,7 @@ public class Map {
             }
 
             enemies.removeAll(enemies);
+            clearItems();
             createRoom(10, 10, 14, 14);
             getTile(12, 12).setType(Tiletype.StairsDown);
 

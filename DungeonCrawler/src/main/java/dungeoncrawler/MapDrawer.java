@@ -93,15 +93,29 @@ public class MapDrawer {
 
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
-        gc.strokeText("Inventory:", 10, 20, 1000);
+        gc.strokeText("Inventory:  (esc to exit) ", 10, 20, 1000);
         List<Item> items = map.getPlayer().inventory();
         for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
             String text = " - " + items.get(i).name();
             gc.strokeText(text, 10, i * 20 + 40);
         }
         gc.setFill(Color.BLUE);
-        gc.strokeRect(chooser.getX() * 150, chooser.getY() * 20 + 25, 150, 20);
-        gc.strokeText("Drop", 200, chooser.getY() * 20 + 40);
-        gc.strokeText("Equip", 350, chooser.getY() * 20 + 40);
+        gc.strokeRect(chooser.getX() * 170, chooser.getY() * 20 + 25, 170, 20);
+        gc.strokeText("Drop", 230, chooser.getY() * 20 + 40);
+        gc.strokeText(items.get(chooser.getY()).getAction(), 400, chooser.getY() * 20 + 40);
+    }
+
+    public void drawHelpScreen() {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
+        gc.strokeText("Controls: (esc to exit)", 10, 20);
+        gc.strokeText("ArrowKeys: Move", 10, 40);
+        gc.strokeText("SPACE: Wait a turn", 10, 60);
+        gc.strokeText("I: Open Inventory ( for dropping and using Items ) ", 10, 80);
+        gc.strokeText("S: Shoot ( requires ranged weapon )", 10, 100);
+        gc.strokeText("P: PickUp Items", 10, 120);
+        gc.strokeText("C: Close Door", 10, 140);
+        gc.strokeText("TAB: For Switching weapons fast", 10, 160);
+        
     }
 }

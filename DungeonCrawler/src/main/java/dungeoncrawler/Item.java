@@ -12,7 +12,7 @@ package dungeoncrawler;
 public class Item {
 
     public enum ItemType {
-        WEAPON;
+        ITEM, WEAPON, POTION;
     }
 
     private String name;
@@ -26,6 +26,14 @@ public class Item {
 
     public String name() {
         return this.name;
+    }
+
+    public ItemType getType() {
+        return ItemType.ITEM;
+    }
+    
+    public String getAction() {
+        return "";
     }
 
 }

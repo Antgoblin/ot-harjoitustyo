@@ -33,4 +33,12 @@ public class Weapon extends Item {
         return this.weapon.getRange();
     }
 
+    public ItemType getType() {
+        return ItemType.WEAPON;
+    }
+    
+    public String getAction() {
+        return "Equip";
+    }
+
 }

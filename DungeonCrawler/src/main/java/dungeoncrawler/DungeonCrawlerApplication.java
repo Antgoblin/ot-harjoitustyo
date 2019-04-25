@@ -160,6 +160,7 @@ public class DungeonCrawlerApplication extends Application {
 
                 case P:
                     mh.pickUp(player);
+                    mapDrawer.drawAll();
                     break;
 
                 case S:
@@ -187,7 +188,8 @@ public class DungeonCrawlerApplication extends Application {
                         if (mh.getChooser().getX() == 1) {
                             mh.dropItem(player, mh.getChooser().getY());
                         } else if (mh.getChooser().getX() == 2) {
-                            //todo: Equip
+                            mh.Action(player);
+                            player.equipItem(mh.getChooser().getY());
 
                         }
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
@@ -206,6 +208,13 @@ public class DungeonCrawlerApplication extends Application {
                     canvas.setTranslateX(0);
                     canvas.setTranslateY(0);
                     mapDrawer.drawInventory(mh.getChooser());
+                    break;
+
+                case H:
+                    mh.setState(State.Help);
+                    canvas.setTranslateX(0);
+                    canvas.setTranslateY(0);
+                    mapDrawer.drawHelpScreen();
                     break;
 
                 case ESCAPE:
@@ -317,6 +326,7 @@ public class DungeonCrawlerApplication extends Application {
             statscreen.appendText("Weapon2 : -");
         }
         statscreen.appendText(" \n \n \n \n Level: " + map.level());
+        statscreen.appendText(" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n H for Help");
 
     }
 

@@ -97,20 +97,6 @@ public class Map {
         } else if (dir == Direction.LEFT) {
             maxX = limit.x() - 2;
         }
-//        switch (dir) {
-//            case UP:
-//                maxY = limit.y() - 2;
-//                break;
-//            case DOWN:
-//                minY = limit.y() + 2;
-//                break;
-//            case RIGHT:
-//                minX = limit.x() + 2;
-//                break;
-//            case LEFT:
-//                maxX = limit.x() - 2;
-//                break;
-//        }
 
         return getRandomTile(minX, maxX, minY, maxY, type, dir);
 
@@ -563,6 +549,12 @@ public class Map {
         List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount);
         weapons.forEach(w -> {
             spawnItemRandom(new Weapon(w));
+        });
+        
+        //spawn potions
+        List<PotionType> potions = PotionType.HP.randomize(level, amount);
+        potions.forEach(p -> {
+            spawnItemRandom(new Potion(p));
         });
 
     }

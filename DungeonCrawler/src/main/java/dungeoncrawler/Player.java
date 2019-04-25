@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Item.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -142,16 +143,37 @@ public class Player extends Character {
     }
 
     public void equipItem(int i) {
-        Item item = this.inventory.get(i);
+        if (this.inventory.get(i).getType() == ItemType.WEAPON) {
+            Weapon weapon = (Weapon) this.inventory.get(i);
+            if (this.weapon2 == null && this.weapon != null) {
+                this.weapon2 = weapon;
+            } else {
+                this.weapon = weapon;
+
+            }
+        }
+    }
+    
+    public void drinkPotion(int i) {
+        if (this.inventory.get(i).getType() == ItemType.POTION) {
+            Potion potion = (Potion) this.inventory.get(i);
+            gainHp(potion.getHealthGain());
+            gainMana(potion.getManaGain());
+            loseItem(i);
+        }
     }
 
     public void loseItem(int i) {
         Item item = this.inventory.get(i);
-        if (item == this.weapon) {
+        if (item == this.weapon && this.weapon2 != null) {
+            this.weapon = this.weapon2;
+            this.weapon2 = null;
+        } else if (item == this.weapon) {
             this.weapon = null;
         } else if (item == this.weapon2) {
             this.weapon2 = null;
         }
+
         this.inventory.remove(i);
     }
 

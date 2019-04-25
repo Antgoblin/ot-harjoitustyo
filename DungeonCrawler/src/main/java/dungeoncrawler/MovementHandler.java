@@ -15,7 +15,7 @@ import javafx.scene.control.TextArea;
 public class MovementHandler {
 
     public enum State {
-        Normal, OpeningDoor, Shooting, Inventory, Chooser;
+        Normal, OpeningDoor, Shooting, Inventory, Chooser, Help;
     }
 
     private Map map;
@@ -263,5 +263,15 @@ public class MovementHandler {
     public void dropItem(Player player, int i) {
         map.getTile(player.x(), player.y()).setItem(player.inventory().get(i));
         player.loseItem(i);
+    }
+
+    public void Action(Player player) {
+        switch (player.inventory().get(chooser.getY()).getAction()) {
+            case "Equip":
+                player.equipItem(chooser.getY());
+                break;
+            case "Drink":
+                player.drinkPotion(chooser.getY());
+        }
     }
 }

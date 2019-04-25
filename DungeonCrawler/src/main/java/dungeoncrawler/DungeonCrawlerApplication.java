@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.MovementHandler.State;
 import dungeoncrawler.Tile;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +161,7 @@ public class DungeonCrawlerApplication extends Application {
 
                 case C:
                     textArea.appendText("Choose Direction \n");
-                    mh.setState(1);
+                    mh.setState(State.OpeningDoor);
                     break;
                 case P:
                     mh.pickUp(player);
@@ -168,7 +169,7 @@ public class DungeonCrawlerApplication extends Application {
                 case S:
                     if (player.getRange() > 1) {
                         textArea.appendText("Choose Direction \n");
-                        mh.setState(2);
+                        mh.setState(State.Shooting);
                     } else {
                         textArea.appendText("You dont have anything to shoot with \n");
                     }
@@ -189,25 +190,29 @@ public class DungeonCrawlerApplication extends Application {
                     if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
                         map.goDown();
                         mapDrawer.drawAll();
+                        updateCamera();
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsUp) {
                         map.goUp();
                         mapDrawer.drawAll();
+                        updateCamera();
                     }
                     break;
 
                 case I:
-                    openInventory(stage);
+                    mh.setState(State.Inventory);
+                    canvas.setTranslateX(0);
+                    canvas.setTranslateY(0);
+                    mapDrawer.drawInventory(mh.getChooser());
                     break;
                 default:
                     break;
 
             }
-            updateCamera();
             updateStatScreen();
             if (player.hasActed()) {
+                updateCamera();
                 endTurn();
             }
-            mapDrawer.drawAll();
         });
 
         stage.setTitle("DungeonCrawler");
@@ -294,30 +299,6 @@ public class DungeonCrawlerApplication extends Application {
             statscreen.appendText("Weapon2 : -");
         }
         statscreen.appendText(" \n \n \n \n Level: " + map.level());
-
-    }
-
-    private void openInventory(Stage stage) {
-        Stage inventoryscreen = new Stage();
-        inventoryscreen.setTitle("Inventory");
-        inventoryscreen.setHeight(400);
-        inventoryscreen.setWidth(200);
-
-        VBox inventory = new VBox();
-        List<Item> items = player.inventory();
-
-        items.forEach(i -> {
-            String item = i.name();
-            Label label = new Label(item);
-            inventory.getChildren().add(label);
-            System.out.println(item);
-        });
-
-        Scene scene = new Scene(inventory);
-        inventoryscreen.setScene(scene);
-        inventoryscreen.setResizable(false);
-        inventoryscreen.setAlwaysOnTop(true);
-        inventoryscreen.showAndWait();
 
     }
 

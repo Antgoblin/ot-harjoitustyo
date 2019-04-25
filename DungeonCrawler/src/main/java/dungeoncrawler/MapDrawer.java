@@ -17,6 +17,7 @@ public class MapDrawer {
 
     private Map map;
     private GraphicsContext gc;
+//    private Chooser chooser = new Chooser();
 
     public MapDrawer(Map map, GraphicsContext gc) {
         this.map = map;
@@ -87,5 +88,19 @@ public class MapDrawer {
             }
         }
 
+    }
+
+    public void drawInventory(Chooser chooser) {
+
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
+        gc.strokeText("Inventory:", 10, 20, 1000);
+        List<Item> items = map.getPlayer().inventory();
+        for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
+            String text = " - " + items.get(i).name();
+            gc.strokeText(text, 10, i * 20 + 40);
+        }
+        gc.setFill(Color.BLUE);
+        gc.strokeRect(0, chooser.getY() * 20 + 25, 100, 20);
     }
 }

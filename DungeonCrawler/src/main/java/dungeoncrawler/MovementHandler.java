@@ -14,35 +14,47 @@ import javafx.scene.control.TextArea;
  */
 public class MovementHandler {
 
+    public enum State {
+        Normal, OpeningDoor, Shooting, Inventory, Chooser;
+    }
+
     private Map map;
     private TextArea textArea;
-    private int state;
+    private State state;
     private Random random = new Random();
+    private Chooser chooser = new Chooser();
 
     public MovementHandler(Map map, TextArea textArea) {
         this.map = map;
         this.textArea = textArea;
-        this.state = 0;
+        this.state = State.Normal;
     }
 
-    public void setState(int state) {
+    public void setState(State state) {
         this.state = state;
     }
 
-    public int getState() {
+    public State getState() {
         return this.state;
+    }
+    
+    public Chooser getChooser() {
+        return this.chooser;
     }
 
     public void handle(Player player, Direction dir) {
         switch (this.state) {
-            case 0:
+            case Normal:
                 move(player, dir);
                 break;
-            case 1:
+            case OpeningDoor:
                 closeDoor(player, dir);
                 break;
-            case 2:
+            case Shooting:
                 shoot(player, dir);
+                break;
+            case Inventory:
+                chooser.move(dir);
                 break;
             default:
                 break;
@@ -222,7 +234,7 @@ public class MovementHandler {
                 textArea.appendText("There is no door there \n");
                 break;
         }
-        this.state = 0;
+        this.state = State.Normal;
     }
 
     public void shoot(Player player, Direction dir) {
@@ -243,6 +255,6 @@ public class MovementHandler {
             }
         }
         player.setActed(true);
-        this.state = 0;
+        this.state = state.Normal;
     }
 }

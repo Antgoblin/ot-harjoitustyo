@@ -48,7 +48,10 @@ public class Player extends Character {
 
     public void attack(Enemy target) {
         target.rage();
-        int damage = weapon.getDamage();
+        int damage = 1;
+        if (this.weapon != null) {
+            damage = weapon.getDamage();
+        }
         this.attacked(damage);
         target.loseHp(damage);
     }
@@ -136,6 +139,20 @@ public class Player extends Character {
 
     public void addItem(Item item) {
         this.inventory.add(item);
+    }
+
+    public void equipItem(int i) {
+        Item item = this.inventory.get(i);
+    }
+
+    public void loseItem(int i) {
+        Item item = this.inventory.get(i);
+        if (item == this.weapon) {
+            this.weapon = null;
+        } else if (item == this.weapon2) {
+            this.weapon2 = null;
+        }
+        this.inventory.remove(i);
     }
 
     public void switchWeapons() {

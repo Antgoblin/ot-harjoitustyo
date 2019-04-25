@@ -37,7 +37,7 @@ public class MovementHandler {
     public State getState() {
         return this.state;
     }
-    
+
     public Chooser getChooser() {
         return this.chooser;
     }
@@ -54,7 +54,9 @@ public class MovementHandler {
                 shoot(player, dir);
                 break;
             case Inventory:
-                chooser.move(dir);
+                if (chooser.getY() < map.getPlayer().inventory().size() - 1 || dir != Direction.DOWN) {
+                    chooser.move(dir);
+                }
                 break;
             default:
                 break;
@@ -256,5 +258,10 @@ public class MovementHandler {
         }
         player.setActed(true);
         this.state = state.Normal;
+    }
+
+    public void dropItem(Player player, int i) {
+        map.getTile(player.x(), player.y()).setItem(player.inventory().get(i));
+        player.loseItem(i);
     }
 }

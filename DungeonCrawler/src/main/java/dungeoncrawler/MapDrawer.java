@@ -17,7 +17,6 @@ public class MapDrawer {
 
     private Map map;
     private GraphicsContext gc;
-//    private Chooser chooser = new Chooser();
 
     public MapDrawer(Map map, GraphicsContext gc) {
         this.map = map;
@@ -101,6 +100,8 @@ public class MapDrawer {
             gc.strokeText(text, 10, i * 20 + 40);
         }
         gc.setFill(Color.BLUE);
-        gc.strokeRect(0, chooser.getY() * 20 + 25, 100, 20);
+        gc.strokeRect(chooser.getX() * 150, chooser.getY() * 20 + 25, 150, 20);
+        gc.strokeText("Drop", 200, chooser.getY() * 20 + 40);
+        gc.strokeText("Equip", 350, chooser.getY() * 20 + 40);
     }
 }

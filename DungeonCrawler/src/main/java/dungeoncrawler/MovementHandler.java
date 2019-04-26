@@ -24,6 +24,11 @@ public class MovementHandler {
     private Random random = new Random();
     private Chooser chooser = new Chooser();
 
+    public MovementHandler(Map map) {
+        this.map = map;
+        this.state = State.Normal;
+    }
+
     public MovementHandler(Map map, TextArea textArea) {
         this.map = map;
         this.textArea = textArea;
@@ -112,9 +117,13 @@ public class MovementHandler {
         player.attack(enemy);
         if (enemy.sleeping()) {
             enemy.wakeUp();
-            textArea.appendText(enemy.getName() + " woke \n");
+            if (textArea != null) {
+                textArea.appendText(enemy.getName() + " woke \n");
+            }
         }
-        textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
+        if (textArea != null) {
+            textArea.appendText("You hit " + enemy.getName() + " for " + player.getLastDamage() + " damage \n");
+        }
     }
 
     public void seeItem(Player player) {
@@ -128,7 +137,9 @@ public class MovementHandler {
         Tile tile = map.getTile(player.x(), player.y());
         if (tile.containsItem()) {
             player.addItem(tile.getItem());
-            textArea.appendText("You picked up " + tile.getItem().name() + "\n");
+            if (textArea != null) {
+                textArea.appendText("You picked up " + tile.getItem().name() + "\n");
+            }
             tile.removeItem();
             seeItem(player);
         }
@@ -150,7 +161,9 @@ public class MovementHandler {
             int number = random.nextInt(10);
             if (number > 6) {
                 enemy.wakeUp();
-                textArea.appendText(enemy.getName() + " woke \n");
+                if (textArea != null) {
+                    textArea.appendText(enemy.getName() + " woke \n");
+                }
             }
         }
     }
@@ -221,7 +234,9 @@ public class MovementHandler {
             case OpenDoor:
                 if (!tile.occupied()) {
                     tile.setType(Tiletype.Door);
-                    textArea.appendText("You closed the door \n");
+                    if (textArea != null) {
+                        textArea.appendText("You closed the door \n");
+                    }
                     player.hasNotAttacked();
                     player.setActed(true);
 
@@ -229,11 +244,15 @@ public class MovementHandler {
                 break;
 
             case Door:
-                textArea.appendText("The door is already closed \n");
+                if (textArea != null) {
+                    textArea.appendText("The door is already closed \n");
+                }
                 break;
 
             default:
-                textArea.appendText("There is no door there \n");
+                if (textArea != null) {
+                    textArea.appendText("There is no door there \n");
+                }
                 break;
         }
         this.state = State.Normal;
@@ -244,12 +263,16 @@ public class MovementHandler {
             Tile tile = map.getTile(player.x() + i * dir.x(), player.y() + i * dir.y());
             if (tile.occupied() && tile.getCharacter() != null) {
                 player.attack(tile.getCharacter());
-                textArea.appendText("You hit " + tile.getCharacter().getName() + " for " + player.getLastDamage() + " damage \n");
+                if (textArea != null) {
+                    textArea.appendText("You hit " + tile.getCharacter().getName() + " for " + player.getLastDamage() + " damage \n");
+                }
                 Enemy enemy = map.getEnemy(tile.x(), tile.y());
                 enemy.rage();
                 if (enemy.sleeping()) {
                     enemy.wakeUp();
-                    textArea.appendText(enemy.getName() + " woke \n");
+                    if (textArea != null) {
+                        textArea.appendText(enemy.getName() + " woke \n");
+                    }
                 }
                 break;
             } else if (tile.getType() == Tiletype.Wall || tile.getType() == Tiletype.Door) {

@@ -6,31 +6,15 @@
 package dungeoncrawler;
 
 import dungeoncrawler.MovementHandler.State;
-import dungeoncrawler.Tile;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-//import javafx.scene.canvas.Canvas;
-//import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-//import javafx.scene.layout.BorderPane;
-//import javafx.scene.layout.HBox;
-//import javafx.scene.layout.Pane;
-//import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.canvas.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Popup;
-import javafx.stage.Screen;
 
 /**
  *

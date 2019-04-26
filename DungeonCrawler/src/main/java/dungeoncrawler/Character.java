@@ -57,6 +57,11 @@ public class Character {
         return this.currenthp;
     }
 
+    /**
+     * Metodilla lisätään hahmolle elämää. Elämä ei voi nuosta yli maksimin
+     *
+     * @param amount kuinka paljon lisätään
+     */
     public void gainHp(int amount) {
         this.currenthp += amount;
         if (this.currenthp > this.maxhp) {
@@ -64,14 +69,32 @@ public class Character {
         }
     }
 
+    /**
+     * Metodilla vähennetään hahmolta elämää
+     *
+     * @param amount kuinka paljon vähennetään
+     */
     public void loseHp(int amount) {
         this.currenthp -= amount;
     }
-    
+
+    /**
+     * Metodilla lisätään hahmon elämäpisteiden maksimimäärää
+     *
+     * @param amount kuinka paljolla lisätään
+     */
     public void gainMaxHp(int amount) {
-        this.maxhp += amount; 
+        this.maxhp += amount;
     }
 
+    /**
+     * Metodi muuttuu hahmon x ja y koordinaatteja suunnan verran Metodi myös
+     * poistaa kartalta vanhojen koordinaattien ruudusta hahmon ja lisää uusien
+     * koordinaattien ruutuun
+     *
+     * @param map millä kartalla pelaaja liikkuu
+     * @param dir mihin suuntaan pelaaja liikkuu
+     */
     public void move(Map map, Direction dir) {
         //old tile 
         map.getTile(this.x, this.y).setCharacter(null);
@@ -106,6 +129,11 @@ public class Character {
         return lastDamageDealt;
     }
 
+    /**
+     * Metodi tarkistaa onko hahmon elämäpisteet vähemmän kuin yksi
+     *
+     * @return true jos hahmon elämäpisteet ovat nollan tai alle, muuten false
+     */
     public boolean checkIfDead() {
         if (currenthp <= 0) {
             return true;

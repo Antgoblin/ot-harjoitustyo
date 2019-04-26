@@ -291,7 +291,7 @@ public class MovementHandler {
     public void Action(Player player) {
         switch (player.inventory().get(chooser.getY()).getAction()) {
             case "Equip":
-                player.equipItem(chooser.getY());
+                player.equipWeapon(chooser.getY());
                 break;
             case "Drink":
                 player.drinkPotion(chooser.getY());

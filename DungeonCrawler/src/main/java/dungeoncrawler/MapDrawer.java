@@ -24,6 +24,9 @@ public class MapDrawer {
 
     }
 
+    /**
+     * Metodi piirtää ruudukon, ruudut, pelaajan, vhiholliset ja esineet
+     */
     public void drawAll() {
         drawTiles();
         drawGrid();
@@ -32,6 +35,10 @@ public class MapDrawer {
         drawItems();
     }
 
+    /**
+     * Metodi piirtää canvastaululle mustia viivoja kartan ruutujen verran.
+     * Viivojen väli on kartassa oleva ruudunkoko
+     */
     public void drawGrid() {
 
         gc.setStroke(Color.BLACK);
@@ -44,6 +51,11 @@ public class MapDrawer {
 
     }
 
+    /**
+     * Metodi maalaa neliöitä canvastaululle. neliön sivun koko on sama kuin
+     * kartan ruudunkoko ja neliön värin riippuu kartassa olevien ruutujen
+     * tyypistä.
+     */
     public void drawTiles() {
 
         for (int y = 0; y < map.getSize(); y++) {
@@ -55,6 +67,10 @@ public class MapDrawer {
         }
     }
 
+    /**
+     * Metodi piirtää canvastaululle pienen mustan neliön pelaajan
+     * koordinaattien kohtaan
+     */
     public void drawPlayer() {
 
         gc.setFill(Color.BLACK);
@@ -65,6 +81,10 @@ public class MapDrawer {
 
     }
 
+    /**
+     * Metodi piitää pienen ympyrän jokaiseen kartalla olevan vihollisen
+     * koordinaatteihin. ympyrän väri riippuu vihollisen tyypistä
+     */
     public void drawEnemies() {
 
         map.getEnemies().forEach(enemy -> {
@@ -77,6 +97,10 @@ public class MapDrawer {
 
     }
 
+    /**
+     * Metodi piirtää canvastaululle vinottaisen viivan jokaiseen kartan ruutuun
+     * jossa on yksi tai useampi esine.
+     */
     public void drawItems() {
         for (int y = 0; y < map.getSize(); y++) {
             for (int x = 0; x < map.getSize(); x++) {
@@ -89,6 +113,14 @@ public class MapDrawer {
 
     }
 
+    /**
+     * Metodi pyyhkii canvastaulun ja piirtää tekstinä jokaisen kartan pelaajan
+     * esineen. Metodi piitää myös kehän tekstin ympärille jossa sille annetun
+     * valitsijan koordinaatit ovat. Lisäksi valitsija viereen piirtyy tekstit
+     * mitä esineelle voi tehdä
+     *
+     * @param chooser valitsija joka kertoo missä kohtaa esine listää mennään
+     */
     public void drawInventory(Chooser chooser) {
 
         gc.setFill(Color.WHITE);
@@ -105,6 +137,10 @@ public class MapDrawer {
         gc.strokeText(items.get(chooser.getY()).getAction(), 400, chooser.getY() * 20 + 40);
     }
 
+    /**
+     * Metodi pyyhkii canvastaulun ja piirtää tekstinä ohjeet mitä kaikki
+     * näppäimet tekevät pelissä
+     */
     public void drawHelpScreen() {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
@@ -116,6 +152,7 @@ public class MapDrawer {
         gc.strokeText("P: PickUp Items", 10, 120);
         gc.strokeText("C: Close Door", 10, 140);
         gc.strokeText("TAB: For Switching weapons fast", 10, 160);
-        
+        gc.strokeText("ENTER: portaita ylös ja alas menemiseen", 10, 180);
+
     }
 }

@@ -173,7 +173,7 @@ public class DungeonCrawlerApplication extends Application {
                             mh.dropItem(player, mh.getChooser().getY());
                         } else if (mh.getChooser().getX() == 2) {
                             mh.Action(player);
-                            player.equipItem(mh.getChooser().getY());
+                            player.equipWeapon(mh.getChooser().getY());
 
                         }
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {

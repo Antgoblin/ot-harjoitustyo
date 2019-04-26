@@ -28,18 +28,35 @@ public class Tile extends StackPane {
 
     }
 
+    /**
+     * Metodi lisää ruutuun esineen
+     *
+     * @param item mikä esine lisätään
+     */
     public void setItem(Item item) {
         this.items.add(item);
     }
 
+    /**
+     * Metodi poistaa ruudusta listan viimeisimmän esineen
+     */
     public void removeItem() {
         this.items.remove(items.size() - 1);
     }
-    
+
+    /**
+     * Metodi poistaa ruudusta kaikki esineet
+     */
     public void removeItems() {
         this.items.clear();
     }
 
+    /**
+     * Metodilla saa selville ruudussa olevan listan viimeisen esineen, jos
+     * ruudussa on esineitä
+     *
+     * @return esineen joka oli listan viimeinen
+     */
     public Item getItem() {
         if (!items.isEmpty()) {
             return items.get(items.size() - 1);
@@ -48,6 +65,11 @@ public class Tile extends StackPane {
         }
     }
 
+    /**
+     * Metodi tarkistaa onko ruudussa esineitä
+     *
+     * @return true jos ruudussa on esine, muuten false
+     */
     public boolean containsItem() {
         if (items.isEmpty()) {
             return false;
@@ -72,6 +94,11 @@ public class Tile extends StackPane {
         return this.type;
     }
 
+    /**
+     * Metodi tarkistaa onko ruudussa hahmo
+     *
+     * @return true jos ruudussa on hahmo, muulloin false
+     */
     public boolean occupied() {
         return this.character != null;
     }

@@ -42,6 +42,12 @@ public enum WeaponType {
         return this.name;
     }
 
+    /**
+     * Metodi ottaa satummanvaraisesti luvun aseen minimidamagen ja
+     * maksimidamagen väliltä
+     *
+     * @return luvun minimidamagen ja maksimidamagen väliltä
+     */
     public int getDamage() {
         int damage = random.nextInt(maxDamage - minDamage + 1) + minDamage;
         return damage;
@@ -51,10 +57,27 @@ public enum WeaponType {
         return range;
     }
 
+    /**
+     * Metodi tutkii kuinka todennäköisesti ase esiintyy tietyllä syvyydellä
+     *
+     * @param depth syvyys jossa ollaan
+     * @return luvun joka kertoo kuinka todennäköisesti ase esiintyy syvyydellä
+     */
     public double getWeight(int depth) {
         return this.rarity / (Math.abs(this.depth - depth) + 1);
     }
 
+    /**
+     * Metodi vertailee sille annettua syvyyttä ja ottaa listalle aseita niiden
+     * esiintymissyvyyttä ja harvinaisuutta käyttäen. Mitä lähempänä annettu
+     * syvyys on aseen esiintymissyvyyttä suurentaa tietyn aseen
+     * todennäköisyyttä joutua listalle. Listalle otetaan aseita metodille
+     * annetun määrän verran
+     *
+     * @param depth syvyys jossa ollaan
+     * @param amount kuinka monta asetta halutaan
+     * @return listan aseita
+     */
     public List<WeaponType> randomize(int depth, int amount) {
         List<WeaponType> weapons = getAll();
         List<WeaponType> result = new ArrayList<>();
@@ -79,6 +102,10 @@ public enum WeaponType {
         return result;
     }
 
+    /**
+     *
+     * @return Listan jossa on jokaista eri asetta yksi kappale
+     */
     public List<WeaponType> getAll() {
         List<WeaponType> weapontypes = new ArrayList<>();
         weapontypes.add(DAGGER);

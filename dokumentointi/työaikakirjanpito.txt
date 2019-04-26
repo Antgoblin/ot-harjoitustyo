@@ -27,6 +27,10 @@ Päivä    |     Aika:   |    Mitä tein:
 16.4            3h          Tavaroita spawnaa luolastoon ja niitä voi kerätä (tosin ei oikeen voi tehdä vielä niillä mitään)
 16.4            4h          Checkstyle nyt vain 5 virhettä
 16.4            1h          LvlUp ja regeneration
+17.4            1h          Maassa olevat esineet uusiutuu tasojen vaihtuessa
+25.4            4h          Inventory kokonaan uusiksi
+25.4            4h          Tavaroita voi pudottaa ja aseita voi vaihtaa
+26.4            5h          Testit 60%
 
 
-yht:            54h
+yht:            68h

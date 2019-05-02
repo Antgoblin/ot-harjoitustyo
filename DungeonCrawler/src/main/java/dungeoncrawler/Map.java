@@ -546,17 +546,29 @@ public class Map {
         });
 
         //Spawn weapons
-        List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount);
+        List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount / 2);
         weapons.forEach(w -> {
             spawnItemRandom(new Weapon(w));
         });
-        
+
         //spawn potions
-        List<PotionType> potions = PotionType.HP.randomize(level, amount);
+        List<PotionType> potions = PotionType.HP.randomize(level, amount / 2);
         potions.forEach(p -> {
             spawnItemRandom(new Potion(p));
         });
 
+        //spawn spellbooks
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
     }
 
     public void clearItems() {

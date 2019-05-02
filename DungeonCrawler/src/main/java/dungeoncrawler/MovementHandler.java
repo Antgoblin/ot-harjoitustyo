@@ -15,7 +15,7 @@ import javafx.scene.control.TextArea;
 public class MovementHandler {
 
     public enum State {
-        Normal, OpeningDoor, Shooting, Inventory, Chooser, Help;
+        Normal, OpeningDoor, Shooting, Inventory, Chooser, Help, Spells;
     }
 
     private Map map;
@@ -60,6 +60,11 @@ public class MovementHandler {
                 break;
             case Inventory:
                 if (chooser.getY() < map.getPlayer().inventory().size() - 1 || dir != Direction.DOWN) {
+                    chooser.move(dir);
+                }
+                break;
+            case Spells:
+                if (chooser.getY() < map.getPlayer().spells().size() - 1 || dir != Direction.DOWN) {
                     chooser.move(dir);
                 }
                 break;
@@ -295,6 +300,10 @@ public class MovementHandler {
                 break;
             case "Drink":
                 player.drinkPotion(chooser.getY());
+                break;
+            case "Read":
+                player.readSpellbook(chooser.getY());
+                break;
         }
     }
 }

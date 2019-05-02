@@ -28,6 +28,7 @@ public class Player extends Character {
     private int regenerationTimer = 6;
     private int str = 0;
     private List<Item> inventory = new ArrayList<>();
+    private List<Spell> spells = new ArrayList<>();
 
     public Player(int x, int y, Class playerclass) {
         super("You", x, y, playerclass.hp(), Color.BLACK);
@@ -186,6 +187,10 @@ public class Player extends Character {
         return this.inventory;
     }
 
+    public List<Spell> spells() {
+        return this.spells;
+    }
+
     /**
      * Metodilla lisätään pelaajan inventoryyn esine
      *
@@ -224,6 +229,23 @@ public class Player extends Character {
             gainHp(potion.getHealthGain());
             gainMana(potion.getManaGain());
             loseItem(i);
+        }
+    }
+
+    /**
+     * Metodilla pelaajan inventorista poistetaan kirja ja sen sisältämä loitsu
+     * lisätään pelaajaan
+     *
+     * @param i indeksi monesko esine inventorista luotaan
+     */
+    public void readSpellbook(int i) {
+        if (this.inventory.get(i).getType() == ItemType.SPELLBOOK) {
+            System.out.println("kyllä");
+            Spellbook spellbook = (Spellbook) this.inventory.get(i);
+            this.spells.add(spellbook.getSpell());
+            loseItem(i);
+        } else {
+            System.out.println("ei");
         }
     }
 
@@ -301,6 +323,14 @@ public class Player extends Character {
         } else {
             this.gainHp(1);
             this.regenerationTimer = 6;
+        }
+    }
+
+    public Spell getSpell(int i) {
+        if (this.spells != null) {
+            return this.spells.get(i);
+        } else {
+            return null;
         }
     }
 }

@@ -6,8 +6,11 @@
 package dungeoncrawler;
 
 import dungeoncrawler.MovementHandler.State;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -40,6 +43,42 @@ public class DungeonCrawlerApplication extends Application {
     private TextArea textArea;
     private TextArea statscreen;
     private MovementHandler mh;
+
+    public void save() throws IOException {
+        File file = new File("test.txt");
+        FileWriter fr = null;
+        try {
+            fr = new FileWriter(file);
+            fr.write(player.getCurrentHp() + "\r\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //close resources
+            try {
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void load() throws FileNotFoundException, IOException {
+        InputStream is = new FileInputStream("test.txt");
+        BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+
+        String line = buf.readLine();
+        StringBuilder sb = new StringBuilder();
+
+        while (line != null) {
+//            sb.append(line).append("\n");
+            int hp = Integer.parseInt(line);
+            player.setHp(hp);
+            line = buf.readLine();
+        }
+
+        String fileAsString = sb.toString();
+        System.out.println("Contents : " + fileAsString);
+    }
 
     public void init() {
 //
@@ -173,8 +212,6 @@ public class DungeonCrawlerApplication extends Application {
                             mh.dropItem(player, mh.getChooser().getY());
                         } else if (mh.getChooser().getX() == 2) {
                             mh.Action(player);
-                            player.equipWeapon(mh.getChooser().getY());
-
                         }
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
                         map.goDown();
@@ -194,6 +231,13 @@ public class DungeonCrawlerApplication extends Application {
                     mapDrawer.drawInventory(mh.getChooser());
                     break;
 
+                case V:
+                    mh.setState(State.Spells);
+                    canvas.setTranslateX(0);
+                    canvas.setTranslateY(0);
+                    mapDrawer.drawSpells(mh.getChooser());
+                    break;
+
                 case H:
                     mh.setState(State.Help);
                     canvas.setTranslateX(0);
@@ -205,6 +249,22 @@ public class DungeonCrawlerApplication extends Application {
                     mh.setState(State.Normal);
                     updateCamera();
                     mapDrawer.drawAll();
+                    break;
+
+                case O:
+                    try {
+                        save();
+                    } catch (IOException ex) {
+                        Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+
+                case L:
+                    try {
+                        load();
+                    } catch (IOException ex) {
+                        System.out.println("ITS BROKEN");
+                    }
                 default:
                     break;
 

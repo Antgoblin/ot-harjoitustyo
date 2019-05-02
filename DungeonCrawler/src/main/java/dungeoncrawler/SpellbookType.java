@@ -9,31 +9,24 @@ package dungeoncrawler;
  *
  * @author jy
  */
-public class Item {
+public enum SpellbookType {
 
-    public enum ItemType {
-        ITEM, WEAPON, POTION, SPELLBOOK;
-    }
+    FIREBOLTBOOK("Book of Firebolt", Spell.FIREBOLT);
 
+    private Spell spell;
     private String name;
-    private ItemType type;
 
-    public Item(String name, ItemType i) {
+    private SpellbookType(String name, Spell spell) {
         this.name = name;
-        this.type = i;
-
+        this.spell = spell;
     }
 
-    public String name() {
+    public String getName() {
         return this.name;
     }
 
-    public ItemType getType() {
-        return ItemType.ITEM;
-    }
-
-    public String getAction() {
-        return "";
+    public Spell getSpell() {
+        return this.spell;
     }
 
 }

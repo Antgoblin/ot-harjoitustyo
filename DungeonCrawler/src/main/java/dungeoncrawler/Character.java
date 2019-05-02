@@ -86,6 +86,10 @@ public class Character {
     public void gainMaxHp(int amount) {
         this.maxhp += amount;
     }
+    
+    public void setHp(int amount) {
+        this.currenthp = amount;
+    }
 
     /**
      * Metodi muuttuu hahmon x ja y koordinaatteja suunnan verran Metodi myös

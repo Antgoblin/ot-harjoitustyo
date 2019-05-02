@@ -134,7 +134,7 @@ public class MovementHandler {
     public void seeItem(Player player) {
         Tile tile = map.getTile(player.x(), player.y());
         if (tile.containsItem()) {
-            textArea.appendText("There is " + tile.getItem().name() + " on the ground \n");
+            textArea.appendText("There is " + tile.getItem().getName() + " on the ground \n");
         }
     }
 
@@ -143,7 +143,7 @@ public class MovementHandler {
         if (tile.containsItem()) {
             player.addItem(tile.getItem());
             if (textArea != null) {
-                textArea.appendText("You picked up " + tile.getItem().name() + "\n");
+                textArea.appendText("You picked up " + tile.getItem().getName() + "\n");
             }
             tile.removeItem();
             seeItem(player);
@@ -291,6 +291,7 @@ public class MovementHandler {
     public void dropItem(Player player, int i) {
         map.getTile(player.x(), player.y()).setItem(player.inventory().get(i));
         player.loseItem(i);
+        
     }
 
     public void Action(Player player) {

@@ -118,11 +118,15 @@ public enum WeaponType {
         List<WeaponType> weapontypes = getAll();
         List<WeaponType> searchedWeapons = new ArrayList<>();
         weapontypes.forEach(w -> {
-            if (w.getName() == name) {
+            if (w.getName().equals(name)) {
                 searchedWeapons.add(w);
-                System.out.println("löytyi");
             }
         });
-        return searchedWeapons.get(0);
+        if (!searchedWeapons.isEmpty()) {
+            return searchedWeapons.get(0);
+
+        } else {
+            return DAGGER;
+        }
     }
 }

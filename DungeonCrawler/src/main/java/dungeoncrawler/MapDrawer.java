@@ -127,14 +127,18 @@ public class MapDrawer {
         gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
         gc.strokeText("Inventory:  (esc to exit) ", 10, 20, 1000);
         List<Item> items = map.getPlayer().inventory();
-        for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
-            String text = " - " + items.get(i).name();
-            gc.strokeText(text, 10, i * 20 + 40);
+        if (!items.isEmpty()) {
+            for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
+                String text = " - " + items.get(i).getName();
+                gc.strokeText(text, 10, i * 20 + 40);
+            }
         }
-        gc.setFill(Color.BLUE);
         gc.strokeRect(chooser.getX() * 170, chooser.getY() * 20 + 25, 170, 20);
         gc.strokeText("Drop", 230, chooser.getY() * 20 + 40);
-        gc.strokeText(items.get(chooser.getY()).getAction(), 400, chooser.getY() * 20 + 40);
+        if (!items.isEmpty()) {
+            gc.strokeText(items.get(chooser.getY()).getAction(), 400, chooser.getY() * 20 + 40);
+
+        }
     }
 
     public void drawSpells(Chooser chooser) {

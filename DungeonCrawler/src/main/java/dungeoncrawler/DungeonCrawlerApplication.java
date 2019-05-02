@@ -63,13 +63,13 @@ public class DungeonCrawlerApplication extends Application {
             fr.write(player.x() + "\r\n");
             fr.write(player.y() + "\r\n");
             if (player.getWeapon() != null) {
-                fr.write(player.getWeapon().name() + "\r\n");
+                fr.write(player.getWeapon().getWeaponType().getName() + "\r\n");
             }
             if (player.getWeapon2() != null) {
-                fr.write(player.getWeapon2().name() + "\r\n");
+                fr.write(player.getWeapon2().getWeaponType().getName() + "\r\n");
             }
             fr.write("-Items-");
-
+            //TODO Items, Enemies and Map
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -87,12 +87,9 @@ public class DungeonCrawlerApplication extends Application {
         BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 
         String line = buf.readLine();
-        StringBuilder sb = new StringBuilder();
         List<String> lines = new ArrayList<>();
 
         while (line != null) {
-//            sb.append(line).append("\n");
-//            player.setHp(hp);
             lines.add(line);
             line = buf.readLine();
         }
@@ -109,10 +106,21 @@ public class DungeonCrawlerApplication extends Application {
         player.setGold(Integer.parseInt(lines.get(6)));
         player.setX(Integer.parseInt(lines.get(7)));
         player.setY(Integer.parseInt(lines.get(8)));
-        System.out.println("mihin törmää");
-        
+        int i = 0;
+        if (!lines.get(9).equals("-Items-")) {
+            player.setWeapon(new Weapon(WeaponType.DAGGER.getWeapon(lines.get(9))));
+            if (!lines.get(10).equals("-Items-")) {
+                player.setWeapon2(new Weapon(WeaponType.DAGGER.getWeapon(lines.get(10))));
+                i = 11;
+            } else {
+                i = 10;
+            }
+        } else {
+            i = 9;
+        }
 
         mapDrawer.drawAll();
+        updateCamera();
     }
 
     public void l() {
@@ -399,13 +407,13 @@ public class DungeonCrawlerApplication extends Application {
         );
 
         if (player.getWeapon() != null) {
-            statscreen.appendText("Weapon : " + player.getWeapon().name() + "\n");
+            statscreen.appendText("Weapon : " + player.getWeapon().getName() + "\n");
         } else {
             statscreen.appendText("Weapon : - \n");
         }
 
         if (player.getWeapon2() != null) {
-            statscreen.appendText("Weapon2 : " + player.getWeapon2().name());
+            statscreen.appendText("Weapon2 : " + player.getWeapon2().getName());
         } else {
             statscreen.appendText("Weapon2 : -");
         }

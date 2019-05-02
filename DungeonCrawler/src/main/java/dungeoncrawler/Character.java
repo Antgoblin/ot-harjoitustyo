@@ -86,9 +86,13 @@ public class Character {
     public void gainMaxHp(int amount) {
         this.maxhp += amount;
     }
-    
-    public void setHp(int amount) {
-        this.currenthp = amount;
+
+    public void setHp(int currenthp) {
+        this.currenthp = currenthp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxhp = maxhp;
     }
 
     /**

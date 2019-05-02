@@ -36,9 +36,8 @@ public class Weapon extends Item {
     public ItemType getType() {
         return ItemType.WEAPON;
     }
-    
+
     public String getAction() {
         return "Equip";
     }
-
 }

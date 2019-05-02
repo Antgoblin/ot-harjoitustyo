@@ -7,10 +7,14 @@ package dungeoncrawler;
 
 import dungeoncrawler.MovementHandler.State;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -45,11 +49,27 @@ public class DungeonCrawlerApplication extends Application {
     private MovementHandler mh;
 
     public void save() throws IOException {
-        File file = new File("test.txt");
+        File file = new File("save.txt");
         FileWriter fr = null;
         try {
             fr = new FileWriter(file);
             fr.write(player.getCurrentHp() + "\r\n");
+            fr.write(player.getMaxHp() + "\r\n");
+            fr.write(player.currentMana() + "\r\n");
+            fr.write(player.maxMana() + "\r\n");
+            fr.write(player.getLvl() + "\r\n");
+            fr.write(player.getExp() + "\r\n");
+            fr.write(player.getGold() + "\r\n");
+            fr.write(player.x() + "\r\n");
+            fr.write(player.y() + "\r\n");
+            if (player.getWeapon() != null) {
+                fr.write(player.getWeapon().name() + "\r\n");
+            }
+            if (player.getWeapon2() != null) {
+                fr.write(player.getWeapon2().name() + "\r\n");
+            }
+            fr.write("-Items-");
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -63,21 +83,41 @@ public class DungeonCrawlerApplication extends Application {
     }
 
     public void load() throws FileNotFoundException, IOException {
-        InputStream is = new FileInputStream("test.txt");
+        InputStream is = new FileInputStream("save.txt");
         BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 
         String line = buf.readLine();
         StringBuilder sb = new StringBuilder();
+        List<String> lines = new ArrayList<>();
 
         while (line != null) {
 //            sb.append(line).append("\n");
-            int hp = Integer.parseInt(line);
-            player.setHp(hp);
+//            player.setHp(hp);
+            lines.add(line);
             line = buf.readLine();
         }
 
-        String fileAsString = sb.toString();
-        System.out.println("Contents : " + fileAsString);
+        lines.forEach(l -> {
+            System.out.println(l);
+        });
+        player.setHp(Integer.parseInt(lines.get(0)));
+        player.setMaxHp(Integer.parseInt(lines.get(1)));
+        player.setCurrentMana(Integer.parseInt(lines.get(2)));
+        player.setMaxMana(Integer.parseInt(lines.get(3)));
+        player.setLvl(Integer.parseInt(lines.get(4)));
+        player.setExp(Integer.parseInt(lines.get(5)));
+        player.setGold(Integer.parseInt(lines.get(6)));
+        player.setX(Integer.parseInt(lines.get(7)));
+        player.setY(Integer.parseInt(lines.get(8)));
+        System.out.println("mihin törmää");
+        
+
+        mapDrawer.drawAll();
+    }
+
+    public void l() {
+        Path path = Paths.get("save.txt");
+
     }
 
     public void init() {

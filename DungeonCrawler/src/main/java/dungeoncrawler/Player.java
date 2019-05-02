@@ -87,8 +87,16 @@ public class Player extends Character {
         return this.lvl;
     }
 
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
     public int getExp() {
         return this.exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     /**
@@ -118,6 +126,14 @@ public class Player extends Character {
 
     public int currentMana() {
         return this.currentMana;
+    }
+
+    public void setCurrentMana(int currentMana) {
+        this.currentMana = currentMana;
+    }
+
+    public void setMaxMana(int maxMana) {
+        this.maxMana = maxMana;
     }
 
     /**
@@ -153,6 +169,10 @@ public class Player extends Character {
         return this.gold;
     }
 
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
     /**
      * Metodilla lisätään pelaajalle kultaa
      *
@@ -179,8 +199,16 @@ public class Player extends Character {
         return this.weapon;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     public Weapon getWeapon2() {
         return this.weapon2;
+    }
+
+    public void setWeapon2(Weapon weapon) {
+        this.weapon2 = weapon;
     }
 
     public List<Item> inventory() {

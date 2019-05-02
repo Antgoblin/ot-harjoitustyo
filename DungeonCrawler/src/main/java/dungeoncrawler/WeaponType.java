@@ -113,4 +113,16 @@ public enum WeaponType {
         weapontypes.add(BOW);
         return weapontypes;
     }
+
+    public WeaponType getWeapon(String name) {
+        List<WeaponType> weapontypes = getAll();
+        List<WeaponType> searchedWeapons = new ArrayList<>();
+        weapontypes.forEach(w -> {
+            if (w.getName() == name) {
+                searchedWeapons.add(w);
+                System.out.println("löytyi");
+            }
+        });
+        return searchedWeapons.get(0);
+    }
 }

@@ -291,7 +291,39 @@ public class MovementHandler {
     public void dropItem(Player player, int i) {
         map.getTile(player.x(), player.y()).setItem(player.inventory().get(i));
         player.loseItem(i);
-        
+
+    }
+
+    public void castSpell(int i) {
+        Player player = this.map.getPlayer();
+        Spell spell = player.getSpell(i);
+        if (player.loseMana(spell.getMana())) {
+            switch (spell.getName()) {
+                case "Firebolt":
+                    Enemy enemy = this.map.getClosestEnemy();
+                    int distance = Math.max(Math.abs(player.x() - enemy.x()), Math.abs(player.y() - enemy.y()));
+                    System.out.println(distance);
+                    if (distance < 6) {
+                        int damage = random.nextInt(9) + 1;
+                        enemy.loseHp(damage);
+                        textArea.appendText("You hit " + enemy.getName() + " for " + damage + " damage \n");
+                    } else {
+                        textArea.appendText("Your spell hit nothing");
+                    }
+                    break;
+                case "Teleport":
+                    Tile tile = this.map.getRandomTile(Tiletype.Floor);
+                    player.setX(tile.x());
+                    player.setY(tile.y());
+                    break;
+                case "Heal":
+                    player.gainHp(20);
+                    break;
+            }
+
+        } else {
+            textArea.appendText("You dont have enough mana \n");
+        }
     }
 
     public void Action(Player player) {

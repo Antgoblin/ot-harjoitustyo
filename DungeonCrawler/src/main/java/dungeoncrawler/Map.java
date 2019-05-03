@@ -197,6 +197,20 @@ public class Map {
         return enemiesInTile.get(0);
     }
 
+    public Enemy getClosestEnemy() {
+        Enemy closestEnemy = enemies.get(0);
+        int distance = Math.max(Math.abs(player.x() - closestEnemy.x()), Math.abs(player.y() - closestEnemy.y()));
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            int d = Math.max(Math.abs(player.x() - e.x()), Math.abs(player.y() - e.y()));
+            if (d < distance) {
+                distance = d;
+                closestEnemy = e;
+            }
+        }
+        return closestEnemy;
+    }
+
     public void createRoom(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY) {
         for (int x = topLeftX; x <= bottomRightX; x++) {
             for (int y = topLeftY; y <= bottomRightY; y++) {
@@ -558,17 +572,21 @@ public class Map {
         });
 
         //spawn spellbooks
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
+
     }
 
     public void clearItems() {

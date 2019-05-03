@@ -28,7 +28,7 @@ import javafx.scene.layout.*;
  * @author jy
  */
 public class DungeonCrawlerApplication extends Application {
-
+    
     public static void main(String[] args) {
         launch();
     }
@@ -47,7 +47,7 @@ public class DungeonCrawlerApplication extends Application {
     private TextArea textArea;
     private TextArea statscreen;
     private MovementHandler mh;
-
+    
     public void save() throws IOException {
         File file = new File("save.txt");
         FileWriter fr = null;
@@ -81,19 +81,19 @@ public class DungeonCrawlerApplication extends Application {
             }
         }
     }
-
+    
     public void load() throws FileNotFoundException, IOException {
         InputStream is = new FileInputStream("save.txt");
         BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-
+        
         String line = buf.readLine();
         List<String> lines = new ArrayList<>();
-
+        
         while (line != null) {
             lines.add(line);
             line = buf.readLine();
         }
-
+        
         lines.forEach(l -> {
             System.out.println(l);
         });
@@ -118,25 +118,25 @@ public class DungeonCrawlerApplication extends Application {
         } else {
             i = 9;
         }
-
+        
         mapDrawer.drawAll();
         updateCamera();
     }
-
+    
     public void l() {
         Path path = Paths.get("save.txt");
-
+        
     }
-
+    
     public void init() {
 //
         player = new Player(11, 11, Class.Warrior);
         map = new Map(mapSize, tileSize, player);
-
+        
         map.createRoom(10, 10, 14, 14);
         map.getTile(12, 12).setType(Tiletype.StairsDown);
     }
-
+    
     @Override
     public void start(Stage stage) {
 
@@ -172,7 +172,7 @@ public class DungeonCrawlerApplication extends Application {
         initializeStatScreen();
         mh = new MovementHandler(map, textArea);
         Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
-
+        
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
@@ -180,7 +180,7 @@ public class DungeonCrawlerApplication extends Application {
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
-
+                    
                     break;
                 case R:
                     player = new Player(11, 11, Class.Ranger);
@@ -196,44 +196,44 @@ public class DungeonCrawlerApplication extends Application {
                     break;
                 default:
                     break;
-
+                
             }
         });
-
+        
         mapDrawer.drawAll();
-
+        
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
                     mh.handle(player, Direction.UP);
                     break;
-
+                
                 case DOWN:
                     mh.handle(player, Direction.DOWN);
                     break;
-
+                
                 case RIGHT:
                     mh.handle(player, Direction.RIGHT);
                     break;
-
+                
                 case LEFT:
                     mh.handle(player, Direction.LEFT);
                     break;
-
+                
                 case SPACE:
                     player.setActed(true);
                     break;
-
+                
                 case C:
                     textArea.appendText("Choose Direction \n");
                     mh.setState(State.OpeningDoor);
                     break;
-
+                
                 case P:
                     mh.pickUp(player);
                     mapDrawer.drawAll();
                     break;
-
+                
                 case S:
                     if (player.getRange() > 1) {
                         textArea.appendText("Choose Direction \n");
@@ -242,18 +242,18 @@ public class DungeonCrawlerApplication extends Application {
                         textArea.appendText("You dont have anything to shoot with \n");
                     }
                     break;
-
+                
                 case Q:
                     if (map.getEnemies().isEmpty()) {
                         map.spawnEnemy(EnemyType.RAT.spawn(3, 15, player));
                     }
                     player.setActed(true);
                     break;
-
+                
                 case TAB:
                     player.switchWeapons();
                     break;
-
+                
                 case ENTER:
                     if (mh.getState() == State.Inventory) {
                         if (mh.getChooser().getX() == 1) {
@@ -269,36 +269,42 @@ public class DungeonCrawlerApplication extends Application {
                         map.goUp();
                         mapDrawer.drawAll();
                         updateCamera();
+                    } else if (mh.getState() == State.Spells && mh.getChooser().getX() == 1) {
+                        mh.castSpell(mh.getChooser().getY());
+                        player.setActed(true);
+                        mh.setState(State.Normal);
                     }
                     break;
-
+                
                 case I:
                     mh.setState(State.Inventory);
                     canvas.setTranslateX(0);
                     canvas.setTranslateY(0);
                     mapDrawer.drawInventory(mh.getChooser());
                     break;
-
+                
                 case V:
                     mh.setState(State.Spells);
                     canvas.setTranslateX(0);
                     canvas.setTranslateY(0);
                     mapDrawer.drawSpells(mh.getChooser());
                     break;
-
+                
                 case H:
                     mh.setState(State.Help);
                     canvas.setTranslateX(0);
                     canvas.setTranslateY(0);
                     mapDrawer.drawHelpScreen();
                     break;
-
+                
                 case ESCAPE:
+                    mh.getChooser().setX(0);
+                    mh.getChooser().setY(0);
                     mh.setState(State.Normal);
                     updateCamera();
                     mapDrawer.drawAll();
                     break;
-
+                
                 case O:
                     try {
                         save();
@@ -306,7 +312,7 @@ public class DungeonCrawlerApplication extends Application {
                         Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-
+                
                 case L:
                     try {
                         load();
@@ -315,7 +321,7 @@ public class DungeonCrawlerApplication extends Application {
                     }
                 default:
                     break;
-
+                
             }
             updateStatScreen();
             if (player.hasActed()) {
@@ -326,16 +332,18 @@ public class DungeonCrawlerApplication extends Application {
                 endTurn();
             } else if (mh.getState() == State.Inventory) {
                 mapDrawer.drawInventory(mh.getChooser());
+            } else if (mh.getState() == State.Spells) {
+                mapDrawer.drawSpells(mh.getChooser());
             }
         });
-
+        
         stage.setTitle("DungeonCrawler");
         stage.setScene(charactercreation);
         stage.setResizable(false);
         stage.show();
-
+        
     }
-
+    
     private void initializeLayout() {
 
         //Layout of the game
@@ -343,11 +351,11 @@ public class DungeonCrawlerApplication extends Application {
         grid.setPrefSize(WIDTH, HEIGHT);
         grid.setHgap(0);
         grid.setVgap(0);
-
+        
     }
-
+    
     private void initializeMapDrawer() {
-
+        
         canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         mapDrawer = new MapDrawer(map, gc);
@@ -355,7 +363,7 @@ public class DungeonCrawlerApplication extends Application {
         grid.add(canvas, 1, 1, 1, 1); //1,1
 
     }
-
+    
     private void initializeTextArea() {
 
         //TextArea (Only display)
@@ -367,7 +375,7 @@ public class DungeonCrawlerApplication extends Application {
         grid.add(textArea, 0, 0, 2, 1); //0,0
 
     }
-
+    
     public void updateCamera() {
         int x = (player.x() - 11) * tileSize;
         if (x < 0) {
@@ -381,11 +389,11 @@ public class DungeonCrawlerApplication extends Application {
         } else if (y > map.getSize() * tileSize - HEIGHT) {
             y = map.getSize() * tileSize - HEIGHT;
         }
-
+        
         canvas.setTranslateX(-x);
         canvas.setTranslateY(-y);
     }
-
+    
     private void initializeStatScreen() {
 
         //Area for characters stats & such
@@ -396,22 +404,22 @@ public class DungeonCrawlerApplication extends Application {
         statscreen.setMouseTransparent(true);
         grid.add(statscreen, 0, 1, 1, 1);
         updateStatScreen();
-
+        
     }
-
+    
     private void updateStatScreen() {
         statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
                 + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
                 + "Hp: " + player.getCurrentHp() + " / " + player.getMaxHp() + "\n"
                 + "Mana: " + player.currentMana() + " / " + player.maxMana() + "\n \n"
         );
-
+        
         if (player.getWeapon() != null) {
             statscreen.appendText("Weapon : " + player.getWeapon().getName() + "\n");
         } else {
             statscreen.appendText("Weapon : - \n");
         }
-
+        
         if (player.getWeapon2() != null) {
             statscreen.appendText("Weapon2 : " + player.getWeapon2().getName());
         } else {
@@ -419,9 +427,9 @@ public class DungeonCrawlerApplication extends Application {
         }
         statscreen.appendText(" \n \n \n \n Level: " + map.level());
         statscreen.appendText(" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n H for Help");
-
+        
     }
-
+    
     private void endTurn() {
 
         //checks if there are dead enemies
@@ -440,7 +448,7 @@ public class DungeonCrawlerApplication extends Application {
                 map.getTile(dead.x(), dead.y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
-
+            
         }
 
         //Enemies turn
@@ -470,7 +478,7 @@ public class DungeonCrawlerApplication extends Application {
                 map.getTile(dead.x(), dead.y()).setCharacter(null);
                 map.removeEnemy(dead);
             });
-
+            
         }
         player.checkIfRegenerates();
         player.checkIfLevelUp();
@@ -479,6 +487,6 @@ public class DungeonCrawlerApplication extends Application {
         player.setActed(false);
         //draws what happened
         mapDrawer.drawAll();
-
+        
     }
 }

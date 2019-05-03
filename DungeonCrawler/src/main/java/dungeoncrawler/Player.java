@@ -268,15 +268,19 @@ public class Player extends Character {
      */
     public void readSpellbook(int i) {
         if (this.inventory.get(i).getType() == ItemType.SPELLBOOK) {
-            System.out.println("kyllä");
             Spellbook spellbook = (Spellbook) this.inventory.get(i);
             this.spells.add(spellbook.getSpell());
             loseItem(i);
-        } else {
-            System.out.println("ei");
         }
     }
 
+//    public void castSpell(int i) {
+//        Spell spell = this.spells.get(i);
+//        switch (spell.getName()) {
+//            case "Firebolt":
+//                
+//        }
+//    }
     /**
      * Metodilla poistetaan pelaajan inventorista esine. jos esine oli pelaajan
      * käytössä poistetaan se myös asepaikasta.
@@ -350,6 +354,7 @@ public class Player extends Character {
             this.regenerationTimer--;
         } else {
             this.gainHp(1);
+            this.gainMana(1);
             this.regenerationTimer = 6;
         }
     }

@@ -11,7 +11,9 @@ package dungeoncrawler;
  */
 public enum Spell {
 
-    FIREBOLT("Firebolt", 5);
+    FIREBOLT("Firebolt", 5),
+    TELEPORT("Teleport", 10),
+    HEAL("Heal", 5);
 
     private String name;
     private int mana;

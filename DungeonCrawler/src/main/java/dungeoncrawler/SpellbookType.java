@@ -5,13 +5,19 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author jy
  */
 public enum SpellbookType {
 
-    FIREBOLTBOOK("Book of Firebolt", Spell.FIREBOLT);
+    FIREBOLTBOOK("Book of Firebolt", Spell.FIREBOLT),
+    TELEPORTBOOK("Book of Teleportation", Spell.TELEPORT),
+    HEALBOOK("Book of Healing", Spell.HEAL);
 
     private Spell spell;
     private String name;
@@ -27,6 +33,20 @@ public enum SpellbookType {
 
     public Spell getSpell() {
         return this.spell;
+    }
+
+    public List<SpellbookType> getAll() {
+        List<SpellbookType> all = new ArrayList<>();
+        all.add(FIREBOLTBOOK);
+        all.add(TELEPORTBOOK);
+        all.add(HEALBOOK);
+        return all;
+    }
+
+    public SpellbookType Randomize() {
+        List<SpellbookType> all = getAll();
+        Collections.shuffle(all);
+        return all.get(0);
     }
 
 }

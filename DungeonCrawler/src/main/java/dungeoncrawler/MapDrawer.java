@@ -128,10 +128,14 @@ public class MapDrawer {
         gc.strokeText("Inventory:  (esc to exit) ", 10, 20, 1000);
         List<Item> items = map.getPlayer().inventory();
         if (!items.isEmpty()) {
-            for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 String text = " - " + items.get(i).getName();
                 gc.strokeText(text, 10, i * 20 + 40);
             }
+        }
+        if (chooser.getY() >= items.size()) {
+            chooser.move(Direction.UP);
+            chooser.setX(0);
         }
         gc.strokeRect(chooser.getX() * 170, chooser.getY() * 20 + 25, 170, 20);
         gc.strokeText("Drop", 230, chooser.getY() * 20 + 40);
@@ -147,12 +151,14 @@ public class MapDrawer {
         gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
         gc.strokeText("Known Spells:  (esc to exit) ", 10, 20, 1000);
         List<Spell> spells = map.getPlayer().spells();
-        for (int i = 0; i < map.getPlayer().inventory().size(); i++) {
+        for (int i = 0; i < spells.size(); i++) {
             String text = " - " + spells.get(i).getName();
             gc.strokeText(text, 10, i * 20 + 40);
         }
         gc.strokeRect(chooser.getX() * 170, chooser.getY() * 20 + 25, 170, 20);
-        gc.strokeText("Cast (" + spells.get(chooser.getX()).getMana() + ")", 230, chooser.getY() * 20 + 40);
+        if (!spells.isEmpty()) {
+            gc.strokeText("Cast (" + spells.get(chooser.getY()).getMana() + ")", 230, chooser.getY() * 20 + 40);
+        }
     }
 
     /**

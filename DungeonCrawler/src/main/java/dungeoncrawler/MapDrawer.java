@@ -174,9 +174,12 @@ public class MapDrawer {
         gc.strokeText("I: Open Inventory ( for dropping and using Items ) ", 10, 80);
         gc.strokeText("S: Shoot ( requires ranged weapon )", 10, 100);
         gc.strokeText("P: PickUp Items", 10, 120);
-        gc.strokeText("C: Close Door", 10, 140);
-        gc.strokeText("TAB: For Switching weapons fast", 10, 160);
-        gc.strokeText("ENTER: portaita ylös ja alas menemiseen", 10, 180);
+        gc.strokeText("D: Close Door", 10, 140);
+        gc.strokeText("C: Cast Spell", 10, 160);
+        gc.strokeText("TAB: For Switching weapons fast", 10, 180);
+        gc.strokeText("ENTER: Going up and down stairs", 10, 200);
+        gc.strokeText("O: Save game", 10, 220);
+        gc.strokeText("L: Load saved game (only capable of saving and loading character information)", 10, 240);
 
     }
 }

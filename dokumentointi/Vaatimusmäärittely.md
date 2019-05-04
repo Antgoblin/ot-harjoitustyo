@@ -1,7 +1,5 @@
 # Vaatimuusmäärittely
 
-,,,
-
 ## Dungeon Crawler
 
 sovelluksen ideana on olla vuoropohjainen rpg-peli, jossa käyttäjä(eli pelaaja)

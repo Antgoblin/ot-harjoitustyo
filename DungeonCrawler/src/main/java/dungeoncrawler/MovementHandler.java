@@ -312,7 +312,7 @@ public class MovementHandler {
                     }
                     break;
                 case "Teleport":
-                    Tile tile = this.map.getRandomTile(Tiletype.Floor);
+                    Tile tile = this.map.getEmptyTile();
                     player.setX(tile.x());
                     player.setY(tile.y());
                     break;

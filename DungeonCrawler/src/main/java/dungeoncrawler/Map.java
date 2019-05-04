@@ -122,6 +122,14 @@ public class Map {
         }
     }
 
+    public Tile getEmptyTile() {
+        Tile tile = getRandomTile(Tiletype.Floor);
+        while (tile.occupied()) {
+            tile = getRandomTile(Tiletype.Floor);
+        }
+        return tile;
+    }
+
     public int getSize() {
         return this.size;
     }
@@ -414,8 +422,7 @@ public class Map {
         }
     }
 
-    public void createLevel() {
-
+    public void clearTiles() {
         //Makes all tiles Void
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -424,7 +431,11 @@ public class Map {
                 tile.setCharacter(null);
             }
         }
+    }
 
+    public void createLevel() {
+
+        clearTiles();
         enemies.removeAll(enemies);
         clearItems();
 
@@ -553,12 +564,20 @@ public class Map {
 
         //Spawn enemies
         int amount = roomswanted + random.nextInt(10);
+        spawnEnemies(amount);
+        spawnItems(amount);
+
+    }
+
+    public void spawnEnemies(int amount) {
         List<EnemyType> enemies = EnemyType.RAT.randomize(level, amount);
 
         enemies.forEach(enemy -> {
             spawnEnemyRandom(enemy.spawn(player));
         });
+    }
 
+    public void spawnItems(int amount) {
         //Spawn weapons
         List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount / 2);
         weapons.forEach(w -> {
@@ -573,20 +592,6 @@ public class Map {
 
         //spawn spellbooks
         spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-        spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
-
     }
 
     public void clearItems() {

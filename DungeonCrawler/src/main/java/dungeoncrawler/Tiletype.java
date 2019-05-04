@@ -12,30 +12,35 @@ import javafx.scene.paint.Color;
  * @author jy
  */
 public enum Tiletype {
-    Void(Color.GRAY), 
-    Floor(Color.WHITE),
-    Wall(Color.BLACK),
-    Door(Color.SIENNA),
-    OpenDoor(Color.BURLYWOOD),
-    StairsUp(Color.AQUAMARINE),
-    StairsDown(Color.VIOLET),
-    TempFloor(Color.RED),
-    TempWall(Color.BLUE),
-    OutOfMap(Color.BLACK),
-    Corner(Color.BLACK),
-    CheckedFloor(Color.ORANGE),
-    CheckedDoor(Color.SIENNA),
-    CheckedTempFloor(Color.RED);
-    
+    Void(Color.GRAY, "Void"),
+    Floor(Color.WHITE, "Floor"),
+    Wall(Color.BLACK, "Wall"),
+    Door(Color.SIENNA, "Door"),
+    OpenDoor(Color.BURLYWOOD, "OpenDoor"),
+    StairsUp(Color.AQUAMARINE, "StairsUp"),
+    StairsDown(Color.VIOLET, "StairsDown"),
+    TempFloor(Color.RED, "Temporary Floor"),
+    TempWall(Color.BLUE, "Temporary Wall"),
+    OutOfMap(Color.BLACK, "Out of The Map"),
+    Corner(Color.BLACK, "Corner"),
+    CheckedFloor(Color.ORANGE, "Checked Floor"),
+    CheckedDoor(Color.SIENNA, "Checked Door"),
+    CheckedTempFloor(Color.RED, "Checked Temporary Floor");
+
     private Color color;
-    
-    private Tiletype(Color color) {
+    private String name;
+
+    private Tiletype(Color color, String name) {
         this.color = color;
+        this.name = name;
     }
-    
+
     public Color getColor() {
         return this.color;
     }
-            
-    
+
+    public String getName() {
+        return this.name;
+    }
+
 }

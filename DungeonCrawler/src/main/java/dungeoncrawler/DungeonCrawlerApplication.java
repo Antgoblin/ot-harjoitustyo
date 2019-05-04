@@ -68,8 +68,28 @@ public class DungeonCrawlerApplication extends Application {
             if (player.getWeapon2() != null) {
                 fr.write(player.getWeapon2().getWeaponType().getName() + "\r\n");
             }
-            fr.write("-Items-");
-            //TODO Items, Enemies and Map
+            fr.write("-Items- \r\n");
+            fr.write(player.inventory().size() + "\r\n");
+            for (int i = 0; i < player.inventory().size(); i++) {
+                String name = player.inventory().get(i).getName();
+                fr.write(name + "\r\n");
+            }
+            fr.write("-Enemies- \r\n");
+            for (int i = 0; i < map.getEnemies().size(); i++) {
+                Enemy enemy = map.getEnemies().get(i);
+                fr.write(enemy.getName() + "\r\n");
+                fr.write(enemy.getCurrentHp() + "\r\n");
+                fr.write(enemy.x() + "\r\n");
+                fr.write(enemy.y() + "\r\n");
+            }
+            fr.write("-Map- \r\n");
+            for (int y = 0; y < map.getSize(); y++) {
+                for (int x = 0; x < map.getSize(); x++) {
+                    Tile tile = map.getTile(x, y);
+                    fr.write(tile.getType().getName() + "\r\n");
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -118,7 +138,9 @@ public class DungeonCrawlerApplication extends Application {
         } else {
             i = 9;
         }
-
+        for (int x = i; x < Integer.parseInt(lines.get(i + 1)); x++) {
+            
+        }
         mapDrawer.drawAll();
         updateCamera();
     }

@@ -5,6 +5,8 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Weapon;
+import dungeoncrawler.Items.WeaponType;
 import dungeoncrawler.MovementHandler.State;
 import java.io.*;
 import java.nio.file.Files;
@@ -152,7 +154,7 @@ public class DungeonCrawlerApplication extends Application {
 
     public void init() {
 //
-        player = new Player(11, 11, Class.Warrior);
+        player = new Player(11, 11, PlayerClass.Warrior);
         map = new Map(mapSize, tileSize, player);
 
         map.createRoom(10, 10, 14, 14);
@@ -198,20 +200,20 @@ public class DungeonCrawlerApplication extends Application {
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
-                    player = new Player(11, 11, Class.Warrior);
+                    player = new Player(11, 11, PlayerClass.Warrior);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
 
                     break;
                 case R:
-                    player = new Player(11, 11, Class.Ranger);
+                    player = new Player(11, 11, PlayerClass.Ranger);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);
                     break;
                 case M:
-                    player = new Player(11, 11, Class.Mage);
+                    player = new Player(11, 11, PlayerClass.Mage);
                     map.setplayer(player);
                     updateStatScreen();
                     stage.setScene(game);

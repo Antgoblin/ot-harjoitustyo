@@ -5,8 +5,8 @@
  */
 
 import dungeoncrawler.Player;
-import dungeoncrawler.Class;
-import dungeoncrawler.Item;
+import dungeoncrawler.PlayerClass;
+import dungeoncrawler.Items.Item;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -26,7 +26,7 @@ public class PlayerTest {
     
     @Before
     public void setUp() {
-        player = new Player(2,3,Class.Ranger);
+        player = new Player(2,3,PlayerClass.Ranger);
     }
     
     @Test
@@ -111,28 +111,28 @@ public class PlayerTest {
     
     @Test
     public void GettingWeaponAndWeapon2() {
-        assertEquals(Class.Ranger.startingWeapon(), player.getWeapon());
-        assertEquals(Class.Ranger.secondWeapon(), player.getWeapon2());
+        assertEquals(PlayerClass.Ranger.startingWeapon(), player.getWeapon());
+        assertEquals(PlayerClass.Ranger.secondWeapon(), player.getWeapon2());
     }
     
     @Test
     public void SwitchingWeaponAndWeapon2() {
         player.switchWeapons();
-        assertEquals(Class.Ranger.secondWeapon(), player.getWeapon());
-        assertEquals(Class.Ranger.startingWeapon(), player.getWeapon2());
+        assertEquals(PlayerClass.Ranger.secondWeapon(), player.getWeapon());
+        assertEquals(PlayerClass.Ranger.startingWeapon(), player.getWeapon2());
     }
     
     @Test
     public void GettingInventory() {
         List<Item> items = new ArrayList<>();
-        items.add(Class.Ranger.startingWeapon());
-        items.add(Class.Ranger.secondWeapon());
+        items.add(PlayerClass.Ranger.startingWeapon());
+        items.add(PlayerClass.Ranger.secondWeapon());
         assertEquals(items, player.inventory());
     }
     
     @Test
     public void GettingPlayerClass() {
-        assertEquals(Class.Ranger, player.getPlayerClass());
+        assertEquals(PlayerClass.Ranger, player.getPlayerClass());
     }
     
 }

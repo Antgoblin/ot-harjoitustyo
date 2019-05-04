@@ -6,7 +6,7 @@
 
 import dungeoncrawler.Map;
 import dungeoncrawler.Player;
-import dungeoncrawler.Class;
+import dungeoncrawler.PlayerClass;
 import dungeoncrawler.Tile;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,7 +26,7 @@ public class MapTest {
     
     @Before
     public void setUp() {
-        player = new Player(1,1,Class.Warrior);
+        player = new Player(1,1,PlayerClass.Warrior);
         map = new Map(100, 50, player);
     }
     

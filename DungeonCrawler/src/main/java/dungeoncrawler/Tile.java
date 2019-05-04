@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Item;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.StackPane;

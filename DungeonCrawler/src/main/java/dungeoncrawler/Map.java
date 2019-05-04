@@ -5,6 +5,13 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Item;
+import dungeoncrawler.Items.Potion;
+import dungeoncrawler.Items.PotionType;
+import dungeoncrawler.Items.Spellbook;
+import dungeoncrawler.Items.SpellbookType;
+import dungeoncrawler.Items.Weapon;
+import dungeoncrawler.Items.WeaponType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

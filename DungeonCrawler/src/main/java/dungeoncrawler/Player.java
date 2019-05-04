@@ -5,7 +5,11 @@
  */
 package dungeoncrawler;
 
-import dungeoncrawler.Item.ItemType;
+import dungeoncrawler.Items.Item;
+import dungeoncrawler.Items.Potion;
+import dungeoncrawler.Items.Spellbook;
+import dungeoncrawler.Items.Weapon;
+import dungeoncrawler.Items.Item.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -17,7 +21,7 @@ import javafx.scene.shape.Polygon;
  */
 public class Player extends Character {
 
-    private Class playerClass;
+    private PlayerClass playerClass;
     private int lvl;
     private int exp;
     private int gold;
@@ -30,7 +34,7 @@ public class Player extends Character {
     private List<Item> inventory = new ArrayList<>();
     private List<Spell> spells = new ArrayList<>();
 
-    public Player(int x, int y, Class playerclass) {
+    public Player(int x, int y, PlayerClass playerclass) {
         super("You", x, y, playerclass.hp(), Color.BLACK);
         this.weapon = playerclass.startingWeapon();
         this.weapon2 = playerclass.secondWeapon();
@@ -79,7 +83,7 @@ public class Player extends Character {
         target.loseHp(damage);
     }
 
-    public Class getPlayerClass() {
+    public PlayerClass getPlayerClass() {
         return this.playerClass;
     }
 

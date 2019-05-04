@@ -15,7 +15,7 @@ import dungeoncrawler.Character;
 import dungeoncrawler.Direction;
 import dungeoncrawler.Map;
 import dungeoncrawler.Player;
-import dungeoncrawler.Class;
+import dungeoncrawler.PlayerClass;
 
 /**
  *
@@ -122,7 +122,7 @@ public class CharacterTest {
     
     @Test
     public void MoveWorks() {
-        Map map = new Map(100, 50, new Player(3,3,Class.Warrior));
+        Map map = new Map(100, 50, new Player(3,3,PlayerClass.Warrior));
         character.move(map, Direction.DOWN);
         character.move(map, Direction.RIGHT);
         assertEquals(2, character.x());

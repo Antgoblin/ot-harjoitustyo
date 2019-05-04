@@ -7,8 +7,8 @@
 import dungeoncrawler.Direction;
 import dungeoncrawler.Enemy;
 import dungeoncrawler.EnemyType;
-import dungeoncrawler.Item;
-import dungeoncrawler.Item.ItemType;
+import dungeoncrawler.Items.Item;
+import dungeoncrawler.Items.Item.ItemType;
 import dungeoncrawler.Map;
 import dungeoncrawler.MovementHandler;
 import dungeoncrawler.Player;
@@ -37,7 +37,7 @@ public class MovementHandlerTest {
 
     @Before
     public void setUp() {
-        player = new Player(2, 2, dungeoncrawler.Class.Warrior);
+        player = new Player(2, 2, dungeoncrawler.PlayerClass.Warrior);
         map = new Map(100, 50, player);
         enemy = EnemyType.RAT.spawn(5, 5, player);
         map.getEnemies().add(enemy);
@@ -123,7 +123,7 @@ public class MovementHandlerTest {
     @Test
     public void Shooting() {
         mh.move(enemy);
-        player = new Player(2, 5, dungeoncrawler.Class.Ranger);
+        player = new Player(2, 5, dungeoncrawler.PlayerClass.Ranger);
         map.setplayer(player);
         mh.shoot(player, Direction.RIGHT);
         System.out.println(enemy.getCurrentHp());

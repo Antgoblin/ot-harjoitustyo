@@ -5,11 +5,14 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Weapon;
+import dungeoncrawler.Items.WeaponType;
+
 /**
  *
  * @author jy
  */
-public enum Class {
+public enum PlayerClass {
     Warrior(100, 0, new Weapon(WeaponType.LONGSWORD), null),
     Ranger(60, 10, new Weapon(WeaponType.BOW), new Weapon(WeaponType.DAGGER)),
     Mage(50, 25, new Weapon(WeaponType.DAGGER), null);
@@ -19,7 +22,7 @@ public enum Class {
     private Weapon weapon;
     private Weapon weapon2;
 
-    private Class(int hp, int mana, Weapon weapon, Weapon weapon2) {
+    private PlayerClass(int hp, int mana, Weapon weapon, Weapon weapon2) {
         this.hp = hp;
         this.mana = mana;
         this.weapon = weapon;

@@ -5,6 +5,8 @@
  */
 package dungeoncrawler;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.paint.Color;
 
 /**
@@ -41,6 +43,30 @@ public enum Tiletype {
 
     public String getName() {
         return this.name;
+    }
+
+    public List<Tiletype> getAll() {
+        List<Tiletype> all = new ArrayList<>();
+        all.add(Floor);
+        all.add(Wall);
+        all.add(Door);
+        all.add(Void);
+        all.add(OpenDoor);
+        all.add(StairsUp);
+        all.add(StairsDown);
+        return all;
+    }
+
+    public Tiletype getTile(String name) {
+        List<Tiletype> all = getAll();
+        Tiletype type = all.get(0);
+        for (int i = 0; i < all.size(); i++) {
+            type = all.get(i);
+            if (type.name.equals(name)) {
+                break;
+            }
+        }
+        return type;
     }
 
 }

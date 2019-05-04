@@ -114,6 +114,13 @@ public enum WeaponType {
         return weapontypes;
     }
 
+    /**
+     * Palauttaa aseen jolla tietty nimi
+     *
+     * @param name minkä niminen ase halutaan
+     * @return WeaponTypen jonka nimi sama kuin annettu String, jos sellaista ei
+     * löydy palauttaa null.
+     */
     public WeaponType getWeapon(String name) {
         List<WeaponType> weapontypes = getAll();
         List<WeaponType> searchedWeapons = new ArrayList<>();
@@ -126,7 +133,8 @@ public enum WeaponType {
             return searchedWeapons.get(0);
 
         } else {
-            return DAGGER;
+            return null;
+
         }
     }
 }

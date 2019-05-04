@@ -20,10 +20,6 @@ public class Potion extends Item {
         this.potion = p;
     }
 
-//    public ItemType getType() {
-//        return ItemType.POTION;
-//    }
-
     public int getHealthGain() {
         return this.potion.getHealthGain();
     }
@@ -32,6 +28,12 @@ public class Potion extends Item {
         return this.potion.getManaGain();
     }
 
+    /**
+     * Kertoo mitä potionille pystyy tehdä. Kaikki Itemiä lisäävät luokat
+     * omistavat getAction() metodin
+     *
+     * @return String "Drink"
+     */
     public String getAction() {
         return "Drink";
     }

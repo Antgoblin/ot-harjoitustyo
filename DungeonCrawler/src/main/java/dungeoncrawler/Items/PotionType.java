@@ -49,10 +49,27 @@ public enum PotionType {
         return this.manaGain;
     }
 
+    /**
+     * Metodi selvittää kuinka todennäköisesti potion esiintyy tietyllä
+     * syvyydellä
+     *
+     * @param depth luolaston syvyys
+     * @return luvun kuinka todennäköisesti potion esiintyisi annetulla
+     * syvyydellä
+     */
     public double getWeight(int depth) {
         return this.rarity / (Math.abs(this.depth - depth) + 1);
     }
 
+    /**
+     * Metodilla saadaan haluttu määrä potioneja. Metodi valitsee potionit
+     * verraten sille annettua syvyyttä ja potion tyyppien esiintymissyvyyttä
+     * sekä harvinaisuutta. Metodia käytetään kun luolastoon luodaan potionit
+     *
+     * @param depth luolaston syvyys
+     * @param amount kuinka monta halutaan
+     * @return listan jossa sille annetun määrän verran satunnaisia potioneja
+     */
     public List<PotionType> randomize(int depth, int amount) {
         List<PotionType> potions = getAll();
         List<PotionType> result = new ArrayList<>();
@@ -77,6 +94,11 @@ public enum PotionType {
         return result;
     }
 
+    /**
+     * Metodilla saa selville kaikki eri potionit
+     *
+     * @return Listan jossa kaikki eri tyyppise potionit
+     */
     public List<PotionType> getAll() {
         List<PotionType> potiontypes = new ArrayList<>();
         potiontypes.add(LHP);
@@ -86,6 +108,29 @@ public enum PotionType {
         potiontypes.add(MP);
         potiontypes.add(GMP);
         return potiontypes;
+    }
+
+    /**
+     * Etsii potionin jolla tietty nimi
+     *
+     * @param name jonka niminen potion halutaan
+     * @return potion tyypin jolla sama nimi kuin annettu, jos ei ole sellaista
+     * palauttaa null
+     */
+    public PotionType getPotion(String name) {
+        List<PotionType> potiontypes = getAll();
+        List<PotionType> searchedPotions = new ArrayList<>();
+        potiontypes.forEach(w -> {
+            if (w.getName().equals(name)) {
+                searchedPotions.add(w);
+            }
+        });
+        if (!searchedPotions.isEmpty()) {
+            return searchedPotions.get(0);
+
+        } else {
+            return null;
+        }
     }
 
 }

@@ -104,4 +104,17 @@ public enum EnemyType {
         return enemytypes;
     }
 
+    public Enemy getEnemy(String name, Character target) {
+        List<EnemyType> enemytypes = getAll();
+        EnemyType enemytype = enemytypes.get(0);
+        for (int i = 0; i < enemytypes.size(); i++) {
+            enemytype = enemytypes.get(i);
+            if (enemytype.name.equals(name)) {
+                break;
+            }
+        }
+        Enemy enemy = enemytype.spawn(target);
+        return enemy;
+    }
+
 }

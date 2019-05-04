@@ -49,4 +49,27 @@ public enum SpellbookType {
         return all.get(0);
     }
 
+    /**
+     * Metodilla haetaan loitsukirja jolla tietty nimi
+     *
+     * @param name minkä nimistä etsitään
+     * @return loitsukirjan jolla sama nimi kuin mitä on annettu, jos ei löydy
+     * palauttaa null.
+     */
+    public SpellbookType getSpellbook(String name) {
+        List<SpellbookType> spellbookTypes = getAll();
+        List<SpellbookType> searchedSpellBooks = new ArrayList<>();
+        spellbookTypes.forEach(w -> {
+            if (w.getName().equals(name)) {
+                searchedSpellBooks.add(w);
+            }
+        });
+        if (!searchedSpellBooks.isEmpty()) {
+            return searchedSpellBooks.get(0);
+
+        } else {
+            return null;
+        }
+    }
+
 }

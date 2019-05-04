@@ -6,6 +6,7 @@
 package dungeoncrawler;
 
 import dungeoncrawler.Items.Spell;
+import dungeoncrawler.Items.Spellbook;
 import java.util.Random;
 import javafx.scene.control.TextArea;
 
@@ -16,7 +17,7 @@ import javafx.scene.control.TextArea;
 public class MovementHandler {
 
     public enum State {
-        Normal, OpeningDoor, Shooting, Inventory, Chooser, Help, Spells;
+        Normal, OpeningDoor, Shooting, Inventory, Chooser, Help, Spells, Options;
     }
 
     private Map map;
@@ -69,6 +70,11 @@ public class MovementHandler {
                     chooser.move(dir);
                 }
                 break;
+            case Options:
+                if (chooser.getY() < 1 || dir != Direction.DOWN) {
+                    chooser.move(dir);
+                }
+                break;
             default:
                 break;
         }
@@ -107,7 +113,7 @@ public class MovementHandler {
         if (!player.hasAttacked()) {
             Tile tile = map.getTile(player.x() + dir.x(), player.y() + dir.y());
 
-            if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.OpenDoor || tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
+            if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.Void || tile.getType() == Tiletype.OpenDoor || tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
                 player.move(map, dir);
                 player.hasNotAttacked();
                 seeItem(player);
@@ -336,7 +342,12 @@ public class MovementHandler {
                 player.drinkPotion(chooser.getY());
                 break;
             case "Read":
-                player.readSpellbook(chooser.getY());
+                Spellbook spellbook = (Spellbook) player.inventory().get(chooser.getY());
+                if (player.spells().contains(spellbook.getSpell())) {
+                    textArea.appendText("You allready know that spell \n");
+                } else {
+                    player.readSpellbook(chooser.getY());
+                }
                 break;
         }
     }

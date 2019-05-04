@@ -9,18 +9,17 @@ import dungeoncrawler.Items.Weapon;
 import dungeoncrawler.Items.WeaponType;
 import dungeoncrawler.MovementHandler.State;
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.canvas.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
@@ -49,6 +48,9 @@ public class DungeonCrawlerApplication extends Application {
     private TextArea textArea;
     private TextArea statscreen;
     private MovementHandler mh;
+    private Pane classSelection;
+    private Pane startGame;
+    private Pane gameover;
 
     public void save() throws IOException {
         File file = new File("save.txt");
@@ -66,9 +68,13 @@ public class DungeonCrawlerApplication extends Application {
             fr.write(player.y() + "\r\n");
             if (player.getWeapon() != null) {
                 fr.write(player.getWeapon().getWeaponType().getName() + "\r\n");
+            } else {
+                fr.write("Empty \r\n");
             }
             if (player.getWeapon2() != null) {
                 fr.write(player.getWeapon2().getWeaponType().getName() + "\r\n");
+            } else {
+                fr.write("Empty \r\n");
             }
             fr.write("-Items- \r\n");
             fr.write(player.inventory().size() + "\r\n");
@@ -77,6 +83,7 @@ public class DungeonCrawlerApplication extends Application {
                 fr.write(name + "\r\n");
             }
             fr.write("-Enemies- \r\n");
+            fr.write(map.getEnemies().size() + "\r\n");
             for (int i = 0; i < map.getEnemies().size(); i++) {
                 Enemy enemy = map.getEnemies().get(i);
                 fr.write(enemy.getName() + "\r\n");
@@ -85,6 +92,7 @@ public class DungeonCrawlerApplication extends Application {
                 fr.write(enemy.y() + "\r\n");
             }
             fr.write("-Map- \r\n");
+            fr.write(map.getSize() + "\r\n");
             for (int y = 0; y < map.getSize(); y++) {
                 for (int x = 0; x < map.getSize(); x++) {
                     Tile tile = map.getTile(x, y);
@@ -115,10 +123,6 @@ public class DungeonCrawlerApplication extends Application {
             lines.add(line);
             line = buf.readLine();
         }
-
-        lines.forEach(l -> {
-            System.out.println(l);
-        });
         player.setHp(Integer.parseInt(lines.get(0)));
         player.setMaxHp(Integer.parseInt(lines.get(1)));
         player.setCurrentMana(Integer.parseInt(lines.get(2)));
@@ -129,27 +133,41 @@ public class DungeonCrawlerApplication extends Application {
         player.setX(Integer.parseInt(lines.get(7)));
         player.setY(Integer.parseInt(lines.get(8)));
         int i = 0;
-        if (!lines.get(9).equals("-Items-")) {
+        if (WeaponType.DAGGER.getWeapon(lines.get(9)) != null) {
             player.setWeapon(new Weapon(WeaponType.DAGGER.getWeapon(lines.get(9))));
-            if (!lines.get(10).equals("-Items-")) {
-                player.setWeapon2(new Weapon(WeaponType.DAGGER.getWeapon(lines.get(10))));
-                i = 11;
-            } else {
-                i = 10;
+        }
+        if (WeaponType.DAGGER.getWeapon(lines.get(10)) != null) {
+            player.setWeapon2(new Weapon(WeaponType.DAGGER.getWeapon(lines.get(10))));
+        }
+        i = 13;
+        //Items
+        for (int x = i; x < i + Integer.parseInt(lines.get(12)); x++) {
+
+        }
+        i += 2 + Integer.parseInt(lines.get(12));
+        //Enemies
+        map.getEnemies().clear();
+        for (int x = i; x < i + Integer.parseInt(lines.get(i - 1)) * 4; x += 4) {
+            Enemy enemy = EnemyType.RAT.getEnemy(lines.get(x), player);
+            enemy.setHp(Integer.parseInt(lines.get(x + 1)));
+            enemy.setX(Integer.parseInt(lines.get(x + 2)));
+            enemy.setY(Integer.parseInt(lines.get(x + 3)));
+            map.spawnEnemy(enemy);
+        }
+        i += 2 + Integer.parseInt(lines.get(i - 1)) * 4;
+        //Tiles
+        map.clearTiles();
+
+        for (int y = 0; y < map.getSize(); y++) {
+            for (int x = 0; x < map.getSize(); x++) {
+                Tile tile = map.getTile(x, y);
+                tile.setType(Tiletype.Void.getTile(lines.get(i)));
+                i++;
             }
-        } else {
-            i = 9;
         }
-        for (int x = i; x < Integer.parseInt(lines.get(i + 1)); x++) {
-            
-        }
+
         mapDrawer.drawAll();
         updateCamera();
-    }
-
-    public void l() {
-        Path path = Paths.get("save.txt");
-
     }
 
     public void init() {
@@ -164,58 +182,86 @@ public class DungeonCrawlerApplication extends Application {
     @Override
     public void start(Stage stage) {
 
-        //Character creation scene
-        Pane pane = new Pane();
-        Label choose = new Label("Choose Class");
-        choose.setTranslateX(500);
-        choose.setTranslateY(300);
-        choose.setScaleX(3);
-        choose.setScaleY(3);
-        Label warrior = new Label("W = Warrior");
-        warrior.setTranslateX(500);
-        warrior.setTranslateY(400);
-        warrior.setScaleX(1.5);
-        warrior.setScaleY(1.5);
-        Label ranger = new Label("R = Ranger");
-        ranger.setTranslateX(500);
-        ranger.setTranslateY(420);
-        ranger.setScaleX(1.5);
-        ranger.setScaleY(1.5);
-        Label mage = new Label("M = mage");
-        mage.setTranslateX(500);
-        mage.setTranslateY(440);
-        mage.setScaleX(1.5);
-        mage.setScaleY(1.5);
-        pane.getChildren().addAll(choose, warrior, ranger, mage);
-        Scene charactercreation = new Scene(pane, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
-
         //Game Scene
         initializeLayout();
         initializeMapDrawer();
         initializeTextArea();
         initializeStatScreen();
+        initializeStartGameScreen();
+        initializeGameoverScreen();
+        initializeClassSelection();
+
         mh = new MovementHandler(map, textArea);
+
+        Scene gameoverScreen = new Scene(gameover, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+        Scene startScreen = new Scene(startGame, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+        Scene charactercreation = new Scene(classSelection, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
         Scene game = new Scene(grid, WIDTH + tileSize * 5 - 10, HEIGHT + tileSize * 5 - 10);
+
+        gameoverScreen.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case ENTER:
+                    stage.setScene(charactercreation);
+                    break;
+                case L: {
+                    try {
+                        load();
+                        stage.setScene(game);
+                    } catch (IOException ex) {
+//                            Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                        stage.setScene(charactercreation);
+                    }
+                }
+                break;
+            }
+        });
+
+        startScreen.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case ENTER:
+                    stage.setScene(charactercreation);
+                    break;
+                case L: {
+                    try {
+                        load();
+                        stage.setScene(game);
+                    } catch (IOException ex) {
+//                            Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                        stage.setScene(charactercreation);
+                    }
+                }
+                break;
+            }
+        });
 
         charactercreation.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
                     player = new Player(11, 11, PlayerClass.Warrior);
+                    map.generateStartingRoom();
                     map.setplayer(player);
+                    mapDrawer.drawAll();
                     updateStatScreen();
+                    updateCamera();
                     stage.setScene(game);
 
                     break;
                 case R:
                     player = new Player(11, 11, PlayerClass.Ranger);
+                    map.generateStartingRoom();
                     map.setplayer(player);
+                    mapDrawer.drawAll();
                     updateStatScreen();
+                    updateCamera();
                     stage.setScene(game);
                     break;
                 case M:
                     player = new Player(11, 11, PlayerClass.Mage);
+                    map.generateStartingRoom();
                     map.setplayer(player);
+                    mapDrawer.drawAll();
                     updateStatScreen();
+                    updateCamera();
                     stage.setScene(game);
                     break;
                 default:
@@ -223,8 +269,6 @@ public class DungeonCrawlerApplication extends Application {
 
             }
         });
-
-        mapDrawer.drawAll();
 
         game.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -254,8 +298,12 @@ public class DungeonCrawlerApplication extends Application {
                     break;
 
                 case P:
-                    mh.pickUp(player);
-                    mapDrawer.drawAll();
+                    if (player.inventory().size() <= 35) {
+                        mh.pickUp(player);
+                        mapDrawer.drawAll();
+                    } else {
+                        textArea.appendText("Your inventory is full \n");
+                    }
                     break;
 
                 case S:
@@ -278,6 +326,31 @@ public class DungeonCrawlerApplication extends Application {
                         } else if (mh.getChooser().getX() == 2) {
                             mh.Action(player);
                         }
+                    } else if (mh.getState() == State.Options) {
+                        if (mh.getChooser().getY() == 0) {
+                            try {
+                                save();
+                                textArea.appendText("Game saved \n");
+                            } catch (IOException ex) {
+                                Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else if (mh.getChooser().getY() == 1) {
+                            try {
+                                textArea.appendText("Game loaded \n");
+                                mh.setState(State.Normal);
+                                mh.getChooser().setX(0);
+                                mh.getChooser().setY(0);
+                                load();
+                                update();
+                            } catch (IOException ex) {
+                                Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
+                    } else if (mh.getState() == State.Spells && mh.getChooser().getX() == 1) {
+                        mh.castSpell(mh.getChooser().getY());
+                        player.setActed(true);
+                        mh.setState(State.Normal);
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
                         map.goDown();
                         mapDrawer.drawAll();
@@ -286,13 +359,8 @@ public class DungeonCrawlerApplication extends Application {
                         map.goUp();
                         mapDrawer.drawAll();
                         updateCamera();
-                    } else if (mh.getState() == State.Spells && mh.getChooser().getX() == 1) {
-                        mh.castSpell(mh.getChooser().getY());
-                        player.setActed(true);
-                        mh.setState(State.Normal);
                     }
                     break;
-
                 case I:
                     mh.setState(State.Inventory);
                     canvas.setTranslateX(0);
@@ -318,16 +386,19 @@ public class DungeonCrawlerApplication extends Application {
                     mh.getChooser().setX(0);
                     mh.getChooser().setY(0);
                     mh.setState(State.Normal);
-                    updateCamera();
-                    mapDrawer.drawAll();
+                    update();
                     break;
 
                 case O:
-                    try {
-                        save();
-                    } catch (IOException ex) {
-                        Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                    try {
+//                        save();
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    canvas.setTranslateX(0);
+                    canvas.setTranslateY(0);
+                    mh.setState(State.Options);
+                    mapDrawer.drawOptionScreen(mh.getChooser());
                     break;
 
                 case L:
@@ -351,11 +422,16 @@ public class DungeonCrawlerApplication extends Application {
                 mapDrawer.drawInventory(mh.getChooser());
             } else if (mh.getState() == State.Spells) {
                 mapDrawer.drawSpells(mh.getChooser());
+            } else if (mh.getState() == State.Options) {
+                mapDrawer.drawOptionScreen(mh.getChooser());
+            }
+            if (player.checkIfDead()) {
+                stage.setScene(gameoverScreen);
             }
         });
 
         stage.setTitle("DungeonCrawler");
-        stage.setScene(charactercreation);
+        stage.setScene(startScreen);
         stage.setResizable(false);
         stage.show();
 
@@ -369,6 +445,75 @@ public class DungeonCrawlerApplication extends Application {
         grid.setHgap(0);
         grid.setVgap(0);
 
+    }
+
+    private void initializeStartGameScreen() {
+        startGame = new Pane();
+        Label dungeonCrawler = new Label("DungeonCrawler");
+        dungeonCrawler.setTranslateX(500);
+        dungeonCrawler.setTranslateY(300);
+        dungeonCrawler.setScaleX(3);
+        dungeonCrawler.setScaleY(3);
+        Label newGame = new Label(" Enter >  New Game");
+        newGame.setTranslateX(480);
+        newGame.setTranslateY(400);
+        newGame.setScaleX(1.5);
+        newGame.setScaleY(1.5);
+        Label loadGame = new Label("L >   Load Game");
+        loadGame.setTranslateX(510);
+        loadGame.setTranslateY(440);
+        loadGame.setScaleX(1.5);
+        loadGame.setScaleY(1.5);
+        startGame.getChildren().add(newGame);
+        startGame.getChildren().add(loadGame);
+        startGame.getChildren().add(dungeonCrawler);
+    }
+
+    private void initializeGameoverScreen() {
+        gameover = new Pane();
+        Label dungeonCrawler = new Label("Gameover");
+        dungeonCrawler.setTranslateX(500);
+        dungeonCrawler.setTranslateY(300);
+        dungeonCrawler.setScaleX(3);
+        dungeonCrawler.setScaleY(3);
+        Label newGame = new Label(" Enter >  New Game");
+        newGame.setTranslateX(480);
+        newGame.setTranslateY(400);
+        newGame.setScaleX(1.5);
+        newGame.setScaleY(1.5);
+        Label loadGame = new Label("L >   Load Game");
+        loadGame.setTranslateX(510);
+        loadGame.setTranslateY(440);
+        loadGame.setScaleX(1.5);
+        loadGame.setScaleY(1.5);
+        gameover.getChildren().add(newGame);
+        gameover.getChildren().add(loadGame);
+        gameover.getChildren().add(dungeonCrawler);
+    }
+
+    private void initializeClassSelection() {
+        classSelection = new Pane();
+        Label choose = new Label("Choose Class");
+        choose.setTranslateX(500);
+        choose.setTranslateY(300);
+        choose.setScaleX(3);
+        choose.setScaleY(3);
+        Label warrior = new Label("W = Warrior");
+        warrior.setTranslateX(500);
+        warrior.setTranslateY(400);
+        warrior.setScaleX(1.5);
+        warrior.setScaleY(1.5);
+        Label ranger = new Label("R = Ranger");
+        ranger.setTranslateX(500);
+        ranger.setTranslateY(420);
+        ranger.setScaleX(1.5);
+        ranger.setScaleY(1.5);
+        Label mage = new Label("M = mage");
+        mage.setTranslateX(500);
+        mage.setTranslateY(440);
+        mage.setScaleX(1.5);
+        mage.setScaleY(1.5);
+        classSelection.getChildren().addAll(choose, warrior, ranger, mage);
     }
 
     private void initializeMapDrawer() {
@@ -422,6 +567,12 @@ public class DungeonCrawlerApplication extends Application {
         grid.add(statscreen, 0, 1, 1, 1);
         updateStatScreen();
 
+    }
+
+    private void update() {
+        mapDrawer.drawAll();
+        updateCamera();
+        updateStatScreen();
     }
 
     private void updateStatScreen() {

@@ -147,6 +147,12 @@ public class MapDrawer {
         }
     }
 
+    /**
+     * Metodi pyyhkii canvastaulus ja pirtää jokaisen loitsun nimen jonka
+     * pelaaja osaa
+     *
+     * @param chooser valitsija joka kertoo missä kohtaa loitsu listaa ollaan
+     */
     public void drawSpells(Chooser chooser) {
 
         gc.setFill(Color.WHITE);
@@ -161,6 +167,19 @@ public class MapDrawer {
         if (!spells.isEmpty()) {
             gc.strokeText("Cast (" + spells.get(chooser.getY()).getMana() + ")", 230, chooser.getY() * 20 + 40);
         }
+    }
+
+    /**
+     *
+     * @param chooser valitsija joka kertoo missä kohtaa option menua ollaan
+     */
+    public void drawOptionScreen(Chooser chooser) {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, map.getSize() * map.getTileSize(), map.getSize() * map.getTileSize());
+        gc.strokeText("Options: (esc to exit)", 10, 20);
+        gc.strokeText(" Save ", 10, 40);
+        gc.strokeText(" Load ", 10, 60);
+        gc.strokeRect(chooser.getX() * 170, chooser.getY() * 20 + 25, 170, 20);
     }
 
     /**

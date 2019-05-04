@@ -28,10 +28,12 @@ public class Spellbook extends Item {
         return this.s.getSpell();
     }
 
-//    public ItemType getType() {
-//        return ItemType.SPELLBOOK;
-//    }
-
+    /**
+     * Kertoo mitä kirjalle pystyy tehdä. Kaikki Itemiä lisäävät luokat omistavat
+     * getAction() metodin
+     *
+     * @return String "Read"
+     */
     public String getAction() {
         return "Read";
     }

@@ -32,6 +32,12 @@ public class Item {
         return this.type;
     }
 
+    /**
+     * Kertoo mitä esineelle pystyy tehdä. Kaikki Itemiä lisäävät luokat
+     * omistavat getAction() metodin
+     *
+     * @return String ""
+     */
     public String getAction() {
         return "";
     }

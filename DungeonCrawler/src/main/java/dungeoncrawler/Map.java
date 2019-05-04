@@ -443,7 +443,7 @@ public class Map {
     public void createLevel() {
 
         clearTiles();
-        enemies.removeAll(enemies);
+        enemies.clear();
         clearItems();
 
         // creates rooms
@@ -621,18 +621,7 @@ public class Map {
     public void goUp() {
         this.level--;
         if (this.level == 0) {
-            for (int x = 0; x < size; x++) {
-                for (int y = 0; y < size; y++) {
-                    Tile tile = getTile(x, y);
-                    tile.setType(Tiletype.Void);
-                    tile.setCharacter(null);
-                }
-            }
-
-            enemies.removeAll(enemies);
-            clearItems();
-            createRoom(10, 10, 14, 14);
-            getTile(12, 12).setType(Tiletype.StairsDown);
+            generateStartingRoom();
 
         } else {
             createLevel();
@@ -641,6 +630,22 @@ public class Map {
         Tile stairs = getRandomTile(Tiletype.StairsDown);
         player.setX(stairs.x());
         player.setY(stairs.y());
+    }
+
+    public void generateStartingRoom() {
+        this.level = 0;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile tile = getTile(x, y);
+                tile.setType(Tiletype.Void);
+                tile.setCharacter(null);
+            }
+        }
+
+        enemies.clear();
+        clearItems();
+        createRoom(10, 10, 14, 14);
+        getTile(12, 12).setType(Tiletype.StairsDown);
     }
 
 }

@@ -8,10 +8,14 @@
 11
 11
 Longsword
+Empty 
 -Items- 
+1
 Longsword
 -Enemies- 
+0
 -Map- 
+80
 Void
 Void
 Void

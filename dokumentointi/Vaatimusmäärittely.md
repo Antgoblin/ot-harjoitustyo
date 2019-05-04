@@ -1,10 +1,14 @@
-**Dungeon Crawler**
+# Vaatimuusmäärittely
+
+,,,
+
+## Dungeon Crawler
 
 sovelluksen ideana on olla vuoropohjainen rpg-peli, jossa käyttäjä(eli pelaaja)
 liikuttaa hahmoaan pelin generoimassa luolastossa taistellen vihollisia ja
 keräten aarteita.
 
-**Toiminnallisuudet:**
+## Toiminnallisuudet:
 
 -Käyttäjän tulee pystyä aloittamaan uusi peli.
 -Käyttäjän tulee pystyä tallentamaan peli.
@@ -18,7 +22,7 @@ keräten aarteita.
 -Pelaajan tulee pystyä keräämään tavaroita, saamaan kokemuspisteitä ja 
 kehittyämään tasoja.
 
-**Mahdollisia jatkotoimintoja:**
+## Mahdollisia jatkotoimintoja:
 
 -Pelaajan luonnissa pelaajalle voisi valita rodun ja hahmoluokan(Eng. Class).
 -Pelaajalla voisi olla taitoja joita pystyy käyttämään.

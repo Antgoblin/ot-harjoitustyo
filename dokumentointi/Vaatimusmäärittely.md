@@ -1,29 +1,28 @@
 # Vaatimuusmäärittely
 
-## Dungeon Crawler
+## Sovelluksen tarkoitus
 
-sovelluksen ideana on olla vuoropohjainen rpg-peli, jossa käyttäjä(eli pelaaja)
+sovelluksen ideana on olla vuoropohjainen rpg-peli, jossa käyttäjä (eli pelaaja)
 liikuttaa hahmoaan pelin generoimassa luolastossa taistellen vihollisia ja
-keräten aarteita.
+keräten esineitä.
 
-## Toiminnallisuudet:
+## Käyttäjät
+Sovelluksen ainoa käyttäjärooli on normaalikäyttäjä eli "pelaaja".
 
--Käyttäjän tulee pystyä aloittamaan uusi peli.
--Käyttäjän tulee pystyä tallentamaan peli.
--Käyttäjän tulee pystyä luomaan ja liikuttamaan hahmoaan.
--Pelin tulee pystyä luomaan luolasto.
--Pelin tulee pystyä luomaan ja liikuttamaan vihollisia.
--Pelaajalla ja vihollisilla tulee olla Elämäpisteitä ja pystyä iskemään 
-(vähentämään toisten elämäpisteitä.)
--Vihollisten tulee tuhoutua jos elämäpisteet menevät nollaan.
--Pelin tulee päättyä jos pelaajan elämäpisteet menevät nollaan.
--Pelaajan tulee pystyä keräämään tavaroita, saamaan kokemuspisteitä ja 
-kehittyämään tasoja.
+## Pelin Toiminnallisuudet
 
-## Mahdollisia jatkotoimintoja:
+## Käyttäjän ominaisuudet
+-Käyttäjä pystyy aloittamaan pelin.
+-Käyttäjä tulee pystyä valitsemaan hahmon ja pelaamaan.
+-Käyttäjä pystyy liikuttamaan hahmoaan näytöllä ja käyttämään muita pelin ominaisuuksia niille laitetuilla näppäimistön näppäimillä.
 
--Pelaajan luonnissa pelaajalle voisi valita rodun ja hahmoluokan(Eng. Class).
--Pelaajalla voisi olla taitoja joita pystyy käyttämään.
--Vihollisilla voisi olla taitoja.
--Luolaston generointi voisi olla satunnainen.
+## Pelin ominaisuudet
+-Peli luo satunnaisen luolaston jokaisella tasoa 1 isommalla syvyydellä.
+-Peli luo satunnaisen määrän eri vihollisia ja liikuttaa niitä.
+-Peli pitää ylhäällä pelaajan ja vihollisten elämiä. 
+-Peli poistaa viholliset joiden elämät menevät nollaan.
+-Peli päättyy kun pelaajan elämät tippuvat nollaan.
+
+## Jatkokehitysideoita
+-Peliin voisi lisätä paljon eri esineitä ja vihollisia
   

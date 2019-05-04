@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Item;
 import dungeoncrawler.Items.Potion;
 import dungeoncrawler.Items.Spellbook;
@@ -150,6 +151,15 @@ public class Player extends Character {
         if (this.currentMana > this.maxMana) {
             this.currentMana = this.maxMana;
         }
+    }
+
+    /**
+     * Metodilla pelaajalle lisätään pelaajan manan maksimimäärää
+     *
+     * @param amount kuinka paljon lisätään
+     */
+    public void gainMaxMana(int amount) {
+        this.maxMana += amount;
     }
 
     /**
@@ -345,7 +355,7 @@ public class Player extends Character {
     public void lvlUp() {
         this.gainMaxHp(this.lvl * 10);
         this.lvl++;
-        this.str++;
+
     }
 
     /**
@@ -363,6 +373,12 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * hakee pelaajalle listatuista loitsuista loitsun
+     *
+     * @param i monesko loitsu listalta
+     * @return loitsu
+     */
     public Spell getSpell(int i) {
         if (this.spells != null) {
             return this.spells.get(i);

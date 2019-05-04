@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Spell;
 import java.util.Random;
 import javafx.scene.control.TextArea;
 

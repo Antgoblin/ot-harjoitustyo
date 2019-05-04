@@ -29,7 +29,7 @@ public class Item {
     }
 
     public ItemType getType() {
-        return ItemType.ITEM;
+        return this.type;
     }
 
     public String getAction() {

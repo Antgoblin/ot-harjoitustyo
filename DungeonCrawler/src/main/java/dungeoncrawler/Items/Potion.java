@@ -20,9 +20,9 @@ public class Potion extends Item {
         this.potion = p;
     }
 
-    public ItemType getType() {
-        return ItemType.POTION;
-    }
+//    public ItemType getType() {
+//        return ItemType.POTION;
+//    }
 
     public int getHealthGain() {
         return this.potion.getHealthGain();

@@ -5,7 +5,6 @@
  */
 package dungeoncrawler.Items;
 
-import dungeoncrawler.Spell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

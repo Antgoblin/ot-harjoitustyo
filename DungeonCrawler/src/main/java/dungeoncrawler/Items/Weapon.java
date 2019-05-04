@@ -33,12 +33,13 @@ public class Weapon extends Item {
     public int getRange() {
         return this.weapon.getRange();
     }
-    
 
-    public ItemType getType() {
-        return ItemType.WEAPON;
-    }
-
+    /**
+     * Kertoo mitä aseelle pystyy tehdä. Kaikki Itemiä lisäävät luokat omistavat
+     * getAction() metodin
+     *
+     * @return String "Equip"
+     */
     public String getAction() {
         return "Equip";
     }

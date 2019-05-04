@@ -5,6 +5,7 @@
  */
 package dungeoncrawler;
 
+import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Item;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;

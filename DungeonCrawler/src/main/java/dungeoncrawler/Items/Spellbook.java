@@ -6,7 +6,6 @@
 package dungeoncrawler.Items;
 
 import dungeoncrawler.Items.SpellbookType;
-import dungeoncrawler.Spell;
 
 /**
  *
@@ -29,9 +28,9 @@ public class Spellbook extends Item {
         return this.s.getSpell();
     }
 
-    public ItemType getType() {
-        return ItemType.SPELLBOOK;
-    }
+//    public ItemType getType() {
+//        return ItemType.SPELLBOOK;
+//    }
 
     public String getAction() {
         return "Read";

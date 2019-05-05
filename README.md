@@ -6,6 +6,8 @@
 
 [Vaatimuusmäärittely](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/Vaatimusm%C3%A4%C3%A4rittely.md)
 
+[Arkkitehtuuri](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
+
 [TestausKattavuus](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/testaus.md)
 
 [Työaikakirjanpito](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/ty%C3%B6aikakirjanpito.txt)

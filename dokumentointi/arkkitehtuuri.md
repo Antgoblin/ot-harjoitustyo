@@ -15,6 +15,10 @@ Scenet ovat luotu luokass dungeoncrawler.DungeonCrawlerApplication.
 
 ## Sovelluslogiikka
 
+Sovelluksen looginen datamalli koostuu pääosin luokasta movementHandler.
+Luokka DungeonCrawlerApplication saa tiedon mitä näppäintä on painettu ja lähettää tiedon Movementhandlerille.
+MovementHandler sitten tutkii tätä tietoa ja kertoo kartalle, vihollisille ja pelaajalle mitä niiden pitää tehdä.
+
 ## Tietojen pysyväistallennus
 Sovellus tallentaa tietoa metodilla save() tiedostoon save.txt ja lukee sen sieltä metodilla load().
 Sovellus luo tiedoston save.txt jos sellaista ei ole olemassa.

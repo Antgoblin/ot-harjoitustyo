@@ -31,6 +31,14 @@ Päivä    |     Aika:   |    Mitä tein:
 25.4            4h          Inventory kokonaan uusiksi
 25.4            4h          Tavaroita voi pudottaa ja aseita voi vaihtaa
 26.4            5h          Testit 60%
+2.5             5h          Tallennuksen alku ja loitsujen alku
+3.5             5h          loitsut ja ohjeet 
+4.5             6h          Tallennus
+4.5             1h          Vaatimuusmäärittely
+4.5             3h          JavaDoc 
+5.5             4h          Testit
+5.5             3h          Käyttöohje ja release (pom.xml korjattu)
+5.5             2h          Arkkitehtuuri
 
 
-yht:            68h
+yht:            97h

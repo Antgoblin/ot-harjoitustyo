@@ -1,6 +1,11 @@
 # Arkkitehtuurikuvaus
 
 ## Rakenne
+Rakenteelta sovelluksessa ylimpänä on DungeonCrawlerApplication, joka pitää sisällään luokat MovementHandler, Map
+ja MapDrawer. MovementHandler ja MapDrawer pitävät sisällään myös saman kartan kuin DungeoncrawlerApplication.
+Luokka Map pitää taas sisällään hyvin paljon muita luokkia. Esimerkkeinä Player ja monta Enemyä sekä Itemiä.
+
+<img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Untitled%20Diagram.drawio%20-%20draw.io.png">
 
 ## Käyttöliittymä
 

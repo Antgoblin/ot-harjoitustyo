@@ -5,9 +5,6 @@
  */
 package dungeoncrawler.logic;
 
-import dungeoncrawler.Items.Weapon;
-import dungeoncrawler.Items.WeaponType;
-
 /**
  *
  * @author jy

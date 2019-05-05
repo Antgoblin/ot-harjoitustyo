@@ -6,15 +6,7 @@
 package dungeoncrawler.logic;
 
 import dungeoncrawler.logic.PlayerClass;
-import dungeoncrawler.Items.Spell;
-import dungeoncrawler.Items.Item;
-import dungeoncrawler.Items.Potion;
-import dungeoncrawler.Items.Spellbook;
-import dungeoncrawler.Items.Weapon;
-import dungeoncrawler.Items.Item.ItemType;
-import dungeoncrawler.Items.PotionType;
-import dungeoncrawler.Items.SpellbookType;
-import dungeoncrawler.Items.WeaponType;
+import dungeoncrawler.logic.Item.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;

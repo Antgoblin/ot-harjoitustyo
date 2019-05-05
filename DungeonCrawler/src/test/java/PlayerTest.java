@@ -6,9 +6,9 @@
 
 import dungeoncrawler.logic.Player;
 import dungeoncrawler.logic.PlayerClass;
-import dungeoncrawler.Items.Item;
-import dungeoncrawler.Items.Weapon;
-import dungeoncrawler.Items.WeaponType;
+import dungeoncrawler.logic.Item;
+import dungeoncrawler.logic.Weapon;
+import dungeoncrawler.logic.WeaponType;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

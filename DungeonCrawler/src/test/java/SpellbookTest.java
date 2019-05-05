@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Items.Spell;
-import dungeoncrawler.Items.Spellbook;
-import dungeoncrawler.Items.SpellbookType;
+import dungeoncrawler.logic.Spell;
+import dungeoncrawler.logic.Spellbook;
+import dungeoncrawler.logic.SpellbookType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

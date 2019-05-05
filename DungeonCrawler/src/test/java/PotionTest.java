@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Items.Potion;
-import dungeoncrawler.Items.PotionType;
+import dungeoncrawler.logic.Potion;
+import dungeoncrawler.logic.PotionType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

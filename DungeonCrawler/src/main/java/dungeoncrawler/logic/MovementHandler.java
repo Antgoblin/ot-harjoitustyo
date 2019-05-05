@@ -8,8 +8,6 @@ package dungeoncrawler.logic;
 import dungeoncrawler.logic.Player;
 import dungeoncrawler.logic.Tile;
 import dungeoncrawler.logic.Tiletype;
-import dungeoncrawler.Items.Spell;
-import dungeoncrawler.Items.Spellbook;
 import java.util.List;
 import java.util.Random;
 import javafx.scene.control.TextArea;

@@ -5,8 +5,8 @@
  */
 package dungeoncrawler;
 
-import dungeoncrawler.Items.Spell;
-import dungeoncrawler.Items.Item;
+import dungeoncrawler.logic.Spell;
+import dungeoncrawler.logic.Item;
 import dungeoncrawler.logic.Chooser;
 import dungeoncrawler.logic.Direction;
 import dungeoncrawler.logic.Map;

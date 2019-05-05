@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Items.Item;
-import dungeoncrawler.Items.Item.ItemType;
-import dungeoncrawler.Items.Weapon;
-import dungeoncrawler.Items.WeaponType;
+import dungeoncrawler.logic.Item;
+import dungeoncrawler.logic.Item.ItemType;
+import dungeoncrawler.logic.Weapon;
+import dungeoncrawler.logic.WeaponType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

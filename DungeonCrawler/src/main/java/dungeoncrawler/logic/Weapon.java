@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler.Items;
+package dungeoncrawler.logic;
 
-import dungeoncrawler.Items.WeaponType;
+import dungeoncrawler.logic.WeaponType;
 import java.util.Random;
 
 /**

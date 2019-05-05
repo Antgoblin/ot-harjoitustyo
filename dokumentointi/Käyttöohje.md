@@ -84,3 +84,18 @@ Näytön vasemmassa reunassa oleva valkoinen suorakulmio sisältää tekstia, jo
 - ESC 
     asettaa pelinäkymän (poistuu inventori, spell, help tai optionnäkymästä).
     
+## Pelin mekaniikkoja
+
+- Vihollisia isketään liikkumalla niitä päin.
+- Ovi avataan liikkumalla sitä päin.
+- Pelaaja saa elämää takaisin hitaasti.
+- vihollisista saa kehityspisteitä ja kun niitä on tarpeeksi kehittyy pelaaja tason.
+
+## Pelin loppuminen
+
+Kuna pelaajan elämäpisteet tippuvat alle yhden sovellus siirtyy gameover näkymään.
+
+<img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Gameover.png">
+
+Peli on nyt loppunut. Käyttäjä voi aloittaa uuden pelin painamalle Enter. Tai lataamalla pelin edellisestä tallennus kohtaa
+painamalla näppäintä L.

@@ -20,17 +20,27 @@ public class Spellbook extends Item {
         this.s = s;
     }
 
+    /**
+     * palauttaa loitsukirjan nimen
+     *
+     * @return loitsukirjan nimen
+     */
     public String getName() {
         return this.s.getName();
     }
 
+    /**
+     * palauttaa loitsun joka on tyypin sisällä
+     *
+     * @return loitsun joka on kirjan sisällä
+     */
     public Spell getSpell() {
         return this.s.getSpell();
     }
 
     /**
-     * Kertoo mitä kirjalle pystyy tehdä. Kaikki Itemiä lisäävät luokat omistavat
-     * getAction() metodin
+     * Kertoo mitä kirjalle pystyy tehdä. Kaikki Itemiä lisäävät luokat
+     * omistavat getAction() metodin
      *
      * @return String "Read"
      */

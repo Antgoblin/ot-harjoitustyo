@@ -36,6 +36,12 @@ public class Chooser {
         this.x = x;
     }
 
+    /**
+     * Metodi liikuttaa valitsijaa suuntaan, paitsi jos valitsija on liian
+     * lähellä rajoja
+     *
+     * @param dir
+     */
     public void move(Direction dir) {
         if (dir.y() != 0) {
             this.y += dir.y();

@@ -54,6 +54,13 @@ public class Map {
         return this.tiles;
     }
 
+    /**
+     * Metodi palauttaa ruudun koordinaateista (x, y)
+     *
+     * @param x
+     * @param y
+     * @return ruutu
+     */
     public Tile getTile(int x, int y) {
         //tarkoituksella väärinpäin.
         if (x < 0 || y < 0 || x >= size || y >= size) {
@@ -66,6 +73,12 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi palauttaa satunnaisen ruudun joka on tiettyä tyyppiä
+     *
+     * @param type tyyppi joka halutaan
+     * @return ruutu
+     */
     public Tile getRandomTile(Tiletype type) {
         List<Tile> tiles = new ArrayList<>();
         for (int x = 0; x < size - 0; x++) {
@@ -84,7 +97,15 @@ public class Map {
         }
     }
 
-    // Random Tile from certain direction (Used for creating hallways) 
+    /**
+     * Metodi etsii tietyn tyyppisen ruudun tietyn rajan tietyltä puolelta.
+     * Metodi oikeastaan etsii rajat ja kutsuu niiden avulla toista metodia
+     *
+     * @param type tyyppi
+     * @param limit raja jonka tietyltä puolelta etsitään
+     * @param dir suunta josta etsitään
+     * @return ruutu
+     */
     public Tile getRandomTile(Tiletype type, Tile limit, Direction dir) {
         // Area where to look for another tile
         // +2/-2 to not get the tile too close from map edges
@@ -106,9 +127,19 @@ public class Map {
         }
 
         return getRandomTile(minX, maxX, minY, maxY, type, dir);
-
     }
 
+    /**
+     * etsii tietyn tyyppisen ruudun rajojen sisältä
+     *
+     * @param minX raja
+     * @param maxX raja
+     * @param minY raja
+     * @param maxY raja
+     * @param type tyyppi
+     * @param dir suunta
+     * @return ruutu
+     */
     public Tile getRandomTile(int minX, int maxX, int minY, int maxY, Tiletype type, Direction dir) {
         List<Tile> tiles = new ArrayList<>();
         for (int x = minX; x < maxX; x++) {
@@ -129,12 +160,34 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi etsii ruudun jossa ei vihollista
+     *
+     * @return ruutu joka tyhjä
+     */
     public Tile getEmptyTile() {
         Tile tile = getRandomTile(Tiletype.Floor);
         while (tile.occupied()) {
             tile = getRandomTile(Tiletype.Floor);
         }
         return tile;
+    }
+
+    /**
+     * Metodi laskee kaikki maassa olevat esineet
+     *
+     * @return yhteenlasketun summan kaikista esineistä
+     */
+    public int getItemCount() {
+        int count = 0;
+        for (int x = 0; x < this.size; x++) {
+            for (int y = 0; y < this.size; y++) {
+                if (getTile(x, y).containsItem()) {
+                    count += getTile(x, y).getItems().size();
+                }
+            }
+        }
+        return count;
     }
 
     public int getSize() {
@@ -153,6 +206,11 @@ public class Map {
         return this.level;
     }
 
+    /**
+     * Laittaa pelaajan kartalle ja kaikki viholliset jahtaamaan pelaajaa
+     *
+     * @param player pelaaja
+     */
     public void setplayer(Player player) {
         this.player = player;
         enemies.forEach(enemy -> {
@@ -164,12 +222,22 @@ public class Map {
         return this.player;
     }
 
+    /**
+     * Lisää vihollisen kartalle ja ruudulle
+     *
+     * @param enemy vihollinen
+     */
     public void spawnEnemy(Enemy enemy) {
         enemies.add(enemy);
         Tile tile = getTile(enemy.x(), enemy.y());
         tile.setCharacter(enemy);
     }
 
+    /**
+     * lisää vihollisen satunnaiseen ruutuun. Ruudun täytyy olla lattia ja tyhjä
+     *
+     * @param enemy vihollinen
+     */
     public void spawnEnemyRandom(Enemy enemy) {
         List<Tile> vapaat = new ArrayList<>();
         for (int i = 0; i < this.size; i++) {
@@ -188,11 +256,21 @@ public class Map {
         tile.setCharacter(enemy);
     }
 
+    /**
+     * lisää esineen satunnaiseen ruutuun
+     *
+     * @param item esine
+     */
     public void spawnItemRandom(Item item) {
         Tile tile = getRandomTile(Tiletype.Floor);
         tile.setItem(item);
     }
 
+    /**
+     * Poistaa vihollisen kartalta
+     *
+     * @param enemy vihollinen
+     */
     public void removeEnemy(Enemy enemy) {
         enemies.remove(enemy);
     }
@@ -201,6 +279,13 @@ public class Map {
         return enemies;
     }
 
+    /**
+     * Metodi etsii vihollisen tietyistä koordinaateista
+     *
+     * @param x
+     * @param y
+     * @return vihollinen
+     */
     public Enemy getEnemy(int x, int y) {
         List<Enemy> enemiesInTile = new ArrayList<>();
         enemies.forEach(enemy -> {
@@ -212,6 +297,11 @@ public class Map {
         return enemiesInTile.get(0);
     }
 
+    /**
+     * Metodi etsii pelaajaa lähinnä olevan vihollisen
+     *
+     * @return vihollisen lähinpänä pelaajaa
+     */
     public Enemy getClosestEnemy() {
         Enemy closestEnemy = enemies.get(0);
         int distance = Math.max(Math.abs(player.x() - closestEnemy.x()), Math.abs(player.y() - closestEnemy.y()));
@@ -226,6 +316,15 @@ public class Map {
         return closestEnemy;
     }
 
+    /**
+     * Metodi muuttaa rajalla olevien ruutujen tyypin seinäksi ja siällä olevien
+     * lattiaksi. Metodi luo siis huoneen
+     *
+     * @param topLeftX
+     * @param topLeftY
+     * @param bottomRightX
+     * @param bottomRightY
+     */
     public void createRoom(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY) {
         for (int x = topLeftX; x <= bottomRightX; x++) {
             for (int y = topLeftY; y <= bottomRightY; y++) {
@@ -238,6 +337,13 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi tekee kahden ruudun välille reitin jonka ruutujen tyyppi muuttuu
+     * lattiaksi. Viereiset ruudut muuttuvat seiniksi. Metodi luo siis käytävän
+     *
+     * @param tile1
+     * @param tile2
+     */
     public void createHallway(Tile tile1, Tile tile2) {
 
         // 2x3 tile parts coming from rooms to make hallways look better
@@ -346,6 +452,15 @@ public class Map {
 
     }
 
+    /**
+     * Metodi luo hetkellisen huoneen muuttamalla ruutuja hetkellisiksi
+     * lattioiksi ja seiniksi
+     *
+     * @param topLeftX
+     * @param topLeftY
+     * @param bottomRightX
+     * @param bottomRightY
+     */
     public void createTempRoom(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY) {
         for (int x = topLeftX; x <= bottomRightX; x++) {
             for (int y = topLeftY; y <= bottomRightY; y++) {
@@ -363,10 +478,24 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi muuttaa ruudun koordinaateissa oveksi
+     *
+     * @param x
+     * @param y
+     */
     public void createDoor(int x, int y) {
         getTile(x, y).setType(Tiletype.Door);
     }
 
+    /**
+     * Metodi hakee listan ruuduista jotka ovat rajatun alueen sisällä
+     *
+     * @param topLeft alku piste
+     * @param x alueen pituus x-suunnassa
+     * @param y alueen pituus y-suunnass
+     * @return lista ruutuja
+     */
     public List<Tile> getArea(Tile topLeft, int x, int y) {
 
         List<Tile> area = new ArrayList<>();
@@ -388,6 +517,13 @@ public class Map {
         }
     }
 
+    /**
+     * Metodille annetaan lista ruuduista. Metodi lisää listalle kaikki ruudut
+     * jotka ovat näiden vieressä sekä ovat joko lattiaa tai ovia
+     *
+     * @param tiles ruudut
+     * @return saman listan johon on mahdollisesti lisätty nyt ruutuja
+     */
     public List<Tile> checkIfUnited(List<Tile> tiles) {
         List<Tile> searched = new ArrayList<>();
         tiles.forEach(searchtile -> {
@@ -397,22 +533,18 @@ public class Map {
                     if (checkTile(tile)) {
                         searched.add(tile);
                     }
-//                    if (tile != null && tile.getType() == Tiletype.Floor) {
-//                        tile.setType(Tiletype.CheckedFloor);
-//                        searched.add(tile);
-//                    } else if (tile != null && tile.getType() == Tiletype.TempFloor) {
-//                        tile.setType(Tiletype.CheckedTempFloor);
-//                        searched.add(tile);
-//                    } else if (tile != null && tile.getType() == Tiletype.Door) {
-//                        tile.setType(Tiletype.CheckedDoor);
-//                        searched.add(tile);
-//                    }
                 }
             }
         });
         return searched;
     }
 
+    /**
+     * Metodi muuttaa ruudun tyypin tarkistetuksi
+     *
+     * @param tile ruutu joka tarkistetaan
+     * @return true jos ruutu oli lattia, hetkellinen lattia tai ovi
+     */
     public boolean checkTile(Tile tile) {
         switch (tile.getType()) {
             case Floor:
@@ -429,6 +561,9 @@ public class Map {
         }
     }
 
+    /**
+     * Muuttaa kaikki kartan ruudut tyhjyydeksi
+     */
     public void clearTiles() {
         //Makes all tiles Void
         for (int x = 0; x < size; x++) {
@@ -440,6 +575,11 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi luo luolaston luomalla tietyn määrän huoneita ja lisäämällä niiden
+     * välille käytäviä kunnes kaikki kartan lattia ja ovi palat ovat yhteydessä
+     * toisiinsa
+     */
     public void createLevel() {
 
         clearTiles();
@@ -464,14 +604,6 @@ public class Map {
             }
 
         }
-//        // creates stairs up and down
-//        Tile stairs = getRandomTile(Tiletype.TempFloor);
-//        stairs.setType(Tiletype.StairsUp);
-//        
-//        int stairsDown = random.nextInt(3);
-//        for (int s = 0; s <= stairsDown; s++ ) {
-//            getRandomTile(Tiletype.TempFloor).setType(Tiletype.StairsDown);
-//        }
 
         boolean floorIsUnited = false;
 
@@ -576,6 +708,12 @@ public class Map {
 
     }
 
+    /**
+     * Metodi lisää kartalle vihollisia annetun määärän. Viholliset valitaan
+     * satunnaisesti kutsumalla EnemyTypen metodeita
+     *
+     * @param amount kuinka paljon
+     */
     public void spawnEnemies(int amount) {
         List<EnemyType> enemies = EnemyType.RAT.randomize(level, amount);
 
@@ -584,6 +722,13 @@ public class Map {
         });
     }
 
+    /**
+     * Metodi lisää kartalle esineitä annetun määärän. Esineet valitaan
+     * satunnaisesti kutsumalla Potion-, Weapon-, ja Spellbook Metodeja
+     * metodeita
+     *
+     * @param amount kuinka paljon
+     */
     public void spawnItems(int amount) {
         //Spawn weapons
         List<WeaponType> weapons = WeaponType.DAGGER.randomize(level, amount / 2);
@@ -601,6 +746,9 @@ public class Map {
         spawnItemRandom(new Spellbook(SpellbookType.FIREBOLTBOOK.Randomize()));
     }
 
+    /**
+     * Metodi tyhjentää kartalla olevat esineet
+     */
     public void clearItems() {
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -610,6 +758,9 @@ public class Map {
         }
     }
 
+    /**
+     * Metodi nostattaa syvyyttä yhdellä ja luo uuden luolaston
+     */
     public void goDown() {
         this.level++;
         createLevel();
@@ -618,6 +769,9 @@ public class Map {
         player.setY(stairs.y());
     }
 
+    /**
+     * Metodi pienentää syvyyttä yhdellä ja luo uuden luolaston
+     */
     public void goUp() {
         this.level--;
         if (this.level == 0) {
@@ -632,6 +786,9 @@ public class Map {
         player.setY(stairs.y());
     }
 
+    /**
+     * Metodi luo 3 kertaa 3 kokoisen huoneen jossa keskellä portaat alas
+     */
     public void generateStartingRoom() {
         this.level = 0;
         for (int x = 0; x < size; x++) {

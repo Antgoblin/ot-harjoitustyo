@@ -45,6 +45,13 @@ public enum Tiletype {
         return this.name;
     }
 
+    /**
+     * Metodi luo listan jossa on kaikki ruututyypit joita esiintyy pelissä.
+     * Listalla ei ole tyyppejä joita hyödynnetään ainoastaa luolaston
+     * rakennuksessa
+     *
+     * @return listan kaikista ruututyypristä
+     */
     public List<Tiletype> getAll() {
         List<Tiletype> all = new ArrayList<>();
         all.add(Floor);
@@ -57,6 +64,12 @@ public enum Tiletype {
         return all;
     }
 
+    /**
+     * Metodi etsii ruudun sille annetun nime avulla
+     *
+     * @param name minkä nimistä etsitään
+     * @return ruututyypin jolla etsitty nimi
+     */
     public Tiletype getTile(String name) {
         List<Tiletype> all = getAll();
         Tiletype type = all.get(0);

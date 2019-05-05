@@ -11,6 +11,9 @@ import dungeoncrawler.Items.Potion;
 import dungeoncrawler.Items.Spellbook;
 import dungeoncrawler.Items.Weapon;
 import dungeoncrawler.Items.Item.ItemType;
+import dungeoncrawler.Items.PotionType;
+import dungeoncrawler.Items.SpellbookType;
+import dungeoncrawler.Items.WeaponType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -240,6 +243,21 @@ public class Player extends Character {
      */
     public void addItem(Item item) {
         this.inventory.add(item);
+    }
+
+    /**
+     * Metodi lisää pelaajan inventoryyn tietyn nimisen esineen
+     *
+     * @param name minkä niminen esine lisätään
+     */
+    public void addItem(String name) {
+        if (WeaponType.DAGGER.getWeapon(name) != null) {
+            this.inventory.add(new Weapon(WeaponType.DAGGER.getWeapon(name)));
+        } else if (PotionType.HP.getPotion(name) != null) {
+            this.inventory.add(new Potion(PotionType.HP.getPotion(name)));
+        } else if (SpellbookType.FIREBOLTBOOK.getSpellbook(name) != null) {
+            this.inventory.add(new Spellbook(SpellbookType.FIREBOLTBOOK.getSpellbook(name)));
+        }
     }
 
     /**

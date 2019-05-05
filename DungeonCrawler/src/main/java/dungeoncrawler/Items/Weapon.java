@@ -25,11 +25,21 @@ public class Weapon extends Item {
         return this.weapon;
     }
 
+    /**
+     * Metodi kutsuu WeaponTypen samannimistä metodia getDamage()
+     *
+     * @return luvun paljon ase iskee
+     */
     public int getDamage() {
         int damage = this.weapon.getDamage();
         return damage;
     }
 
+    /**
+     * Metodi kutsuu WeaponTypen samannimistä metodia getRange()
+     *
+     * @return luvun joka kertoo kuinka kauas aseella voi iskeä
+     */
     public int getRange() {
         return this.weapon.getRange();
     }

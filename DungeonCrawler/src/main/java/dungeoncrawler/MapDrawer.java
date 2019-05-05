@@ -170,6 +170,7 @@ public class MapDrawer {
     }
 
     /**
+     * pyyhkii canvastaulun ja piirtää sille tekstit save ja load
      *
      * @param chooser valitsija joka kertoo missä kohtaa option menua ollaan
      */

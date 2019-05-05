@@ -35,6 +35,11 @@ public enum SpellbookType {
         return this.spell;
     }
 
+    /**
+     * Metodi tekee listan jossa on kaikki mahdolliset loitsukirjatyypit
+     *
+     * @return listan kaikista loitsukirjatyypeistä
+     */
     public List<SpellbookType> getAll() {
         List<SpellbookType> all = new ArrayList<>();
         all.add(FIREBOLTBOOK);
@@ -43,6 +48,11 @@ public enum SpellbookType {
         return all;
     }
 
+    /**
+     * palauttaa satunnaisesti valitut loitsukirjan
+     *
+     * @return random loitsukirjatyyppi
+     */
     public SpellbookType Randomize() {
         List<SpellbookType> all = getAll();
         Collections.shuffle(all);

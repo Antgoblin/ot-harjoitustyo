@@ -52,21 +52,46 @@ public enum EnemyType {
         this.depth = depth;
     }
 
+    /**
+     * Luo vihollisen tyypistä ja laittaa sen hyökkäämään targetin kimppuun
+     *
+     * @param target hahmo johon hyökkää
+     * @return vihollisen
+     */
     public Enemy spawn(Character target) {
         return new Enemy(name, 0, 0, hp, color, minDamage, maxDamage, aggressionRange, exp, target);
     }
 
+    /**
+     * Luo vihollisen tyypistä ja laittaa sen hyökkäämään targetin kimppuun
+     * vihollinen tulee annettuihin koordinaatteihin
+     *
+     * @param x x-koordinaatti
+     * @param y y-koordinaatti
+     * @param target hahmo johon hyökkää
+     * @return vihollisen
+     */
     public Enemy spawn(int x, int y, Character target) {
         return new Enemy(name, x, y, hp, color, minDamage, maxDamage, aggressionRange, exp, target);
     }
 
+    /**
+     * Metodi selvittää kuinka todennäköisesti vihollinen esiintyy
+     *
+     * @param depth syvyys
+     * @return luvun kuinka todennäköisesti vihollinen esiintyy syvyydelllä
+     */
     public double getWeight(int depth) {
         return this.spawnrate / (Math.abs(this.depth - depth) + 1);
     }
 
-//    public List<Double> getWeights(int depth) {
-//        
-//    }
+    /**
+     * Metodi palauttaa annetun määrän satunnaisia vihollisia
+     *
+     * @param depth syvyys
+     * @param amount määrä
+     * @return
+     */
     public List<EnemyType> randomize(int depth, int amount) {
         List<EnemyType> enemies = getAll();
         List<EnemyType> result = new ArrayList<>();
@@ -91,6 +116,11 @@ public enum EnemyType {
         return result;
     }
 
+    /**
+     * Metodi palauttaa listan jossa kaikkia vihollistyyppejä yksi
+     *
+     * @return lista
+     */
     public List<EnemyType> getAll() {
         List<EnemyType> enemytypes = new ArrayList<>();
         enemytypes.add(RAT);
@@ -104,6 +134,14 @@ public enum EnemyType {
         return enemytypes;
     }
 
+    /**
+     * Palauttaa vihollisen jolla on haettu nimi sekä muuttaa vihollisen
+     * kohteeksi annetun kohteen
+     *
+     * @param name nimi
+     * @param target kohde
+     * @return vihollisen
+     */
     public Enemy getEnemy(String name, Character target) {
         List<EnemyType> enemytypes = getAll();
         EnemyType enemytype = enemytypes.get(0);

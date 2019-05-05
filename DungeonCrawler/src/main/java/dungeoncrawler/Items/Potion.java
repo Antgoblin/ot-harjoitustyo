@@ -20,10 +20,20 @@ public class Potion extends Item {
         this.potion = p;
     }
 
+    /**
+     * palauttaa tyypin sisällä olevan luvun joka kertoo paljon saa elämää
+     *
+     * @return luvun kuinka paljon saa elämää
+     */
     public int getHealthGain() {
         return this.potion.getHealthGain();
     }
 
+    /**
+     * palauttaa tyypin sisällä olevan luvun joka kertoo paljon saa manaa
+     *
+     * @return luvun kuinka paljon saa manaa
+     */
     public int getManaGain() {
         return this.potion.getManaGain();
     }

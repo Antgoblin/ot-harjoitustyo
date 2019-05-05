@@ -49,6 +49,13 @@ public class MovementHandler {
         return this.chooser;
     }
 
+    /**
+     * Metodi katsoo missä tilassa peli on ja sen mukaan tekee mitä tapahtuu kun
+     * käyttäjä on painanut nuolinäppäintä
+     *
+     * @param player pelaaja joka tekee
+     * @param dir suunta
+     */
     public void handle(Player player, Direction dir) {
         switch (this.state) {
             case Normal:
@@ -80,6 +87,11 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodilla saa satunnaisesti suunnan
+     *
+     * @return satunnaisen suunnan
+     */
     public Direction randomDirection() {
         Direction dir = Direction.DOWN;
         switch (random.nextInt(4)) {
@@ -101,6 +113,14 @@ public class MovementHandler {
         return dir;
     }
 
+    /**
+     * Metodi liikuttaa pelaajaa laudalla annettuun suuntaa jos uudessa ruudussa
+     * ei ole seinää. Jos ruudussa on ovi pelaaja ei liiku vaan ovi avautuu. Jos
+     * ruudussa on vihollinen iskee pelaaja tätä
+     *
+     * @param player pelaaja
+     * @param dir suunta
+     */
     public void move(Player player, Direction dir) {
         //checks if enemies in way
         map.getEnemies().forEach(enemy -> {
@@ -125,6 +145,13 @@ public class MovementHandler {
         player.setActed(true);
     }
 
+    /**
+     * Metodi hakee pelaajan aseesta luvun ja vihollinen menettää luvun verran
+     * elämää
+     *
+     * @param player pelaaja
+     * @param enemy vihollinen
+     */
     public void attack(Player player, Enemy enemy) {
         player.attack(enemy);
         if (enemy.sleeping()) {
@@ -138,6 +165,11 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi kirjoittaa tekstialueeseen jos pelaajan ruudussa on esine
+     *
+     * @param player pelaaja
+     */
     public void seeItem(Player player) {
         Tile tile = map.getTile(player.x(), player.y());
         if (tile.containsItem()) {
@@ -145,6 +177,13 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi poistaa pelaajan ruudusta esineen ja lisää sen pelaajan
+     * inventoryyn. Metodi myös kirjoittaa tekstiareaan tekstin joka kertoo mikä
+     * esine nostettiin
+     *
+     * @param player pelaaja
+     */
     public void pickUp(Player player) {
         Tile tile = map.getTile(player.x(), player.y());
         if (tile.containsItem()) {
@@ -157,6 +196,12 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi katsoo nukkuuko vihollinen, jos nukkuu on sillä mahdollisuus
+     * herätä, jos ei niin liikkuu
+     *
+     * @param enemy vihollinen
+     */
     public void act(Enemy enemy) {
         if (enemy.sleeping()) {
             chanceToWake(enemy);
@@ -165,6 +210,12 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi tarkistaa onko pelaaja vihollisen huomaamisalueella, jos on
+     * vihollisen boolean arvo sleeping saattaa muuttua falseksi
+     *
+     * @param enemy vihollinen
+     */
     public void chanceToWake(Enemy enemy) {
         //If player is in range and enemy is sleeping 30% chance to wakeUp
         int distanceX = enemy.getTarget().x() - enemy.x();
@@ -180,6 +231,12 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi liiikuttaa vihollista laudalla. Jos pelaaja on vihollises
+     * huomaamisalueella liikkuu se pelaajaa päin, muulloin random suuntaan
+     *
+     * @param enemy vihollinen
+     */
     public void move(Enemy enemy) {
 
         int distanceX = enemy.getTarget().x() - enemy.x();
@@ -238,6 +295,14 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi katsoo onko pelaajan tietyssä suunnassa avoin ovi. Jos on ovi
+     * sulkeutuu, muulloin tekstiareaan tulee teksti jossa kerrotaan että
+     * suunnassa ei ole ovea tai kyseinen ovi on jo kiinni
+     *
+     * @param player pelaaja
+     * @param dir suunta
+     */
     public void closeDoor(Player player, Direction dir) {
 
         Tile tile = map.getTile(player.x() + dir.x(), player.y() + dir.y());
@@ -270,6 +335,14 @@ public class MovementHandler {
         this.state = State.Normal;
     }
 
+    /**
+     * Metodi hakee pelaajan aseen rangen ja katsoo tuleeko vihollista vastaan
+     * jos kulkee ruutuja suuntaan rangen verran. Jos tulee vihollinen menettää
+     * aseen damagen verran elämää ja tekstiareaan tulee tieto tästä
+     *
+     * @param player pelaaja
+     * @param dir suunta
+     */
     public void shoot(Player player, Direction dir) {
         for (int i = 1; i <= player.getRange(); i++) {
             Tile tile = map.getTile(player.x() + i * dir.x(), player.y() + i * dir.y());
@@ -295,12 +368,25 @@ public class MovementHandler {
         this.state = state.Normal;
     }
 
+    /**
+     * Metodi poistaa pelaajan inventorista esineen ja lisää sen pelaajan
+     * ruutuun
+     *
+     * @param player pelaaja
+     * @param i monesko esine
+     */
     public void dropItem(Player player, int i) {
         map.getTile(player.x(), player.y()).setItem(player.inventory().get(i));
         player.loseItem(i);
 
     }
 
+    /**
+     * Katsoo pelaajan loitsulistalta loitsun ja tekee sen mukaan mitä loitsun
+     * pitäisi
+     *
+     * @param i monesko loitsu
+     */
     public void castSpell(int i) {
         Player player = this.map.getPlayer();
         Spell spell = player.getSpell(i);
@@ -333,6 +419,13 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * Metodi kutsuu pelaajan inventorissa olevan esineen metodia getAction()
+     * joka kertoo mitä esineellä voi tehdä. Metodi tekee asian jonka saa
+     * metodilta
+     *
+     * @param player
+     */
     public void Action(Player player) {
         switch (player.inventory().get(chooser.getY()).getAction()) {
             case "Equip":

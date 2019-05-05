@@ -52,6 +52,12 @@ public class DungeonCrawlerApplication extends Application {
     private Pane startGame;
     private Pane gameover;
 
+    /**
+     * Tallentaa pelaajan ja kartan tiedot tiedostoon save.txt jos tiedostoa ei
+     * ole luodaan se ensiksi
+     *
+     * @throws IOException heittää virheen
+     */
     public void save() throws IOException {
         File file = new File("save.txt");
         FileWriter fr = null;
@@ -99,6 +105,20 @@ public class DungeonCrawlerApplication extends Application {
                     fr.write(tile.getType().getName() + "\r\n");
                 }
             }
+            fr.write("-Items on ground- \r\n");
+            fr.write(map.getItemCount() + "\r\n");
+            for (int y = 0; y < map.getSize(); y++) {
+                for (int x = 0; x < map.getSize(); x++) {
+                    Tile tile = map.getTile(x, y);
+                    if (tile.containsItem()) {
+                        for (int i = 0; i < tile.getItems().size(); i++) {
+                            fr.write(tile.x() + "\r\n");
+                            fr.write(tile.y() + "\r\n");
+                            fr.write(tile.getItems().get(i).getName() + "\r\n");
+                        }
+                    }
+                }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +132,12 @@ public class DungeonCrawlerApplication extends Application {
         }
     }
 
+    /**
+     * Lukee tiedoston save.txt ja muuttaa kartan ja pelaajan arvot sen mukaan
+     *
+     * @throws FileNotFoundException jos tiedostoa ei ole
+     * @throws IOException
+     */
     public void load() throws FileNotFoundException, IOException {
         InputStream is = new FileInputStream("save.txt");
         BufferedReader buf = new BufferedReader(new InputStreamReader(is));
@@ -141,8 +167,9 @@ public class DungeonCrawlerApplication extends Application {
         }
         i = 13;
         //Items
+        player.inventory().clear();
         for (int x = i; x < i + Integer.parseInt(lines.get(12)); x++) {
-
+            player.addItem(lines.get(x));
         }
         i += 2 + Integer.parseInt(lines.get(12));
         //Enemies
@@ -165,13 +192,21 @@ public class DungeonCrawlerApplication extends Application {
                 i++;
             }
         }
-
+        map.clearItems();
+        i += 2;
+        System.out.println(lines.get(i));
+        for (int x = i; x < i + Integer.parseInt(lines.get(i - 1)) * 3; x += 3) {
+            Tile tile = map.getTile(Integer.parseInt(lines.get(x)), Integer.parseInt(lines.get(x + 1)));
+            tile.addItem(lines.get(x + 2));
+        }
         mapDrawer.drawAll();
         updateCamera();
     }
 
+    /**
+     * Alustaa pelaajan ja kartan
+     */
     public void init() {
-//
         player = new Player(11, 11, PlayerClass.Warrior);
         map = new Map(mapSize, tileSize, player);
 
@@ -336,14 +371,15 @@ public class DungeonCrawlerApplication extends Application {
                             }
                         } else if (mh.getChooser().getY() == 1) {
                             try {
-                                textArea.appendText("Game loaded \n");
                                 mh.setState(State.Normal);
                                 mh.getChooser().setX(0);
                                 mh.getChooser().setY(0);
                                 load();
+                                textArea.appendText("Game loaded \n");
                                 update();
                             } catch (IOException ex) {
-                                Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
+                                textArea.appendText("There is nothing to load \n");
+                                update();
                             }
                         }
 
@@ -353,12 +389,10 @@ public class DungeonCrawlerApplication extends Application {
                         mh.setState(State.Normal);
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsDown) {
                         map.goDown();
-                        mapDrawer.drawAll();
-                        updateCamera();
+                        update();
                     } else if (map.getTile(player.x(), player.y()).getType() == Tiletype.StairsUp) {
                         map.goUp();
-                        mapDrawer.drawAll();
-                        updateCamera();
+                        update();
                     }
                     break;
                 case I:
@@ -390,23 +424,11 @@ public class DungeonCrawlerApplication extends Application {
                     break;
 
                 case O:
-//                    try {
-//                        save();
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(DungeonCrawlerApplication.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
                     canvas.setTranslateX(0);
                     canvas.setTranslateY(0);
                     mh.setState(State.Options);
                     mapDrawer.drawOptionScreen(mh.getChooser());
                     break;
-
-                case L:
-                    try {
-                        load();
-                    } catch (IOException ex) {
-                        System.out.println("ITS BROKEN");
-                    }
                 default:
                     break;
 
@@ -437,6 +459,9 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * Alustaa pelin näkymän
+     */
     private void initializeLayout() {
 
         //Layout of the game
@@ -447,6 +472,9 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * Alustaa pelin alku näkymän
+     */
     private void initializeStartGameScreen() {
         startGame = new Pane();
         Label dungeonCrawler = new Label("DungeonCrawler");
@@ -469,6 +497,9 @@ public class DungeonCrawlerApplication extends Application {
         startGame.getChildren().add(dungeonCrawler);
     }
 
+    /**
+     * Alustaa pelin kuolema näkymän
+     */
     private void initializeGameoverScreen() {
         gameover = new Pane();
         Label dungeonCrawler = new Label("Gameover");
@@ -491,6 +522,9 @@ public class DungeonCrawlerApplication extends Application {
         gameover.getChildren().add(dungeonCrawler);
     }
 
+    /**
+     * Alustaa hahmo valikon
+     */
     private void initializeClassSelection() {
         classSelection = new Pane();
         Label choose = new Label("Choose Class");
@@ -516,6 +550,9 @@ public class DungeonCrawlerApplication extends Application {
         classSelection.getChildren().addAll(choose, warrior, ranger, mage);
     }
 
+    /**
+     * Alustaa kartan piirtäjän
+     */
     private void initializeMapDrawer() {
 
         canvas = new Canvas(mapSize * tileSize, mapSize * tileSize);
@@ -526,6 +563,9 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * Alustaa tekstikentän
+     */
     private void initializeTextArea() {
 
         //TextArea (Only display)
@@ -538,6 +578,10 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * Kohdistaa ruudun että pelaaja on sen keskellä, paitsi jos pelaaja on
+     * liian lähellä kentän reunoja
+     */
     public void updateCamera() {
         int x = (player.x() - 11) * tileSize;
         if (x < 0) {
@@ -556,6 +600,9 @@ public class DungeonCrawlerApplication extends Application {
         canvas.setTranslateY(-y);
     }
 
+    /**
+     * Alustaa tekstikentän jossa näkyy pelaajan arvot
+     */
     private void initializeStatScreen() {
 
         //Area for characters stats & such
@@ -569,12 +616,18 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * päivittää tekstikentän, keskittää kameran ja piirtää näkymän uusiksi
+     */
     private void update() {
         mapDrawer.drawAll();
         updateCamera();
         updateStatScreen();
     }
 
+    /**
+     * lisää tekstikentälle kaikki pelaajan arvot
+     */
     private void updateStatScreen() {
         statscreen.setText(player.getPlayerClass() + "   Lvl:" + player.getLvl() + "\n"
                 + "Exp( " + player.getExp() + " )    Gold( " + player.getGold() + " )\n"
@@ -598,6 +651,11 @@ public class DungeonCrawlerApplication extends Application {
 
     }
 
+    /**
+     * Tarkistaa onko vihollisia kuollut, jos on ne poistetaan. Seuraavaksi
+     * liikuttaa vihollisia. jonka jälkeen tarkistaa uusiksi onko vihollisia
+     * kuollut. Lopuksi päivittää kaikki näkymät
+     */
     private void endTurn() {
 
         //checks if there are dead enemies

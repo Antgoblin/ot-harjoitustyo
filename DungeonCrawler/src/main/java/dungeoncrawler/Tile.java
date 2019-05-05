@@ -6,6 +6,12 @@
 package dungeoncrawler;
 
 import dungeoncrawler.Items.Item;
+import dungeoncrawler.Items.Potion;
+import dungeoncrawler.Items.PotionType;
+import dungeoncrawler.Items.Spellbook;
+import dungeoncrawler.Items.SpellbookType;
+import dungeoncrawler.Items.Weapon;
+import dungeoncrawler.Items.WeaponType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.StackPane;
@@ -110,5 +116,24 @@ public class Tile extends StackPane {
 
     public Character getCharacter() {
         return this.character;
+    }
+
+    public List<Item> getItems() {
+        return this.items;
+    }
+
+    /**
+     * Metodi etsii nimetyn esineen ja laittaa sellaisen ruudun sisälle
+     *
+     * @param name minkä niminen esine laitetaan
+     */
+    public void addItem(String name) {
+        if (WeaponType.DAGGER.getWeapon(name) != null) {
+            this.items.add(new Weapon(WeaponType.DAGGER.getWeapon(name)));
+        } else if (PotionType.HP.getPotion(name) != null) {
+            this.items.add(new Potion(PotionType.HP.getPotion(name)));
+        } else if (SpellbookType.FIREBOLTBOOK.getSpellbook(name) != null) {
+            this.items.add(new Spellbook(SpellbookType.FIREBOLTBOOK.getSpellbook(name)));
+        }
     }
 }

@@ -174,6 +174,21 @@ public class Map {
     }
 
     /**
+     * Metodi tekee listan kaikista vihollisista joiden elämäpisteet ovat alle 1
+     *
+     * @return listan kuolleista vihollisista
+     */
+    public List<Enemy> getDeadEnemies() {
+        List<Enemy> deadEnemies = new ArrayList<>();
+        this.enemies.forEach(enemy -> {
+            if (enemy.checkIfDead()) {
+                deadEnemies.add(enemy);
+            }
+        });
+        return deadEnemies;
+    }
+
+    /**
      * Metodi laskee kaikki maassa olevat esineet
      *
      * @return yhteenlasketun summan kaikista esineistä

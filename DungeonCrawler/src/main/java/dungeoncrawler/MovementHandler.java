@@ -7,6 +7,7 @@ package dungeoncrawler;
 
 import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Spellbook;
+import java.util.List;
 import java.util.Random;
 import javafx.scene.control.TextArea;
 
@@ -443,5 +444,57 @@ public class MovementHandler {
                 }
                 break;
         }
+    }
+
+    public void endTurn() {
+
+        //checks if there are dead enemies
+        List<Enemy> deadEnemies = map.getDeadEnemies();
+        Player player = map.getPlayer();
+
+        //deletes dead enemies
+        if (!deadEnemies.isEmpty()) {
+            deadEnemies.forEach(dead -> {
+                textArea.appendText("You killed " + dead.getName() + " \n");
+                player.gainExp(dead.getExp());
+                map.getTile(dead.x(), dead.y()).setCharacter(null);
+                map.removeEnemy(dead);
+            });
+
+        }
+
+        //Enemies turn
+        map.getEnemies().forEach(enemy -> {
+            enemy.hasNotAttacked();
+            act(enemy);
+            if (enemy.hasAttacked()) {
+                textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
+            }
+        });
+        if (map.getPlayer().checkIfDead()) {
+            textArea.appendText("You died \n");
+        }
+
+        //checks if there are dead enemies again (if enemies kill each other)
+        deadEnemies.clear();
+        map.getEnemies().forEach(enemy -> {
+            if (enemy.checkIfDead()) {
+                deadEnemies.add(enemy);
+            }
+        });
+
+        //deletes dead enemies
+        if (deadEnemies.isEmpty() == false) {
+            deadEnemies.forEach(dead -> {
+                textArea.appendText(dead.getName() + " died \n");
+                map.getTile(dead.x(), dead.y()).setCharacter(null);
+                map.removeEnemy(dead);
+            });
+
+        }
+        player.checkIfRegenerates();
+        player.checkIfLevelUp();
+        player.hasNotAttacked();
+        player.setActed(false);
     }
 }

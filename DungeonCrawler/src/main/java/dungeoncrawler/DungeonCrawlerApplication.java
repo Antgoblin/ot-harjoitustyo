@@ -194,7 +194,6 @@ public class DungeonCrawlerApplication extends Application {
         }
         map.clearItems();
         i += 2;
-        System.out.println(lines.get(i));
         for (int x = i; x < i + Integer.parseInt(lines.get(i - 1)) * 3; x += 3) {
             Tile tile = map.getTile(Integer.parseInt(lines.get(x)), Integer.parseInt(lines.get(x + 1)));
             tile.addItem(lines.get(x + 2));
@@ -439,7 +438,9 @@ public class DungeonCrawlerApplication extends Application {
                 if (mh.getState() == State.Inventory) {
                     mh.setState(State.Normal);
                 }
-                endTurn();
+                mh.endTurn();
+                update();
+
             } else if (mh.getState() == State.Inventory) {
                 mapDrawer.drawInventory(mh.getChooser());
             } else if (mh.getState() == State.Spells) {
@@ -656,63 +657,63 @@ public class DungeonCrawlerApplication extends Application {
      * liikuttaa vihollisia. jonka jälkeen tarkistaa uusiksi onko vihollisia
      * kuollut. Lopuksi päivittää kaikki näkymät
      */
-    private void endTurn() {
-
-        //checks if there are dead enemies
-        List<Enemy> deadEnemies = new ArrayList<>();
-        map.getEnemies().forEach(enemy -> {
-            if (enemy.checkIfDead()) {
-                deadEnemies.add(enemy);
-            }
-        });
-
-        //deletes dead enemies
-        if (deadEnemies.isEmpty() == false) {
-            deadEnemies.forEach(dead -> {
-                textArea.appendText("You killed " + dead.getName() + " \n");
-                player.gainExp(dead.getExp());
-                map.getTile(dead.x(), dead.y()).setCharacter(null);
-                map.removeEnemy(dead);
-            });
-
-        }
-
-        //Enemies turn
-        map.getEnemies().forEach(enemy -> {
-            enemy.hasNotAttacked();
-            mh.act(enemy);
-            if (enemy.hasAttacked()) {
-                textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
-            }
-        });
-        if (player.checkIfDead()) {
-            textArea.appendText("You died \n");
-        }
-
-        //checks if there are dead enemies again (if enemies kill each other)
-        deadEnemies.clear();
-        map.getEnemies().forEach(enemy -> {
-            if (enemy.checkIfDead()) {
-                deadEnemies.add(enemy);
-            }
-        });
-
-        //deletes dead enemies
-        if (deadEnemies.isEmpty() == false) {
-            deadEnemies.forEach(dead -> {
-                textArea.appendText(dead.getName() + " died \n");
-                map.getTile(dead.x(), dead.y()).setCharacter(null);
-                map.removeEnemy(dead);
-            });
-
-        }
-        player.checkIfRegenerates();
-        player.checkIfLevelUp();
-        updateStatScreen();
-        player.hasNotAttacked();
-        player.setActed(false);
-        //draws what happened
-        mapDrawer.drawAll();
-
-    }
+//    private void endTurn() {
+//
+//        //checks if there are dead enemies
+//        List<Enemy> deadEnemies = new ArrayList<>();
+//        map.getEnemies().forEach(enemy -> {
+//            if (enemy.checkIfDead()) {
+//                deadEnemies.add(enemy);
+//            }
+//        });
+//
+//        //deletes dead enemies
+//        if (deadEnemies.isEmpty() == false) {
+//            deadEnemies.forEach(dead -> {
+//                textArea.appendText("You killed " + dead.getName() + " \n");
+//                player.gainExp(dead.getExp());
+//                map.getTile(dead.x(), dead.y()).setCharacter(null);
+//                map.removeEnemy(dead);
+//            });
+//
+//        }
+//
+//        //Enemies turn
+//        map.getEnemies().forEach(enemy -> {
+//            enemy.hasNotAttacked();
+//            mh.act(enemy);
+//            if (enemy.hasAttacked()) {
+//                textArea.appendText(enemy.getName() + " hit you for " + enemy.getLastDamage() + " damage \n");
+//            }
+//        });
+//        if (player.checkIfDead()) {
+//            textArea.appendText("You died \n");
+//        }
+//
+//        //checks if there are dead enemies again (if enemies kill each other)
+//        deadEnemies.clear();
+//        map.getEnemies().forEach(enemy -> {
+//            if (enemy.checkIfDead()) {
+//                deadEnemies.add(enemy);
+//            }
+//        });
+//
+//        //deletes dead enemies
+//        if (deadEnemies.isEmpty() == false) {
+//            deadEnemies.forEach(dead -> {
+//                textArea.appendText(dead.getName() + " died \n");
+//                map.getTile(dead.x(), dead.y()).setCharacter(null);
+//                map.removeEnemy(dead);
+//            });
+//
+//        }
+//        player.checkIfRegenerates();
+//        player.checkIfLevelUp();
+//        updateStatScreen();
+//        player.hasNotAttacked();
+//        player.setActed(false);
+//        //draws what happened
+//        mapDrawer.drawAll();
+//
+//    }
 }

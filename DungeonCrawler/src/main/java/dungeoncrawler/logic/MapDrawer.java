@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler;
+package dungeoncrawler.logic;
 
 import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Item;

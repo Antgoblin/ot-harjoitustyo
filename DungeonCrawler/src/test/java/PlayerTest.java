@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Player;
-import dungeoncrawler.PlayerClass;
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.PlayerClass;
 import dungeoncrawler.Items.Item;
 import java.util.ArrayList;
 import java.util.List;

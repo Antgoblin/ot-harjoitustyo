@@ -3,11 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler;
+package dungeoncrawler.UI;
 
+import dungeoncrawler.logic.Direction;
+import dungeoncrawler.logic.Enemy;
+import dungeoncrawler.logic.EnemyType;
 import dungeoncrawler.Items.Weapon;
 import dungeoncrawler.Items.WeaponType;
-import dungeoncrawler.MovementHandler.State;
+import dungeoncrawler.logic.Map;
+import dungeoncrawler.logic.MapDrawer;
+import dungeoncrawler.logic.MovementHandler;
+import dungeoncrawler.logic.MovementHandler.State;
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.PlayerClass;
+import dungeoncrawler.logic.Tile;
+import dungeoncrawler.logic.Tiletype;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;

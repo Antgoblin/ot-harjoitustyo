@@ -11,11 +11,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import dungeoncrawler.Character;
-import dungeoncrawler.Direction;
-import dungeoncrawler.Map;
-import dungeoncrawler.Player;
-import dungeoncrawler.PlayerClass;
+import dungeoncrawler.logic.Character;
+import dungeoncrawler.logic.Direction;
+import dungeoncrawler.logic.Map;
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.PlayerClass;
 
 /**
  *

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler;
+package dungeoncrawler.logic;
 
+import dungeoncrawler.logic.PlayerClass;
 import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Item;
 import dungeoncrawler.Items.Potion;

@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Enemy;
-import dungeoncrawler.Character;
+import dungeoncrawler.logic.Enemy;
+import dungeoncrawler.logic.Character;
 import javafx.scene.paint.Color;
 import org.junit.After;
 import org.junit.AfterClass;

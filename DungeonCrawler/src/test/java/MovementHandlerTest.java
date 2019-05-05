@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Direction;
-import dungeoncrawler.Enemy;
-import dungeoncrawler.EnemyType;
+import dungeoncrawler.logic.Direction;
+import dungeoncrawler.logic.Enemy;
+import dungeoncrawler.logic.EnemyType;
 import dungeoncrawler.Items.Item;
 import dungeoncrawler.Items.Item.ItemType;
-import dungeoncrawler.Map;
-import dungeoncrawler.MovementHandler;
-import dungeoncrawler.Player;
-import dungeoncrawler.Tiletype;
+import dungeoncrawler.logic.Map;
+import dungeoncrawler.logic.MovementHandler;
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.Tiletype;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.control.TextArea;
@@ -37,7 +37,7 @@ public class MovementHandlerTest {
 
     @Before
     public void setUp() {
-        player = new Player(2, 2, dungeoncrawler.PlayerClass.Warrior);
+        player = new Player(2, 2, dungeoncrawler.logic.PlayerClass.Warrior);
         map = new Map(100, 50, player);
         enemy = EnemyType.RAT.spawn(5, 5, player);
         map.getEnemies().add(enemy);
@@ -123,7 +123,7 @@ public class MovementHandlerTest {
     @Test
     public void Shooting() {
         mh.move(enemy);
-        player = new Player(2, 5, dungeoncrawler.PlayerClass.Ranger);
+        player = new Player(2, 5, dungeoncrawler.logic.PlayerClass.Ranger);
         map.setplayer(player);
         mh.shoot(player, Direction.RIGHT);
         System.out.println(enemy.getCurrentHp());

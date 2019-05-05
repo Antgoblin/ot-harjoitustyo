@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler;
+package dungeoncrawler.logic;
 
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.Tile;
+import dungeoncrawler.logic.Tiletype;
 import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Spellbook;
 import java.util.List;

@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-import dungeoncrawler.Map;
-import dungeoncrawler.Player;
-import dungeoncrawler.PlayerClass;
-import dungeoncrawler.Tile;
+import dungeoncrawler.logic.Map;
+import dungeoncrawler.logic.Player;
+import dungeoncrawler.logic.PlayerClass;
+import dungeoncrawler.logic.Tile;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

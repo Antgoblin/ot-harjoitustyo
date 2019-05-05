@@ -40,7 +40,7 @@ public class Chooser {
      * Metodi liikuttaa valitsijaa suuntaan, paitsi jos valitsija on liian
      * lähellä rajoja
      *
-     * @param dir
+     * @param dir suunta
      */
     public void move(Direction dir) {
         if (dir.y() != 0) {

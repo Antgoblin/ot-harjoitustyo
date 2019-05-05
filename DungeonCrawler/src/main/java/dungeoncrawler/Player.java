@@ -372,6 +372,11 @@ public class Player extends Character {
      */
     public void lvlUp() {
         this.gainMaxHp(this.lvl * 10);
+        int mana = 5;
+        if (this.playerClass == PlayerClass.Mage) {
+            mana = 10;
+        }
+        this.gainMaxMana(mana);
         this.lvl++;
 
     }

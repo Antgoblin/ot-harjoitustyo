@@ -103,6 +103,7 @@ public enum WeaponType {
     }
 
     /**
+     * Metodi kerää listan kaikista eri asetyypeistä.
      *
      * @return Listan jossa on jokaista eri asetta yksi kappale
      */

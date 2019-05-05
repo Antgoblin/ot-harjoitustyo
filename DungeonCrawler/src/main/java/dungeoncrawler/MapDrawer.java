@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dungeoncrawler.logic;
+package dungeoncrawler;
 
 import dungeoncrawler.Items.Spell;
 import dungeoncrawler.Items.Item;
+import dungeoncrawler.logic.Chooser;
+import dungeoncrawler.logic.Direction;
+import dungeoncrawler.logic.Map;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

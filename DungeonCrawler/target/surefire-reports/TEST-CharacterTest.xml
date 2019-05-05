@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="16" failures="0" name="CharacterTest" time="0.653" errors="0" skipped="0">
+<testsuite tests="16" failures="0" name="CharacterTest" time="0.544" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
@@ -65,18 +65,18 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="CharacterTest" name="GainingHpOverMaxMakesCurrentHpEqualMax" time="0.086"/>
+  <testcase classname="CharacterTest" name="GainingHpOverMaxMakesCurrentHpEqualMax" time="0.071"/>
   <testcase classname="CharacterTest" name="GettingHpWhenFull" time="0"/>
   <testcase classname="CharacterTest" name="LosingHp" time="0"/>
-  <testcase classname="CharacterTest" name="HasNotAttackedMakesAttackedEqualFalse" time="0.001"/>
+  <testcase classname="CharacterTest" name="HasNotAttackedMakesAttackedEqualFalse" time="0"/>
   <testcase classname="CharacterTest" name="setActedWorks" time="0"/>
   <testcase classname="CharacterTest" name="CheckkingIfDeadWhenOverZero" time="0"/>
-  <testcase classname="CharacterTest" name="MoveWorks" time="0.565"/>
+  <testcase classname="CharacterTest" name="MoveWorks" time="0.471"/>
   <testcase classname="CharacterTest" name="SetXAndSetY" time="0"/>
   <testcase classname="CharacterTest" name="GettingHpWhenBelowZero" time="0"/>
   <testcase classname="CharacterTest" name="GettingColor" time="0"/>
   <testcase classname="CharacterTest" name="GainingHp" time="0"/>
-  <testcase classname="CharacterTest" name="ActedAndAttackedFalseInBeginning" time="0"/>
+  <testcase classname="CharacterTest" name="ActedAndAttackedFalseInBeginning" time="0.001"/>
   <testcase classname="CharacterTest" name="GettingName" time="0"/>
   <testcase classname="CharacterTest" name="AttackedTrueAfterAttackingAndGettingLastDamage" time="0"/>
   <testcase classname="CharacterTest" name="GettingX" time="0"/>

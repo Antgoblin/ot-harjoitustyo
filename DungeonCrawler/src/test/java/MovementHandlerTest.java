@@ -154,4 +154,16 @@ public class MovementHandlerTest {
         mh.dropItem(player, 0);
         assertEquals(true, map.getTile(2, 2).containsItem());
     }
+
+    @Test
+    public void Handle() {
+        mh.handle(player, Direction.DOWN);
+        assertEquals(3, player.y());
+        mh.setState(MovementHandler.State.Inventory);
+        map.getPlayer().addItem("Bow");
+        map.getPlayer().addItem("Bow");
+        map.getPlayer().addItem("Bow");
+        assertEquals(0, mh.getChooser().getY());
+
+    }
 }

@@ -7,7 +7,7 @@ ohjelma käynnistyy avaamalla jar-tiedoston tai komentoriviin laittamalla komenn
 ```
 java -jar DungeonCrawler.jar
 ```
-
+kunhan komentorivillä tietysti on oikean tiedoston sisällä.
 ## Aloitus
 
 Sovellus käynnistyy Aloitusruutu näkymään:

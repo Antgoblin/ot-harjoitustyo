@@ -12,7 +12,7 @@ integraatiotestattu joitain asioita.
 Käyttöliittymä ja kartanpiirtäjä ovat ainoat luokat paketissa dungeoncrawler.
 Joten näitä lukuunottamatta sovelluksen rivikattavuus on 79% ja haarautumakattavuus on 64%.
 
-<imh src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Testikattavuus.png">
+<img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Testikattavuus.png">
   
 Testaamatta jäi paljon kohtia jotka käyttävät hyväkeseen jonkinlaista satunnaista arvoa, sekä etenkin luokasta
 MovementHandler jäi testaamatta paljon metodeja jotka olisivat kirjoittaneet TextArealle tekstiä.

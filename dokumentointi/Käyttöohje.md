@@ -4,7 +4,11 @@ Lataa tiedosto [DungeonCrawler.jar]
 
 ## konfigurointi?
 
-## Ohjelman käynnistys?
+## Ohjelman käynnistys
+ohjelma käynnistyy komennolla
+```
+java -jar DungeonCrawler.jar
+```
 
 ## Aloitus
 

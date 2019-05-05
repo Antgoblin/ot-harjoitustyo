@@ -24,3 +24,4 @@ Sovellus luo tiedoston save.txt jos sellaista ei ole olemassa.
 Sovelluksen pää toiminnallisuutena on "pelivuoro" joka tapahtuu lähes aina kun käyttä painaa jotain peliin
 asetettua näppäintä. Otetaan esimerkiksi vaikka yksi nuolinäppäimistä.
 
+<img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Turn.png">

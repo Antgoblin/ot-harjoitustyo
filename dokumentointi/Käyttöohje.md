@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [DungeonCrawler.jar]
+Lataa tiedosto [DungeonCrawler.jar](https://github.com/Antgoblin/ot-harjoitustyo/releases/tag/1.0)
 
 ## Ohjelman käynnistys
 ohjelma käynnistyy komennolla

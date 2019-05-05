@@ -9,6 +9,8 @@ keräten esineitä.
 ## Käyttäjät
 Sovelluksen ainoa käyttäjärooli on normaalikäyttäjä eli "pelaaja".
 
+<img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Screenshot_20190505-132945_Gallery.jpg">
+
 ## KäyttöLiittymäluonnos 
 Sovellus koostuu neljästä eri näkymästä.
 

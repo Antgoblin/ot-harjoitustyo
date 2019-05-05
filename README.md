@@ -4,7 +4,7 @@
 
 [Käyttöohje](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/Käyttöohje.md)
 
-[Määrittelydokumentti](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/Vaatimusm%C3%A4%C3%A4rittely.md)
+[Vaatimuusmäärittely](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/Vaatimusm%C3%A4%C3%A4rittely.md)
 
 [TestausKattavuus](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/testaus.md)
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="26" failures="0" name="PlayerTest" time="0.002" errors="0" skipped="0">
+<testsuite tests="26" failures="0" name="PlayerTest" time="0.004" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
@@ -66,19 +66,19 @@
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
   <testcase classname="PlayerTest" name="AddItemWorks" time="0.001"/>
-  <testcase classname="PlayerTest" name="LosingTooMuchMana" time="0"/>
+  <testcase classname="PlayerTest" name="LosingTooMuchMana" time="0.001"/>
   <testcase classname="PlayerTest" name="GoldAnDExpAtBeginning" time="0"/>
   <testcase classname="PlayerTest" name="GoldAndExpDontGoToNegativesWhenLosingTooMuch" time="0"/>
   <testcase classname="PlayerTest" name="setWeaponAndSetWeapon2" time="0"/>
   <testcase classname="PlayerTest" name="CheckIfRegenerates" time="0"/>
-  <testcase classname="PlayerTest" name="GainingTooMuchMana" time="0.001"/>
+  <testcase classname="PlayerTest" name="GainingTooMuchMana" time="0"/>
   <testcase classname="PlayerTest" name="MageLevelingUp" time="0"/>
   <testcase classname="PlayerTest" name="EquipinWeapon" time="0"/>
   <testcase classname="PlayerTest" name="DrinkingPotion" time="0"/>
   <testcase classname="PlayerTest" name="GainingMana" time="0"/>
   <testcase classname="PlayerTest" name="GainingGoldAnDExp" time="0"/>
   <testcase classname="PlayerTest" name="ReadingSpellBookAndGettingSpell" time="0"/>
-  <testcase classname="PlayerTest" name="GettingRange" time="0"/>
+  <testcase classname="PlayerTest" name="GettingRange" time="0.001"/>
   <testcase classname="PlayerTest" name="GettingInventory" time="0"/>
   <testcase classname="PlayerTest" name="LosingMana" time="0"/>
   <testcase classname="PlayerTest" name="GettingWeaponAndWeapon2" time="0"/>
@@ -89,6 +89,6 @@
   <testcase classname="PlayerTest" name="SettingGoldAnDExp" time="0"/>
   <testcase classname="PlayerTest" name="setCurrentAndMaxManaAndGainMaxMana" time="0"/>
   <testcase classname="PlayerTest" name="CheckIfLevelUpAndLevelUp" time="0"/>
-  <testcase classname="PlayerTest" name="setAndGetLvl" time="0"/>
+  <testcase classname="PlayerTest" name="setAndGetLvl" time="0.001"/>
   <testcase classname="PlayerTest" name="LosingGoldAnDExp" time="0"/>
 </testsuite>

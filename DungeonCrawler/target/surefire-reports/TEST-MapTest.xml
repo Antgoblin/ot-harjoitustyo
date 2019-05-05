@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="MapTest" time="0.546" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="MapTest" time="0.514" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
@@ -65,8 +65,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="MapTest" name="GoUpMakesLevelGoDown" time="0.46"/>
-  <testcase classname="MapTest" name="GettingLevel" time="0.011"/>
+  <testcase classname="MapTest" name="GoUpMakesLevelGoDown" time="0.424"/>
+  <testcase classname="MapTest" name="GettingLevel" time="0.013"/>
   <testcase classname="MapTest" name="GoDownMakesLevelGoUp" time="0.071"/>
-  <testcase classname="MapTest" name="GettingSize" time="0.004"/>
+  <testcase classname="MapTest" name="GettingSize" time="0.006"/>
 </testsuite>

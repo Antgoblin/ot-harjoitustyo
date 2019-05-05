@@ -97,5 +97,5 @@ Kuna pelaajan elämäpisteet tippuvat alle yhden sovellus siirtyy gameover näky
 
 <img src="https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/kuvat/Gameover.png">
 
-Peli on nyt loppunut. Käyttäjä voi aloittaa uuden pelin painamalle Enter. Tai lataamalla pelin edellisestä tallennus kohtaa
+Peli on nyt loppunut. Käyttäjä voi aloittaa uuden pelin painamalle Enter. Tai lataamalla pelin edellisestä tallennuskohdasta
 painamalla näppäintä L.

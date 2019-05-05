@@ -47,3 +47,40 @@ Ruudussa voi mahdollisesti olla myös vinottainen viiva. Tämä kertoo että ruu
 Näytön yläreunassa oleva valkoinen suorakulmio sisältää tekstiä, joka kertoo mitä pelissä tapahtuu.
 
 Näytön vasemmassa reunassa oleva valkoinen suorakulmio sisältää tekstia, joka kertoo Käyttäjälle pelaajan tilanteen.
+
+## Näppäimet
+
+- Nuolinäppäimet
+    liikuttavat pelihahmoa.
+    
+- O (options)
+    avaa näkymän josta voi tallentaa tai ladata pelin.
+
+- H (help)
+    avaa näkymän jossa kerrotaan näppäimet.
+    
+- I (inventory)
+    avaa näkymän jossa pelaajan kaikki esineet. Esineitä voi pudottaa ja käyttää tässä näkymässä.
+    
+- P (pickup)
+    nostaa pelaajan ruudussa olevan esineen.
+    
+- S (shoot)
+    aseella ampuminen (jos ase pystyy siihen)
+   
+- C (cast)
+    avaa näkymän, jossa kaikki pelaajan osaamat loitsut. Loitsuja voi käyttää tässä näkymässä.
+    
+- SPACE 
+    odottaa vuoron
+    
+- D (door)
+    sulkee kysytyssä suunnassa olevan oven.
+    
+- TAB
+    vaihtaa pelaajan asepaikoissa olevat aseet (hyötyä tästä on jos ei halua aina mennä inventorin kautta 
+    vaihtamaan esim jousen miekkaan.)
+    
+- ESC 
+    asettaa pelinäkymän (poistuu inventori, spell, help tai optionnäkymästä).
+    

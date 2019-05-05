@@ -198,8 +198,7 @@ public class DungeonCrawlerApplication extends Application {
             Tile tile = map.getTile(Integer.parseInt(lines.get(x)), Integer.parseInt(lines.get(x + 1)));
             tile.addItem(lines.get(x + 2));
         }
-        mapDrawer.drawAll();
-        updateCamera();
+        update();
     }
 
     /**

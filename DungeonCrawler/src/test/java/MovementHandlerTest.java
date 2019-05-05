@@ -9,6 +9,7 @@ import dungeoncrawler.logic.Enemy;
 import dungeoncrawler.logic.EnemyType;
 import dungeoncrawler.Items.Item;
 import dungeoncrawler.Items.Item.ItemType;
+import dungeoncrawler.Items.Spell;
 import dungeoncrawler.logic.Map;
 import dungeoncrawler.logic.MovementHandler;
 import dungeoncrawler.logic.Player;

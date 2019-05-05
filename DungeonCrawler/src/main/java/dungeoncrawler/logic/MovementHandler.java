@@ -449,6 +449,9 @@ public class MovementHandler {
         }
     }
 
+    /**
+     * poistaa kuolleet viholliset ja liikuttaa eläviä.
+     */
     public void endTurn() {
 
         //checks if there are dead enemies

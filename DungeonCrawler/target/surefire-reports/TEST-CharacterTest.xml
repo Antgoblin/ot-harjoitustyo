@@ -46,7 +46,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_181\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test jacoco:report"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="fi"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -67,18 +67,18 @@
   </properties>
   <testcase classname="CharacterTest" name="GainingHpOverMaxMakesCurrentHpEqualMax" time="0.086"/>
   <testcase classname="CharacterTest" name="GettingHpWhenFull" time="0"/>
-  <testcase classname="CharacterTest" name="LosingHp" time="0"/>
+  <testcase classname="CharacterTest" name="LosingHp" time="0.001"/>
   <testcase classname="CharacterTest" name="HasNotAttackedMakesAttackedEqualFalse" time="0"/>
   <testcase classname="CharacterTest" name="setActedWorks" time="0"/>
   <testcase classname="CharacterTest" name="CheckkingIfDeadWhenOverZero" time="0"/>
-  <testcase classname="CharacterTest" name="MoveWorks" time="0.525"/>
-  <testcase classname="CharacterTest" name="SetXAndSetY" time="0.001"/>
+  <testcase classname="CharacterTest" name="MoveWorks" time="0.523"/>
+  <testcase classname="CharacterTest" name="SetXAndSetY" time="0"/>
   <testcase classname="CharacterTest" name="GettingHpWhenBelowZero" time="0"/>
-  <testcase classname="CharacterTest" name="GettingColor" time="0"/>
+  <testcase classname="CharacterTest" name="GettingColor" time="0.001"/>
   <testcase classname="CharacterTest" name="GainingHp" time="0"/>
   <testcase classname="CharacterTest" name="ActedAndAttackedFalseInBeginning" time="0"/>
   <testcase classname="CharacterTest" name="GettingName" time="0"/>
   <testcase classname="CharacterTest" name="AttackedTrueAfterAttackingAndGettingLastDamage" time="0"/>
   <testcase classname="CharacterTest" name="GettingX" time="0"/>
-  <testcase classname="CharacterTest" name="GettingY" time="0"/>
+  <testcase classname="CharacterTest" name="GettingY" time="0.001"/>
 </testsuite>

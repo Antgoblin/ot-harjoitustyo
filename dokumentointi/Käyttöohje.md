@@ -2,8 +2,6 @@
 
 Lataa tiedosto [DungeonCrawler.jar]
 
-## konfigurointi?
-
 ## Ohjelman käynnistys
 ohjelma käynnistyy komennolla
 ```

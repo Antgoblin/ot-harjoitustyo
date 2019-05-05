@@ -13,4 +13,4 @@
 [Työaikakirjanpito](https://github.com/Antgoblin/ot-harjoitustyo/blob/master/dokumentointi/ty%C3%B6aikakirjanpito.txt)
 
 ### Releaset
-[DungeonCrawler](https://github.com/Antgoblin/ot-harjoitustyo/releases/tag/viikko5)
+[DungeonCrawler](https://github.com/Antgoblin/ot-harjoitustyo/releases/tag/1.0)

@@ -125,15 +125,19 @@ public class MovementHandler {
      */
     public void move(Player player, Direction dir) {
         //checks if enemies in way
-        map.getEnemies().forEach(enemy -> {
-            if (enemy.x() == player.x() + dir.x() && enemy.y() == player.y() + dir.y()) {
-                attack(player, enemy);
-            }
-        });
+        Tile tile = map.getTile(player.x() + dir.x(), player.y() + dir.y());
+        if (tile.occupied()) {
+            attack(player, (Enemy) tile.getCharacter());
+        }
+        //map.getEnemies().forEach(enemy -> {
+        //    if (enemy.x() == player.x() + dir.x() && enemy.y() == player.y() + dir.y()) {
+        //        attack(player, enemy);
+        //    }
+        //});
 
         //checks what Tiletype
         if (!player.hasAttacked()) {
-            Tile tile = map.getTile(player.x() + dir.x(), player.y() + dir.y());
+            //tile = map.getTile(player.x() + dir.x(), player.y() + dir.y());
 
             if (tile.getType() == Tiletype.Floor || tile.getType() == Tiletype.Void || tile.getType() == Tiletype.OpenDoor || tile.getType() == Tiletype.StairsDown || tile.getType() == Tiletype.StairsUp) {
                 player.move(map, dir);

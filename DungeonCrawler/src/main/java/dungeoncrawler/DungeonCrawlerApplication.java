@@ -330,6 +330,38 @@ public class DungeonCrawlerApplication extends Application {
                     mh.handle(player, Direction.LEFT);
                     break;
 
+                case NUMPAD1:
+                    mh.handle(player, Direction.DOWNLEFT);
+                    break;
+                    
+                case NUMPAD2:
+                    mh.handle(player, Direction.DOWN);
+                    break;
+                    
+                case NUMPAD4:
+                    mh.handle(player, Direction.LEFT);
+                    break;
+                    
+                case NUMPAD6:
+                    mh.handle(player, Direction.RIGHT);
+                    break;
+                    
+                case NUMPAD8:
+                    mh.handle(player, Direction.UP);
+                    break;
+                    
+                case NUMPAD7:
+                    mh.handle(player, Direction.UPLEFT);
+                    break;
+
+                case NUMPAD9:
+                    mh.handle(player, Direction.UPRIGHT);
+                    break;
+
+                case NUMPAD3:
+                    mh.handle(player, Direction.DOWNRIGHT);
+                    break;
+
                 case SPACE:
                     player.setActed(true);
                     break;
